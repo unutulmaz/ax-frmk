@@ -1,0 +1,342 @@
+@keyframes ngdialog-fadeout {
+	0% {
+		opacity: 1;
+	}
+
+	100% {
+		opacity: 0;
+	}
+}
+
+@-moz-keyframes ngdialog-content-fadeout {
+	0% {
+	}
+
+	100% {
+		-moz-transform: translateY(1400px);
+		-ms-transform: translateY(1400px);
+		-o-transform: translateY(1400px);
+		-webkit-transform: translateY(1400px);
+		transform: translateY(1400px);
+	}
+}
+
+@-webkit-keyframes ngdialog-content-fadeout {
+	0% {
+	}
+
+	100% {
+		-moz-transform: translateY(1400px);
+		-ms-transform: translateY(1400px);
+		-o-transform: translateY(1400px);
+		-webkit-transform: translateY(1400px);
+		transform: translateY(1400px);
+	}
+}
+
+@keyframes ngdialog-content-fadeout {
+	0% {
+	}
+
+	100% {
+		-moz-transform: translateY(1400px);
+		-ms-transform: translateY(1400px);
+		-o-transform: translateY(1400px);
+		-webkit-transform: translateY(1400px);
+		transform: translateY(1400px);
+	}
+}
+
+@keyframes ngdialog-content-fadein {
+	0% {
+		-moz-transform: translateY(-1400px);
+		-ms-transform: translateY(-1400px);
+		-o-transform: translateY(-1400px);
+		-webkit-transform: translateY(-1400px);
+		transform: translateY(-1400px);
+	}
+
+	100% {
+		-moz-transform: translateY(0);
+		-ms-transform: translateY(0);
+		-o-transform: translateY(0);
+		-webkit-transform: translateY(0);
+		transform: translateY(0);
+	}
+}
+
+
+@keyframes ngdialog-fadein {
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+
+.ngdialog *,
+.ngdialog *:before,
+.ngdialog *:after {
+	-moz-box-sizing: inherit;
+	-webkit-box-sizing: inherit;
+	box-sizing: inherit;
+}
+
+.ngdialog {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	position: absolute;
+	overflow: auto;
+	-webkit-overflow-scrolling: touch;
+	/*z-index: 1000;*/
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+}
+
+	.ngdialog.ngdialog-disabled-animation,
+	.ngdialog.ngdialog-disabled-animation .ngdialog-overlay,
+	.ngdialog.ngdialog-disabled-animation .ngdialog-content {
+		-moz-animation: none !important;
+		-o-animation: none !important;
+		-webkit-animation: none !important;
+		-ms-animation: none !important;
+		animation: none !important;
+	}
+
+.ngdialog-overlay {
+	position: absolute;
+	background: #000000;
+	opacity: 0.3;
+	background: rgba(0, 0, 0, 0.3);
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	-webkit-backface-visibility: hidden;
+	-moz-backface-visibility: hidden;
+	backface-visibility: hidden;
+	-moz-animation: ngdialog-fadein 0.5s;
+	-o-animation: ngdialog-fadein 0.5s;
+	-webkit-animation: ngdialog-fadein 0.5s;
+	animation: ngdialog-fadein 0.5s;
+}
+
+.ngdialog-no-overlay {
+	pointer-events: none;
+}
+
+.ngdialog.ngdialog-closing .ngdialog-overlay {
+	-webkit-backface-visibility: hidden;
+	-moz-backface-visibility: hidden;
+	backface-visibility: hidden;
+	-moz-animation: ngdialog-fadeout 0.5s;
+	-o-animation: ngdialog-fadeout 0.5s;
+	-webkit-animation: ngdialog-fadeout 0.5s;
+	animation: ngdialog-fadeout 0.5s;
+}
+
+.ngdialog-content {
+	background: white;
+	-webkit-backface-visibility: hidden;
+	-moz-backface-visibility: hidden;
+	backface-visibility: hidden;
+}
+
+	.ngdialog-content.loaded {
+		-moz-animation: ngdialog-content-fadein 0.5s;
+		-o-animation: ngdialog-content-fadein 0.5s;
+		-webkit-animation: ngdialog-content-fadein 0.5s;
+		animation: ngdialog-content-fadein 0.5s;
+	}
+
+.ngdialog.ngdialog-closing > .ngdialog-content {
+	-webkit-backface-visibility: hidden;
+	-moz-backface-visibility: hidden;
+	backface-visibility: hidden;
+	-moz-animation: ngdialog-content-fadeout 0.5s;
+	-o-animation: ngdialog-content-fadeout 0.5s;
+	-webkit-animation: ngdialog-content-fadeout 0.5s;
+	animation: ngdialog-content-fadeout 0.5s;
+}
+
+/*.ngdialog.ngdialog-closing {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -moz-animation: ngdialog-fadeout 0.9s;
+    -o-animation: ngdialog-fadeout 0.9s;
+    -webkit-animation: ngdialog-fadeout 0.9s;
+    animation: ngdialog-fadeout 0.9s;
+}*/
+
+
+html.ngdialog-open,
+body.ngdialog-open {
+	overflow: hidden;
+}
+
+
+.ngdialog.ngdialog-theme-plain {
+	padding-bottom: 160px;
+	padding-top: 160px;
+}
+
+	.ngdialog.ngdialog-theme-plain .ngdialog-content {
+		background: #fff;
+		color: #444;
+		font-family: 'Helvetica Neue', sans-serif;
+		margin: 0 auto;
+		max-width: 100%;
+		position: relative;
+		width: 100%;
+	}
+
+		.ngdialog.ngdialog-theme-plain .ngdialog-content h1, .ngdialog.ngdialog-theme-plain .ngdialog-content h2, .ngdialog.ngdialog-theme-plain .ngdialog-content h3, .ngdialog.ngdialog-theme-plain .ngdialog-content h4, .ngdialog.ngdialog-theme-plain .ngdialog-content h5, .ngdialog.ngdialog-theme-plain .ngdialog-content h6, .ngdialog.ngdialog-theme-plain .ngdialog-content p, .ngdialog.ngdialog-theme-plain .ngdialog-content ul, .ngdialog.ngdialog-theme-plain .ngdialog-content li {
+			color: inherit;
+		}
+
+
+.ngdialog-toggle-maximize {
+	display: none;
+}
+
+.ngdialog.ngdialog-theme-plain .ngdialog-toggle-maximize {
+	cursor: pointer;
+	display: block;
+	position: absolute;
+	right: 40px;
+	top: 15px;
+	color: black;
+	height: 24px;
+	line-height: 24px;
+	width: 24px;
+}
+ax-table [role=toolbar] .ngdialog-close{
+	width: 30px;
+	top: initial;
+	right: 0;
+	vertical-align:middle;
+	position:relative;
+	display:inline-flex;
+}
+.ngdialog-close {
+	position: absolute;
+	right: 4px;
+	top: 4px;
+	width: 26px;
+	font-size: 41px;
+	font-weight: 400;
+	border: 1px solid #ccc;
+	background-color: white;
+	cursor: pointer;
+}
+
+	.ngdialog-close::before {
+		background: transparent;
+		content: "\00D7";
+		height: 100%;
+		width: 100%;
+		position: relative;
+		text-align: center;
+		color: gray !important;
+		/*font-weight: 600 !important;*/
+		font-family: "bowtie";
+		speak: none;
+		text-decoration: none;
+		-webkit-font-smoothing: antialiased;
+		display: block;
+		overflow: hidden;
+	}
+
+	.ngdialog-close:hover:before {
+		color: white !important;
+	}
+
+	.ngdialog-close:hover:before, .ngdialog-close:active:before {
+		color: #777;
+	}
+
+.ngdialog.ngdialog-theme-plain .ngdialog-message {
+	margin-bottom: .5em;
+}
+
+.ngdialog.ngdialog-theme-plain .ngdialog-input {
+	margin-bottom: 1em;
+}
+
+	.ngdialog.ngdialog-theme-plain .ngdialog-input textarea, .ngdialog.ngdialog-theme-plain .ngdialog-input input[type="text"], .ngdialog.ngdialog-theme-plain .ngdialog-input input[type="password"], .ngdialog.ngdialog-theme-plain .ngdialog-input input[type="email"], .ngdialog.ngdialog-theme-plain .ngdialog-input input[type="url"] {
+		background: #f0f0f0;
+		border: 0;
+		font-family: inherit;
+		font-size: inherit;
+		font-weight: inherit;
+		margin: 0 0 .25em;
+		min-height: 2.5em;
+		padding: .25em .67em;
+		width: 100%;
+	}
+
+		.ngdialog.ngdialog-theme-plain .ngdialog-input textarea:focus, .ngdialog.ngdialog-theme-plain .ngdialog-input input[type="text"]:focus, .ngdialog.ngdialog-theme-plain .ngdialog-input input[type="password"]:focus, .ngdialog.ngdialog-theme-plain .ngdialog-input input[type="email"]:focus, .ngdialog.ngdialog-theme-plain .ngdialog-input input[type="url"]:focus {
+			box-shadow: inset 0 0 0 2px #000000;
+			box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.2);
+			outline: none;
+		}
+
+.ngdialog.ngdialog-theme-plain .ngdialog-buttons:after {
+	clear: both;
+	content: '';
+	display: table;
+}
+
+.ngdialog.ngdialog-theme-plain .ngdialog-button {
+	border: 0;
+	cursor: pointer;
+	float: right;
+	font-family: inherit;
+	font-size: .8em;
+	letter-spacing: .1em;
+	line-height: 1em;
+	margin: 0 0 0 .5em;
+	padding: .75em 2em;
+	text-transform: uppercase;
+}
+
+	.ngdialog.ngdialog-theme-plain .ngdialog-button:focus {
+		animation: ngdialog-pulse 1.1s infinite;
+		outline: none;
+	}
+
+@media (max-width: 568px) {
+	.ngdialog.ngdialog-theme-plain .ngdialog-button:focus {
+		-moz-animation: none;
+		-o-animation: none;
+		-webkit-animation: none;
+		animation: none;
+	}
+}
+
+.ngdialog.ngdialog-theme-plain .ngdialog-button.ngdialog-button-primary {
+	background: #3288e6;
+	color: #fff;
+}
+
+.ngdialog.ngdialog-theme-plain .ngdialog-button.ngdialog-button-secondary {
+	background: #e0e0e0;
+	color: #777;
+}
+
+.ngdialog-content.maximized {
+	width: 100% !important;
+	height: 100% !important;
+	top: 0 !important;
+	margin-top:0 !important;
+}
+
+ngdialog-allheight {
+	top: 0 !important;
+	height: 100% !important;
+}

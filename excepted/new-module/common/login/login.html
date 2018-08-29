@@ -1,0 +1,43 @@
+﻿<div ng-controller="LoginController"
+     style="position: absolute; right: 0; top: 0; bottom: 0; left: 0;background-color: #ebe7e7;">
+    <div style="margin: auto; height: 100%; display: table;">
+        <div class="account-wall" style="display: table-cell; vertical-align: middle">
+            <form class="form-signin" style="background-color: white;width: 500px; padding:25px; margin: 0 auto; margin-top: -50px; border: 1px outset gray;box-shadow: 0 6px 12px rgba(0,0,0,.175);">
+                <label style="width: 100%;text-align:center" ng-bind="ctrl.getFullSystemName()"></label>
+                <div class="inline" style="margin-top:3px">
+                    <label style="width: 120px">Email: </label>
+                    <input type="email"
+                           style="width: 300px;height:28px;padding:0 5px"
+                           name="email"
+                           ng-model="loginInfo.email"
+                           class="form-control"
+                           placeholder="email address" required autofocus>
+                </div>
+                <div class="inline" style="margin-top:3px">
+                    <label style="width: 120px">Parola </label>
+                    <input type="password"
+                           style="width: 300px;height:28px;padding:0 5px"
+                           name="parola"
+                           ng-model="loginInfo.parola"
+                           class="form-control" required autofocus>
+                </div>
+                <div class="inline" style="margin-top:3px">
+                    <button class="btn btn-lg btn-primary btn-block fa fa-sign-in"
+                            id="login"
+                            ng-disabled="loginWorking"
+                            style="width: 147px; height: 28px; text-align: center; margin-left: 120px; font-size: 17px; line-height: 20px; padding: 0 5px; cursor: pointer"
+                            type="button" ng-click="ctrl.login()">
+                        <span style="margin-left:5px;">Login</span>
+                    </button>
+                    <button class="btn btn-lg btn-primary btn-block fa fa-times"
+                            id="reset"
+                            ng-disabled="loginWorking"
+                            style="width: 147px; height: 28px; text-align: center; margin-left: 6px; margin-top:0;font-size: 17px; line-height: 20px; padding: 0 5px; cursor: pointer"
+                            type="button" ng-click="ctrl.resetPassword()">
+                        <span style="margin-left:5px;">Resetare parola</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,29 @@
+﻿<ax-grid>
+	<ax-grid-content>
+		<ax-grid-master>
+			<ax-table-editor></ax-table-editor>
+			<ax-table></ax-table>
+		</ax-grid-master>
+		<ax-tabs tabs-titles="['child1','child2']">
+			<ax-table child="1"></ax-table>
+			<ax-table child="2"></ax-table>
+		</ax-tabs>
+		<ax-grid-pivot></ax-grid-pivot>
+	</ax-grid-content>
+</ax-grid>
+template definitions
+<ax-grid>
+	<ax-grid-child child-name="child1"></ax-grid-child>
+	<ax-grid-child child-name="child2"></ax-grid-child>
+	<ax-grid-editor position="over"
+							  width="100%"
+							  initial-state="visible"></ax-grid-editor>
+</ax-grid>
+<script>
+	var table = {
+		editor: {},
+		pivotTable: {},
+		children: {},
+		config: {} //custom methods overwrite
+	}
+</script>

@@ -1,0 +1,55 @@
+<style>
+    .groups-controls > *:not(:last-child) {
+        margin-bottom: 3px;
+    }
+
+    .groups-controls ax-radio-options > ax-radio-option {
+        width: 50%;
+    }
+
+    .edit-body {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .edit-body > div > label {
+        width: 200px;
+    }
+
+    .edit-body > div {
+
+        margin-bottom: 3px;
+    }
+</style>
+<div class="dropdown-header" ng-bind="launcher.title" ></div>
+<div style="padding:10px" class="groups-controls">
+    <div class="edit-body" ng-click="$event.stopPropagation()">
+        <div class="inline">
+            <label>Width</label>
+            <ax-text class="form-control" style="width:100px;margin-right:3px" ng-model="launcher.column.width"></ax-text>
+            px
+        </div>
+        <div class="inline">
+            <label>Calculation type</label>
+            <ax-dropdown-list
+                    datasource="launcher.types"
+                    list-item-id-field="id"
+                    dropdown-model="launcher.column.type"
+                    list-height="146px"
+                    class="form-control"
+                    style="width:100px"></ax-dropdown-list>
+        </div>
+    </div>
+</div>
+<div style="text-align: left;margin-left:10px;margin-bottom:10px;line-height:30px;">
+    <button ng-click="launcher.confirm($event)"
+            class="btn btn-primary" style="width:105px;">
+        <i class="fa fa-check"></i>
+        {{launcher.applyText }}
+    </button>
+    <button ng-click="launcher.close($event)" class="btn btn-primary" style="width:105px">
+        <i class="fa fa-ban"></i>
+        {{launcher.cancelText}}
+    </button>
+</div>
+

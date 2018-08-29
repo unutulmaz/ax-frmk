@@ -1,0 +1,30 @@
+<div style="width:300px;padding:10px">
+    <div class="dropdown-header"
+         style="max-width: 280px;overflow: hidden">Select table or view</div>
+    <ax-list datasource="launcher.objects"
+                  style="width: 285px; height: 300px; position: relative; margin-top: 10px;"
+                  selectable-rows="single"
+                  selectable-rows-model="launcher.selected"
+                  selectable-rows-model-type="object"
+                  paginate="false"
+                  order-by="name">
+        <ax-column width="260px">
+            <ax-column-filter bind-to="name" filter-type="text"></ax-column-filter>
+            <ax-column-view style="height: initial;padding:0">
+                <div class="inline">
+                    <i class="fa"
+                       style="margin-right:3px; width: 16px; padding-top: 3px;"
+                       ng-class="{'fa-check-circle-o':$ctrl.isSelected(dataItem),'fa-circle-o':!$ctrl.isSelected(dataItem)}"></i>
+                    <i class="fa"
+                       style="margin-right:3px; width: 16px; padding-top: 3px;"
+                       ng-click="$event.stopPropagation();dataItem.expanded=!dataItem.expanded"
+                       ng-class="{'fa-plus':!dataItem.expanded,'fa-minus':dataItem.expanded}"></i>
+                    <div ng-bind="dataItem.name" style="font-weight:bold"></div>
+                </div>
+                <div style="display: grid; background-color1: white;" ng-if="dataItem.expanded">
+                    <div ng-repeat="column in dataItem.columns" class="inline" style="padding-left:40px"><div ng-bind="column.column_name"></div></div>
+                </div>
+            </ax-column-view>
+        </ax-column>
+    </ax-list>
+</div>

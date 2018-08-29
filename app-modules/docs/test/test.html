@@ -1,0 +1,62 @@
+<div ng-controller="testCtrl" style="position:relative;height:100%;width:100%;padding:10px">
+	<ax-table config="datatable1"
+						datasource="data"
+						edit-row="inline-cell"
+						apply-changes-on-save="false"
+						left-freezed-columns="3"
+						right-freezed-columns="1"
+						style="position:relative;width:100%;height:100%">
+		<ax-toolbar>
+			<label class="header-title" toolbar="left">
+				Column edit edit-row = "inline-cell"
+			</label>
+			<ax-button button-type="refresh" style="width:120px" ng-click="$ctrl.$parent.loadData(100,removeSpinner)">
+				100 records
+			</ax-button>
+			<ax-button button-type="refresh" style="width:120px" ng-click="$ctrl.$parent.loadData(1000,removeSpinner)">
+				1k records
+			</ax-button>
+			<ax-button button-type="refresh" style="width:120px" ng-click="$ctrl.$parent.loadData(10000,removeSpinner)">
+				10k records
+			</ax-button>
+			<ax-button button-type="refresh" style="width:120px" ng-click="$ctrl.$parent.loadData(100000,removeSpinner)">
+				100k records
+			</ax-button>
+			<ax-button toolbar="right" button-type="settings"></ax-button>
+		</ax-toolbar>
+		<ax-groups1>
+			<ax-group expression="true">
+				<ax-calculation column="Value" show-on="footer" aggregate-type="sum"></ax-calculation>
+			</ax-group>
+			<ax-group expression="dataItem.deliveryCountry" order-by="deliveryCountry" label="Country">
+				<ax-calculation column="Value" show-on="footer" aggregate-type="sum"></ax-calculation>
+			</ax-group>
+		</ax-groups1>
+		<ax-column header="Gutter Icons" width="24px" view-type="gutter-icons" show-header="false"></ax-column>
+		<ax-column header="Order ID" bind-to="number" sortable width="100px" filter-menu="text" view-type="text" style="text-align:right;padding-right:5px"></ax-column>
+		<ax-column header="Order date" bind-to="date" sortable view-type="date" date-format="dd.MM.yyyy" width="140px" style="text-align:center" filter-menu="date" edit-type="date"></ax-column>
+		<ax-column header="Customer Name" bind-to="customer" sortable="customerInvariant" width="250px" filter-menu="text" edit-type="text"></ax-column>
+		<ax-column header="Customer Code" bind-to="customerCode" sortable width="105px" filter-menu="text" edit-type="text"></ax-column>
+		<ax-column header="Delivery Country" bind-to="deliveryCountry" sortable="deliveryCountryInvariant" width="250px" filter-menu="text">
+			<ax-column-edit type="dropdown-list"
+								 datasource="$ctrl.$parent.countries"
+								 item-id-field="country"
+								 show-search="true"></ax-column-edit>
+
+		</ax-column>
+		<ax-column header="Delivery City" bind-to="deliveryCity" sortable="deliveryCityInvariant" width="150px" filter-menu="text">
+			<ax-column-edit type="dropdown-list"
+								 datasource="$ctrl.$parent.cities"
+								 item-id-field="city"
+								 show-search="true"></ax-column-edit>
+		</ax-column>
+		<ax-column header="Delivery Address" bind-to="deliveryAddress" sortable width="250px" filter-menu="text" edit-type="text"></ax-column>
+		<ax-column header="Inside UE" bind-to="insideUE" sortable width="80px" filter-menu="boolean" view-type="boolean-checkbox" edit-type="checkbox"></ax-column>
+		<ax-column header="Created By" bind-to="createdBy" sortable width="130px" filter-menu="text" edit-type="text"></ax-column>
+		<ax-column header="Created At" bind-to="createdAt" sortable width="180px" view-type="datetime" filter-menu="datetime" edit-type="datetime"></ax-column>
+		<ax-column header="Value" bind-to="value" sortable width="100px" filter-menu="number" view-type="number" locale="en-US" decimals="0">
+			<ax-column-edit type="text" tooltip="$ctrl.customTooltipMethod('Value')"></ax-column-edit>
+		</ax-column>
+		<ax-column header="Actions" width="80px" view-type="crud-buttons"></ax-column>
+	</ax-table>
+</div>

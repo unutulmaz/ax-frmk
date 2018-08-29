@@ -1,0 +1,168 @@
+<div class="form-title">Records grouping
+</div>
+<div ng-style="{'top':(dataStore.formTitleHeight()+10)+'px'}"
+	  style="position: absolute;top:45px;bottom:10px;left:10px;right:10px;overflow: auto;padding-right:10px" ng-controller="recordsGroupingCtrl">
+    <div ng-if="true" >
+		 <div class="info-text" ng-if="true">
+		 	Records grouping is defining with an <strong>ax-groups</strong> element which contain <strong>ax-group</strong> elements.
+		 	<pre ng-bind="code.html" style="width:1100px"></pre>
+		 	<strong>AxGroup template</strong> has attributes:
+		 	<ax-attr>level</ax-attr> integer. He's not assignable, he's zero based and is given by defining order of ax-group template: first it will be zero level.
+		 	<ax-attr>label</ax-attr> text used for label group in end-user group UI config for identifying. If this attribute is not provided, label will take group expression attribute.
+		 	<ax-attr>expression</ax-attr><strong>required</strong>, could be any js expression. <strong>expression='true'</strong> is a group for all records auto generated, if no groups defined (default <strong>display-name = 'All records'</strong>).
+		 	<br>Usual is a dataItem field: <strong>expression = 'dataItem.deliveryCountry'</strong>
+		 	<ax-attr>order-by</ax-attr> <strong>required</strong>, list separated by comma with dataItem fields involved in group expression.
+		 	<ax-attr>collapsible = 'false'</ax-attr> for disable group collapse/expand. Each group is collapsible by default.
+		 	<ax-attr>collapsed</ax-attr> boolean - initial collapsed state.
+		 	<ax-attr>show-calculations-on</ax-attr> with values: <strong>header</strong>, <strong>footer</strong>, <strong>both</strong>, <strong>false</strong>. Where to display group calculation result.
+		 </div>
+        <div class="info-text" style="margin-top:10px" ng-if="true">
+            <strong>AxGroupHeader template</strong>
+            <ax-show-hide element-id="header-template"></ax-show-hide>
+            <div id="header-template">
+                <pre ng-bind="code.headerDef" style="width:1100px"></pre>
+                <br><strong>Attributes:</strong>
+                <ax-attr>show</ax-attr> true or false. Show group header or not. Default is false.
+                <ax-attr>show-label</ax-attr> true or false. Show group label or not in group header. Default is true.
+                <ax-attr>show-value</ax-attr> true or false. Show group expression evaluated value or not in group header. Default is true.
+                <ax-attr>show-toggle-collapsed</ax-attr> true or false. Show group toggle collapsed button or not in group header. Default is true.
+                <ax-attr>show-counter</ax-attr> true or false. Show group records count number or not in group header. Default is true.
+                <ax-attr>show-filter</ax-attr> true or false. Show group filter button or not in group header. Default is true.
+                <ax-attr>label</ax-attr> header label shown in group header.
+                <ax-attr>label-indent</ax-attr> group header indent. By default = level*20px.
+                <ax-attr>background-color</ax-attr> group header css style background color.
+                <br><br><strong>AxGroupDisplay template</strong>
+                <br>When you are using custom group header display theses group header attributes are not assignable: <strong>label</strong>, <strong>show-label</strong>
+                <br>Group header will be <strong>always visible</strong>, even on horizontal scroll.
+                <pre ng-bind="code.headerFullRow" style="width:1100px"></pre>
+                <br><strong>Attributes:</strong>
+                <ax-attr>show-value</ax-attr> true or false. Show group expression evaluated value or not in group header. Default is true.
+                <ax-attr>show-toggle-collapsed</ax-attr> true or false. Show group toggle collapsed button or not in group header. Default is false.
+                <ax-attr>show-counter</ax-attr> true or false. Show group records count number or not in group header. Default is false.
+                <ax-attr>show-filter</ax-attr> true or false. Show group filter button or not in group header. Default is false.
+                <br><br><strong>AxGroupColumn template</strong>
+                <br>You are able to define what you want in group header for each existing column like bellow with ax-group-column template.
+                <br><strong>Grouping</strong> column is a column added by ax-table by default as first column. Usually is hidden if no need to display groups headers or footers.
+                <pre ng-bind="code.headerInGrouping" style="width:1100px"></pre>
+                <br><strong>Attributes:</strong>
+                <ax-attr>column-for</ax-attr> an existing column header attribute.
+                <ax-attr>show-label</ax-attr> true or false. Show group label or not in this column. Default is false.
+                <ax-attr>show-value</ax-attr> true or false. Show group expression evaluated value or not in this column. Default is true.
+                <ax-attr>show-toggle-collapsed</ax-attr> true or false. Show group toggle collapsed button or not in this column. Default is false.
+                <ax-attr>show-counter</ax-attr> true or false. Show group records count number or not in this column. Default is false.
+                <ax-attr>show-filter</ax-attr> true or false. Show group filter button or not in this column. Default is false.
+            </div>
+        </div>
+        <div class="info-text" style="margin-top:10px" ng-if="true">
+            <strong>AxGroupFooter template</strong>
+            <ax-show-hide element-id="footer-template"></ax-show-hide>
+            <div id="footer-template">
+                You can customize group footer template similar with group header, excepting show-filter and show-toggle-collapsed attributes, which are not available in group footer.
+                <pre ng-bind="code.footerDef" style="width:1100px"></pre>
+                <br><strong>AxGroupDisplay template</strong>
+                <pre ng-bind="code.footerFullRow" style="width:1100px"></pre>
+                <br><strong>AxGroupColumn template</strong>
+                <pre ng-bind="code.footerInGrouping" style="width:1100px"></pre>
+                <br><strong>Customize group footer title</strong> can be made by css rules using td.group-footer as parent.
+            </div>
+        </div>
+        <div class="info-text" style="margin-top:10px" ng-if="true">
+            <strong>AxCalculation template</strong>
+            <ax-show-hide element-id="calculation-template"></ax-show-hide>
+            <div id="calculation-template">
+                <br><strong>It's possible to define calculation for all groups levels</strong>
+                <pre ng-bind="code.allLevelsCalculations" style="width:1100px"></pre>
+                <strong>Or you can overwrite global definitions on a specific group</strong>
+                <pre ng-bind="code.calculationTemplate" style="width:1100px"></pre>
+                <br>You can define more than one calculation for each column.
+                <br><strong>Attributes:</strong>
+                <ax-attr>column</ax-attr> the header column attribute where calculation will be shown. It's required when will use show-on attribute for header or footer, or you don't set a name attribute for calculation.
+                <ax-attr>show-on</ax-attr> with values: <strong>header</strong>, <strong>footer</strong>, <strong>both</strong>, <strong>false</strong>. Where to display group calculation result. This overwrite <strong>show-calculations-on</strong> group attribute
+                <ax-attr>name</ax-attr> a name to identify calculation when you need to display somewhere else then group header or footer default templates (with show-on attribute).
+                <ax-attr>expression</ax-attr> expression to calculate. If not present, expression will be <strong>dataItem[bindTo]</strong>, where bindTo is the bind-to attribute for column specified with <strong>column</strong> attribute.
+                <ax-attr>initial-value</ax-attr> expression for evaluate as initial group calculation value.
+                <ax-attr>aggregate-type</ax-attr> with values: <strong>sum</strong>, <strong>count</strong>, <strong>max</strong>, <strong>min</strong>, <strong>first</strong>, <strong>last</strong>, <strong>custom</strong>, <strong>required</strong>. What function use to calculate for expression.
+                <ax-attr>display-label</ax-attr> a label displayed replacing default label (aggregation-type). If <strong>display-label</strong>=<strong>false</strong> , the calculation label will not be shown.
+                <ax-attr>aggregate-obj</ax-attr> a reference to a custom calculation object
+                <br>If you need to <strong>display somewhere else calculation result for 'All records' group</strong> you need to do this:<strong>show-on = 'false'</strong> and for display use controller <strong>getCalculation</strong> method:
+                <pre ng-bind="code.customDisplayCalc"></pre>
+                    where calculationName is name calculation attribute
+                <br><strong>Custom calculation result template</strong>
+                <ax-show-hide element-id="customCalculationResult"></ax-show-hide>
+                <div id="customCalculationResult">
+                    <pre ng-bind="code.customCalcResult" style="width:1100px"></pre>
+                    When you want to use custom template for display calculation result, you must use <strong>ax-calculation-result</strong> template, with the innerHTML you want.
+                    <br>For self generated results, you can customize css style with css rules
+                    <pre ng-bind="code.customCalcCss" style="width:1100px"></pre>
+                </div>
+                <br><strong>Custom calculation aggregate-type</strong>
+                <ax-show-hide element-id="customCalculation"></ax-show-hide>
+                <div id="customCalculation">
+                    Sample: how to display a list with EmployeeName which has errors
+                    <pre ng-bind="code.customCalcHml" style="width:1100px"></pre>
+                    Javascript view controller code (aggregate-obj object)
+                    <pre ng-bind="code.customCalcJs" style="width:1100px"></pre>
+                    Display result: use the <strong>result</strong> method, injected by ax-table controller in your calculation config object.
+                    <pre ng-bind="code.customCalcDisplay" style="width:1100px"></pre>
+                </div>
+            </div>
+        </div>
+        <div class="info-text" style="margin-top:10px">
+            <strong>Group dataItem properties</strong>
+            <ax-show-hide element-id="group-header"></ax-show-hide>
+            <div id="group-header">
+                <strong>Group header dataItem properties</strong>
+                <ax-attr>level</ax-attr> the level of group.
+                <ax-attr>collapsed</ax-attr> boolean, if group is collapsed or not.
+                <ax-attr>collapsible</ax-attr> collapsible value attribute for group.
+                <ax-attr>label</ax-attr> label attribute for group.
+                <ax-attr>headerLabel</ax-attr> label value attribute for group header.
+                <ax-attr>footerLabel</ax-attr> label value attribute for group footer.
+                <ax-attr>expression</ax-attr> expression value attribute for group.
+                <ax-attr>value</ax-attr> the group expression evaluated
+                <ax-attr>fullValue</ax-attr> group value concatenated with parent group fullValue.
+                <ax-attr>isGroupItem=true</ax-attr> help you to distinguish from data records, which they obviously don't have isGroupItem === true.
+                <ax-attr>isGroupHeader = true</ax-attr> prove that this is group header dataItem.
+                <ax-attr>groupRecords</ax-attr> the counted data records of current group.
+                <ax-attr>first</ax-attr> boolean. If the group if first dataItem group or not.
+                <ax-attr>hasHeader</ax-attr> boolean. If the header has header to display.
+                <ax-attr>hasFooter</ax-attr> boolean. If the group has footer to display.
+                <ax-attr>lastLevel</ax-attr> boolean. If the current group si last or not.
+                <ax-attr>firstDataItem</ax-attr> object. Reference to first data record in group;
+                <ax-attr>lastDataItem</ax-attr> object. Reference to last data record in group;
+                <ax-attr>footerDataItem</ax-attr> object. Reference to corresponded group footer dataItem.
+                <ax-attr>parent</ax-attr> object. Reference to parent group, if exist.
+                <ax-attr>calculations</ax-attr> object with properties are calculation names. Each calculation name contain result for calculation with name = propertyName.
+
+                <br><br><strong>Group footer dataItem properties</strong>
+                <ax-attr>level</ax-attr> the level of group.
+                <ax-attr>collapsed</ax-attr> boolean, if group is collapsed or not.
+                <ax-attr>collapsible</ax-attr> collapsible value attribute for group.
+                <ax-attr>headerLabel</ax-attr> label value attribute for group header.
+                <ax-attr>footerLabel</ax-attr> label value attribute for group footer.
+                <ax-attr>expression</ax-attr> expression value attribute for group.
+                <ax-attr>value</ax-attr> the group expression evaluated
+                <ax-attr>fullValue</ax-attr> group value concatenated with parent group fullValue.
+                <ax-attr>isGroupItem=true</ax-attr> help you to distinguish from data records, which they obviously don't have isGroupItem === true.
+                <ax-attr>isGroupHeader = true</ax-attr> prove that this is group header dataItem.
+                <ax-attr>groupRecords</ax-attr> the counted data records of current group.
+                <ax-attr>first</ax-attr> boolean. If the group if first dataItem group or not.
+                <ax-attr>hasHeader</ax-attr> boolean. If the header has header to display.
+                <ax-attr>hasFooter</ax-attr> boolean. If the group has footer to display.
+                <ax-attr>lastLevel</ax-attr> boolean. If the current group si last or not.
+                <ax-attr>firstDataItem</ax-attr> object. Reference to first data record in group;
+                <ax-attr>lastDataItem</ax-attr> object. Reference to last data record in group;
+                <ax-attr>headerDataItem</ax-attr> object. Reference to corresponded group header dataItem.
+                <ax-attr>parent</ax-attr> object. Reference to parent group, if exist.
+                <ax-attr>calculations</ax-attr> object with properties are calculation names. Each calculation name contain result for calculation with name = propertyName.
+
+            </div>
+
+        </div>
+    </div>
+    <ax-code-tabs ng-if="true"
+                  template-url="/app-modules/docs/ax-table/records-grouping/records-grouping-1.html"
+                  style="position:relative;height:710px;width:100%;"
+                  source-code="code"></ax-code-tabs>
+
+</div>

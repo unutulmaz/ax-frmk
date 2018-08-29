@@ -1,0 +1,34 @@
+<style>
+	ax-dropdown-popup > button > span.fa-caret-down {
+		float: right;
+		margin-right: 3px;
+	}
+</style>
+<div ng-controller="tableViewController">
+	<ax-table config="tableView"
+								 customizable-columns-enabled="true"
+								 customizable-data-grouping="true"
+								 customizable-freezed-columns="true"
+								 freeze-columns-enabled="true"
+								 columns-autofit-enabled="true"
+								 style="top:10px;left:10px;right:10px;bottom:10px">
+		<ax-toolbar show-settings="true">
+			<label class="header-title">
+				Table View
+			</label>
+			<ax-dropdown-popup ctrl="$ctrl.parent().selectObject"
+												 style="width:250px;height:30px;background-color:white;margin-top:2px"
+												 uib-tooltip="Select view or table to view"
+												 btn-class="form-control"
+												 btn-text="$ctrl.config.table.name || 'Select object'"
+												 caret-class="fa fa-caret-down"
+												 disable-animation="false"
+												 popup-width="auto"
+												 open-params="$parent.$ctrl;"
+												 template-url="'app-modules/dev/table-view/table-view-select-object.html'">
+
+			</ax-dropdown-popup>
+			<ax-button toolbar="right" button-type="export" ></ax-button>
+		</ax-toolbar>
+	</ax-table>
+</div>

@@ -1,0 +1,29 @@
+<div class="form-title">Freezing and hidding columns</div>
+<div ng-style="{'top':(dataStore.formTitleHeight()+10)+'px'}"
+	  style="position: absolute;top:45px;bottom:10px;left:10px;right:10px;overflow: auto;" ng-controller="freezingColumnsCtrl">
+	<div class="info-text">
+		<strong>Freezing using ax-table attributes</strong>
+		<br><span style="padding-left:20px">- <strong>freeze-columns-enabled</strong> - boolean - enable/disable freezing columns</span>
+		<br><span style="padding-left:20px">- <strong>customizable-freezed-columns</strong> - boolean - enable/disable end user UI for customize freezed columns</span>
+		<br><span style="padding-left:20px">- <strong>left-freezed-columns</strong> - integer>0 </strong></span>
+		<br><span style="padding-left:20px">- <strong>right-freezed-columns</strong> - integer>0</span>
+		<br><br><strong>End user UI</strong>:
+		<br> - in <strong>Settings</strong> button, click on icon <i class="fa fa-cogs"></i> open config popup for customize left and right freezed columns.
+		<br> - in <strong>column menu</strong> click on click on icon
+		<button class="icon column-cmd " style="width:40px"><i class="fa fa-thumb-tack"></i></button> to set last left or right freezed column.
+	</div>
+	<ax-code-tabs template-url="/app-modules/docs/ax-table/freezing-columns/freezing-columns-sample.html"
+					  style="position:relative;width:100%;height:600px"></ax-code-tabs>
+	<div class="info-text" style="margin-top:10px">
+		<strong>Hidden column</strong>
+		<ax-attr>on each column</ax-attr> <strong>hidden-column</strong> an ax-column attribute. Use this attribute on columns you want to hides (without value).</span>
+		<pre ng-bind="code.group"></pre>
+		<strong>End user UI</strong>:
+		<br> - in <strong>Settings</strong> button, click on icon <i class="fa fa-cogs"></i> open config popup for hide/show columns. Columns hidden by hide-columns group option, cannot be made visible in this popup. Use group edit popup instead
+		<br> - in <strong>column menu</strong> click on click on icon <i class="fa fa-eye"></i> to hides column.
+		<br><br>Developer can <strong>disable column access conditionally for user</strong> using <strong>forbiddenColumns</strong> controller method.
+		<pre ng-bind="code.forbiddenColumns"></pre>
+	</div>
+	<ax-code-tabs template-url="/app-modules/docs/ax-table/freezing-columns/hiding-columns-sample.html"
+					  style="position:relative;width:100%;height:600px"></ax-code-tabs>
+</div>

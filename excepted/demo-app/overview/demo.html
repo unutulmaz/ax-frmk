@@ -1,0 +1,42 @@
+<div class="form-title" style="padding-left:5px">
+	<button type="button" onclick="locationReload()"
+			  ng-if="dataStore.isDevelopment()"
+			  style="position: relative; margin:auto 0; color: black;z-index:1000;width:40px;height:40px;line-height: 38px"
+			  class="left btn text fa fa-refresh"
+			  uib-tooltip="Click to reload page"></button>
+	<ax-dropdown-popup style="width:auto;margin: auto 5px"
+							 btn-class="btn btn-primary"
+							 btn-style="padding-right:30px;"
+							 btn-text="'Features overview'">
+		<div class="dropdown-header">Why to use axTable angular component?
+			<div class="ngdialog-close" ng-click="popupClose()"></div>
+		</div>
+		<div style="padding:10px">
+			<div class="info-text" style="margin-bottom:0;">
+				<strong>For end-users </strong>
+				<ax-attr>great user experience</ax-attr> easy to use with <strong>many features and customizations</strong>.
+				<br/><strong>For developers</strong>
+				<ax-attr>is angular native</ax-attr> it is built with angular directives.
+				<ax-attr>is very simple to implement and high customizable</ax-attr> you can use html templates or javascript templates generation.
+				<ax-attr>records and columns virtual scroll</ax-attr> which can handle easy 100k records and up to 1000 columns.
+				<ax-attr>no need to have advanced knowledge of angular or javascript</ax-attr> writing necessary javascript code is very simple and intuitive.
+				<br>DevTools console will crash when loading 100k records, so keep it closed.
+				<br/>To see real axTable performance <strong>keep DevTools console closed and disable Batarang</strong> Chrome extension. Use Timings button to see loading timings.
+				<br><strong>Select a profile from profiles list</strong> in Settings
+				<button class="fa fa-cogs"></button>
+																	  popup to see different use cases.
+			</div>
+		</div>
+	</ax-dropdown-popup>
+</div>
+<div style="position: absolute;top:55px;bottom:10px;left:10px;right:10px;overflow: auto;">
+	<div style="position:relative;height:100%;width:100%" ax-dynamic-template-url="'/app-modules/demo-app/overview/demo-sample.html'"></div>
+
+</div>
+<script>
+	var locationReload = function () {
+		let url = window.origin + "?v=" + Math.random() + window.location.hash;
+		window.location.reload(true);
+		window.location.href = url;
+	};
+</script>

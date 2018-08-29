@@ -1,0 +1,18 @@
+<label class="dropdown-header">Select operator</label>
+<div class="ngdialog-close" ng-click="popupClose()"></div>
+<div style="padding:10px;max-width:100%;overflow: auto;display:flex;flex-direction:column">
+	<ax-radio-options style="margin-bottom:1px;display: inline-flex"
+							ng-model="launcher.settings.operator"
+							ng-change="launcher.onChange()"
+							options="['Between', 'Bigger', 'Less', 'Exact']"></ax-radio-options>
+	<div class="inline">
+		<ax-checkbox ng-change="launcher.onChange()"
+						 style="white-space: nowrap"
+						 ng-model="launcher.settings.orEqual">Or Equal
+		</ax-checkbox>
+		<ax-checkbox ng-change="launcher.onChange()"
+						 style="white-space: nowrap"
+						 ng-model="launcher.settings.includeNulls">Include nulls
+		</ax-checkbox>
+	</div>
+</div>

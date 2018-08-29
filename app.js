@@ -1,12 +1,22 @@
 (function () {
 	window.app = angular.module("App", modules);
 	angular.module("App").controller("mainCtrl", mainCtrl);
-	mainCtrl.$inject = ["$scope", "axDataStore", "authService", "$localStorage", "logger", "apiAction", "$injector"];
+	mainCtrl.$inject = ["$scope", "axDataStore", "authService", "$localStorage", "notify", "apiAction", "$injector"];
 
 	function mainCtrl($scope, dataStore, authService, $storage, notify, apiAction, $injector) {
 		$scope.dataStore = dataStore;
 		$scope.authService = authService;
 		$scope.mainMenu = {};
+		$scope.theme = {
+			list: applicationInfo.themes,
+			current: applicationInfo.theme,
+			onChange: function () {
+				console.log("seleted", this.current);
+				$storage.user.theme = this.current;
+				$scope.locationReload();
+			}
+		};
+
 		$scope.locationReload = function () {
 			let url = window.origin + "?v=" + Math.random() + window.location.hash;
 			window.location.reload(true);
@@ -55,7 +65,21 @@
 						'empty-page': {
 							templateUrl: urlTemplate
 						}
-					}
+					},
+					resolve: {
+						promiseObj: ["authService",
+							function (authService) {
+								// console.log("router promise user:", userLoaded);
+								if (!authService.promiseExecuted) {
+									return authService.getUserInfo().then(function (data) {
+										//console.log("getUserInfo", data);
+										authService.promiseExecuted = true;
+										// authService.go(route);
+										authService.goToStorageRoute(name);
+									});
+								}
+							}]
+					},
 				});
 		};
 
@@ -66,9 +90,8 @@
 					resolve: {
 						promiseObj: ["authService",
 							function (authService) {
-								var userLoaded = authService.userLoaded();
 								// console.log("router promise user:", userLoaded);
-								if (!userLoaded) {
+								if (!authService.promiseExecuted) {
 									return authService.getUserInfo().then(function (data) {
 										//console.log("getUserInfo", data);
 										authService.promiseExecuted = true;
@@ -115,9 +138,29 @@
 	}
 
 	angular.module("App").run(runBlock);
-	runBlock.$inject = ['$rootScope', '$state', "axDataStore", 'authService', 'logger', "$injector", "$localStorage", "$timeout"];
+	runBlock.$inject = ['$rootScope', '$state', "axDataStore", 'authService', 'notify', "$injector", "$localStorage", "$timeout"];
 
 	function runBlock($rootScope, $state, dataStore, authService, notify, $injector, $storage, $timeout) {
+		dataStore.changeTheme = function (theme) {
+			let link = angular.element(window.document).find("head > link[theme]");
+			let add = false;
+			theme = applicationInfo.themes.findObject(theme.name, "name");
+			if (!theme) theme = applicationInfo.themes.findObject(true, "default");
+			if (link.length === 0 || link.getAttribute("href") !== theme.url) add = true;
+			if (add && link.length > 0) link.remove();
+			if (add) {
+				angular.element(window.document).find("head").append(createElement("link", {rel: "stylesheet", theme: "dimensions", href: theme.dimensions.url}));
+				angular.element(window.document).find("head").append(createElement("link", {rel: "stylesheet", theme: "appearance", href: theme.appearance.url}));
+				angular.element(window.document).find("body").attr("class", theme.dimensions.class + " " + theme.appearance.class);
+			}
+			if (dataStore.theme) dataStore.theme.current = theme;
+			if ($storage.user) $storage.user.theme = theme;
+			applicationInfo.theme = theme;
+			if (typeof changeTheme === "function") changeTheme(theme, $rootScope, $injector);
+			if (typeof dynamicStyles === "function") dynamicStyles(theme);
+		};
+		// console.log("run bloc", dataStore, $storage);
+		dataStore.changeTheme($storage.user ? $storage.user.theme : applicationInfo.theme);
 		$rootScope.angular = angular;
 		$rootScope.$on('$stateNotFound',
 			function (event, unfoundState, fromState, fromParams) {
@@ -148,6 +191,7 @@
 			} else {
 				if (!$storage.user) $storage.user = {};
 				$storage.user.currentRoute = route;
+				// $state.go(route);
 			}
 			dataStore.loadingFinish = true;
 		};

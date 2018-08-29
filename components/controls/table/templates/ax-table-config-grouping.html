@@ -1,0 +1,61 @@
+<ax-list config="launcher.dataGrouping.grouping"
+			datasource="launcher.dataGrouping.grouping.data"
+			draggable="$ctrl.$parent.launcher.dataGrouping.grouping.asSortable"
+			order-by="level"
+			debug="false"
+			auto-focus="false"
+			class="group-list"
+			style="margin-bottom:10px;position:relative;width:100%;overflow:auto;border: 1px solid lightgray;height:150px;width:100%">
+	<ax-toolbar style="padding-left:6px;">
+		Grouping by columns:
+		<button class="btn icon fa fa-times"
+				  uib-tooltip="Remove all ordered columns"
+				  style="position:absolute;right:1px;top:0px"
+				  ng-click="$ctrl.$parent.launcher.dataGrouping.clear()"></button>
+	</ax-toolbar>
+	<ax-column width="100%">
+		<ax-column-view type="custom" class="inline">
+			<span ng-bind="::dataItem.label" style="padding-left:6px"></span>
+			<div class="inline" style="position: absolute;top:0;right:0">
+				<ax-dropdown-popup uib-tooltip="Edit group properties"
+										 tabindex="-1"
+										 btn-class="btn icon grid-cell-btn settings"
+										 caret-class="fa fa-edit"
+										 popup-max-height="100%"
+										 popup-relative-left="-300"
+										 popup-relative-top="2"
+										 open-params="$parent.$parent.dataItem;$parent.$parent.$ctrl.$parent.launcher.dataGrouping.columns.hideable;$ctrl.$parent.launcher.dataGrouping.grouping;$parent.$parent.$ctrl.$parent.launcher.dataGrouping.columns.all;$parent.$parent.$ctrl.$parent.launcher.dataGrouping.columns.bindable"
+										 template-url="'components/controls/table/templates/ax-table-config-group-edit.html'"
+										 ctrl="$ctrl.$dropdowns.dataGrouping.edit"></ax-dropdown-popup>
+
+				<ax-button class="btn icon grid-cell-btn"
+							  tabindex="-1"
+							  icon-class="fa fa-times"
+							  ng-click="$parent.$ctrl.$parent.launcher.dataGrouping.grouping.remove(dataItem,$event)"
+							  uib-tooltip="Remove grouping"
+							  tabindex="0"></ax-button>
+			</div>
+		</ax-column-view>
+	</ax-column>
+</ax-list>
+<ax-list config="launcher.dataGrouping.columns"
+			datasource="launcher.dataGrouping.columns.data"
+			draggable="$ctrl.$parent.launcher.dataGrouping.columns.asSortable"
+			order-by="index"
+			class="group-list order-container"
+			auto-focus="false"
+			row-is-disabled="dataItem.bindTo==='$$uid'"
+			no-header="false"
+			style="position:absolute;top:160px;bottom:0;overflow:auto;border: 1px solid lightgray;width:100%">
+	<ax-toolbar style="padding-left:6px;">Groupable columns:</ax-toolbar>
+	<ax-column bind-to="title" width="100%">
+		<ax-column-view type="custom" style="padding-left:0;">
+			<div class="inline">
+				<ax-checkbox ng-model="dataItem.isTaken"
+								 ng-click="$ctrl.$parent.launcher.dataGrouping.selectColumn(dataItem)"></ax-checkbox>
+				<div ng-bind="::dataItem.title"></div>
+			</div>
+		</ax-column-view>
+		<ax-column-filter type="text"></ax-column-filter>
+	</ax-column>
+</ax-list>

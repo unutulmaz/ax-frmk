@@ -1,0 +1,11 @@
+<label class="dropdown-header" >Filter options</label>
+<div class="ngdialog-close" ng-click="popupClose()"></div>
+<div style="padding:10px;max-width:100%;overflow: auto;">
+	<ax-radio-options ng-change="launcher.onChange()"
+							style="display: inline-flex;width:100%"
+							ng-model="launcher.settings.searchType"
+							options="['Starts with', 'Ends with', 'Includes']"></ax-radio-options>
+	<ax-checkbox ng-change="launcher.onChange()"
+					 ng-model="launcher.settings.matchCase">Match case
+	</ax-checkbox>
+</div>

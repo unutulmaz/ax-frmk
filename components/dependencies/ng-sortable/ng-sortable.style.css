@@ -1,0 +1,27 @@
+/* ******************************************* */
+/* Optional CSS, default style for ng-sortable */
+/* ******************************************* */
+
+.as-sortable-item, .as-sortable-placeholder {
+    min-height: 20px;
+}
+
+.as-sortable-item {
+    overflow-y: hidden;
+}
+
+/* ReSharper disable once DeclarationIsEmpty */
+.as-sortable-item-handle {
+}
+
+.as-sortable-placeholder {
+    box-sizing: border-box;
+}
+
+.as-sortable-drag {
+    opacity: .8;
+}
+
+/* ReSharper disable once DeclarationIsEmpty */
+.as-sortable-hidden {
+}

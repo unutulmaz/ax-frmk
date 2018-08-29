@@ -1,0 +1,146 @@
+<style>
+	.column-tabs > *:not(:last-child) {
+		margin-right: 2px;
+	}
+</style>
+<div class="inline column-tabs" style="overflow-y:hidden;margin:2px">
+	<button class="btn icon column-cmd glyphicon glyphicon-sort"
+			  ng-class1="{'hasFocus':launcher.show==='order'}"
+			  tabindex="1"
+			  autofocus=""
+			  ng-if="launcher.sortable "
+			  ng-click="launcher.show='order'"></button>
+	<button class="btn icon column-cmd fa fa-filter"
+			  tabindex="2"
+			  autofocus=""
+			  ng-if="launcher.filterMenuOptions.length>1"
+			  ng-class1="{'hasFocus':launcher.show==='filter'}"
+			  ng-click="launcher.show='filter'"></button>
+	<button class="btn icon column-cmd fa fa-thumb-tack"
+			  tabindex="3"
+			  autofocus=""
+			  ng-if="launcher.leftFreezable || launcher.rightFreezable"
+			  ng-class1="{'hasFocus':launcher.show==='freezed-columns'}"
+			  ng-click="launcher.show='freezed-columns'"></button>
+	<button class="btn icon column-cmd fa fa-eye"
+			  tabindex="4"
+			  autofocus=""
+			  ng-if="launcher.hiddenColumns.length>0 || launcher.hideable"
+			  ng-class1="{'hasFocus':launcher.show==='hidden-columns'}"
+			  ng-click="launcher.show='hidden-columns'"></button>
+	<button class="btn icon column-cmd "
+			  ng-if="launcher.autoFitEnabled"
+			  autofocus=""
+			  uib-tooltip="Auto fit column width to visible content"
+			  tabindex="5"
+			  ng-click="launcher.applySpinner.autofit.do($event)">
+		<ax-i-spinner config="launcher.applySpinner.autofit"
+						  i-class="fa fa-arrows-h"
+						  i-height="16"
+						  has-callback="false"
+						  action="launcher.fit($event)"></ax-i-spinner>
+
+	</button>
+	<div class="ngdialog-close" ng-click="popupClose()"></div>
+
+</div>
+<div ng-if="launcher.show==='order'" style="display:flex;flex-direction:column;padding:2px;width:360px">
+	<button class="btn form-control"
+			  style="text-align:left;padding-left:3px;padding-right:6px;"
+			  ng-if="launcher.sortable"
+			  ng-disabled="!launcher.sortable || launcher.currentOrder===1 || launcher.dataOrder.sortableColumnAdded"
+			  ng-click="launcher.applySpinner.ascending.do($event)">
+		<ax-i-spinner config="launcher.applySpinner.ascending"
+						  i-class="fa fa-long-arrow-up"
+						  i-height="16"
+						  style="margin-right:3px"
+						  has-callback="false"
+						  action="launcher.sort($event,1)"></ax-i-spinner>
+		Click to sort by this column
+	</button>
+
+	<ax-list config="launcher.dataOrder.orderedConfig"
+				datasource="launcher.dataOrder.ordered"
+				draggable="$ctrl.$parent.launcher.dataOrder.orderedSortable"
+				order-by=""
+				class="group-list order-container"
+				no-header="false"
+				auto-focus="false"
+				style="margin-top:2px;position:relative;border: 1px solid lightgray;height:150px;width:100%">
+		<ax-toolbar style="padding: 0 6px">
+			Drag to change sorting order
+			<button class="btn icon fa fa-times"
+					  uib-tooltip="Remove all ordered columns"
+					  style="position:absolute;right:1px;top:0px;height:100%"
+					  ng-click="$ctrl.$parent.launcher.dataOrder.clear()"></button>
+		</ax-toolbar>
+		<ax-column bind-to="title" width="100%">
+			<ax-column-view type="custom" style="padding-left:0;" no-drag="{{dataItem.fixed}}">
+				<div class="inline">
+					<div class="column" style="padding-left:5px" ng-bind="dataItem.title"></div>
+					<div style="position: absolute;top:0;right:0;display: inline-flex">
+						<button class="fa btn icon grid-cell-btn"
+								  ng-click="$ctrl.$parent.launcher.dataOrder.change(dataItem)"
+								  uib-tooltip="Click to change sort direction"
+								  ng-class="{'fa-long-arrow-up': dataItem.asc, 'fa-long-arrow-down':!dataItem.asc}"></button>
+						<button class="btn icon grid-cell-btn fa fa-times"
+								  ng-if="!dataItem.fixed"
+								  uib-tooltip="Click to remove sorting by this column"
+								  ng-click="$ctrl.$parent.launcher.dataOrder.remove(dataItem,$event)"></button>
+					</div>
+				</div>
+			</ax-column-view>
+		</ax-column>
+	</ax-list>
+</div>
+<div class="dropdown-popup-menu" ng-if="launcher.show==='filter'">
+	<label style="padding-left:5px;">Select filter type</label>
+	<ul style="padding-top:0">
+		<li ng-repeat="option in launcher.filterMenuOptions"
+			 ng-click="launcher.filterSelect(option)">
+			<i class="fa " ng-class="{'fa-check':option.selected}" style="width:16px"></i>
+			<span ng-bind="::option.id"></span>
+		</li>
+	</ul>
+</div>
+
+<div class="dropdown-popup-menu" ng-if="launcher.show==='hidden-columns'" style="display:flex;flex-direction:column">
+	<button class="btn form-control"
+			  ng-if="launcher.hideable"
+			  style="margin:0 2px 2px 2px;text-align:left;padding-left:0"
+			  ng-click="launcher.hide($event)">
+		<i class="fa fa-eye-slash"></i>
+		Click to hide this column
+	</button>
+
+	<label style="width:250px;margin:2px 5px" ng-if="launcher.hiddenColumns.length">Hidden columns:</label>
+	<ul style="padding-top:0">
+		<li ng-repeat="column in launcher.hiddenColumns"
+			 tabindex="6"
+			 ng-click="launcher.showColumn(column, $event)">
+			<i class="btn icon fa fa-eye"></i>
+			<span ng-bind="::column.title"></span>
+		</li>
+	</ul>
+</div>
+<div ng-if="launcher.show==='freezed-columns'" style="display:flex;flex-direction:column">
+	<button class="btn form-control"
+			  tabindex="4"
+			  ng-if="launcher.leftFreezable"
+			  uib-tooltip="Set as last left freezed column"
+			  style="text-align:left;padding-left:2px;margin:0 2px 2px 2px;"
+			  ng-click="launcher.freezeLeft($event)">
+		<i class="fa fa fa-arrow-left" style="line-height:20px"></i>
+		{{launcher.freezed.left}}
+	</button>
+	<button class="btn form-control"
+			  tabindex="5"
+			  ng-if="launcher.rightFreezable"
+			  uib-tooltip="Set as last right freezed column"
+			  style="text-align:left;padding-left:2px;margin:0 2px 2px 2px;"
+			  ng-click="launcher.freezeRight($event)">
+		<i class="fa fa fa-arrow-right" style="line-height:20px"></i>
+		{{launcher.freezed.right}}
+	</button>
+
+</div>

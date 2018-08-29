@@ -1,0 +1,33 @@
+.horizontal [role=left-arrow],
+.horizontal [role=right-arrow] {
+	color: black;
+	background-color: #f1eded;
+}
+
+[scroll-disabled] .horizontal [role=left-arrow],
+[scroll-disabled] .horizontal [role=right-arrow],
+[scroll-disabled] .horizontal [role=left-arrow]:hover,
+[scroll-disabled] .horizontal [role=right-arrow]:hover {
+	/*color: transparent;
+  background-color: transparent;
+  cursor: pointer;*/
+	display: none;
+}
+
+.horizontal [role=left-arrow]:hover,
+	.horizontal [role=right-arrow]:hover {
+		background-color: #8f8d8d;
+		color: #f1f1f1;
+	}
+
+.horizontal [role=left-arrow] {
+	padding-right: 2px;
+}
+
+.horizontal [role=right-arrow] {
+	padding-left: 2px;
+}
+[role=scroller-container],
+[role=scroller-content]{
+	height:100%;
+}

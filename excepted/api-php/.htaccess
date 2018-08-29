@@ -1,0 +1,5 @@
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+    RewriteBase /
+	RewriteRule ^([\w\/\-]+)/?$ api/index.php?_route_=$1 [QSA]
+</IfModule>

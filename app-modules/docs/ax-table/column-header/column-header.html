@@ -1,0 +1,49 @@
+<div class="form-title">Column header template
+</div>
+<div ng-style="{'top':(dataStore.formTitleHeight()+10)+'px'}" style="position: absolute;bottom:10px;left:10px;right:10px;overflow: auto;padding-right:10px" ng-controller="columnHeaderTabsCtrl">
+    <div class="info-text">
+        <div style="display:inline-flex;">
+            <div style="margin-right:10px;">
+                <strong>Built-in header template</strong>
+                <pre ng-bind="code.simple"></pre>
+                It's using header ax-column attribute as innerHTML
+                <br/><br/><strong>Two rows header:</strong>
+                <pre ng-bind="code.twoRows"></pre>
+                <strong>Three rows header:</strong>
+                <pre ng-bind="code.threeRows"></pre>
+                If you need custom template for header, you need to use ax-column-header element.
+                <br><strong>Attributes</strong>
+                <ax-attr>row-index</ax-attr> when you have a header with more than one row. If you use rowspan or/and colspan you must skip ax-column-header element for the those columns which are covered by rowspan and colspan
+                <ax-attr>header-title</ax-attr> is necessary only when ax-column-header's innerHTML is not static html (text), but is generate dynamic by a function. Is used as label on Settings Columns Layout tree, and in editor (if ax-table attribute edit-row = editor).
+                <ax-attr>header-menu = 'false'</ax-attr> for disables insert header menu in th cell. Default header menu is inserted on first th element without colspan.
+                <ax-attr>sortable</ax-attr> if if want to define sortable in th cell, otherwise will be inserted to first th element without colspan.
+                <ax-attr>colspan</ax-attr> how many columns will cover this header.
+                <ax-attr>rowspan</ax-attr> how many rows will be expanded this header.
+                <ax-attr>title</ax-attr> title attribute for header cell.
+                <ax-attr>style</ax-attr> css style for header cell.
+                <br>Rowspan and colspan work in same way as table th attributes. If you did some mistakes using colspan or rowspan, you'll receive an error message in DevTools console.
+                <br><strong>innerHTML</strong> of ax-column-header can be anything you need. On header ax-table parent scope will be accessed by <code>$ctrl.$parent</code>.
+                <br><br><strong>Insert calculations results in column header</strong>
+                <ax-show-hide element-id="insertCalculation"></ax-show-hide>
+                <div id="insertCalculation">
+                    To achieve this you must define a group calculation with <strong>expression='true'</strong> (for all records) inside ax-table:
+                    <pre ng-bind="code.groupDefine"></pre>
+                    And then in the ax-column element you need, do this:
+                    <pre ng-bind="code.insertCalc"></pre>
+                    <strong>getCalculation</strong> method has as parameter name ax-calculation attribute. More information on <a ui-sref="ax-table/records-grouping">Records grouping</a> topic.
+                </div>
+            </div>
+        </div>
+    </div>
+    <ax-code-tabs ng-if="true"
+                  template-url="/app-modules/docs/ax-table/column-header/column-header-1.html"
+                  style="position:relative;height:400px;width:100%;"></ax-code-tabs>
+    <div class="info-text" style="margin-top:20px">
+        <strong>No header</strong>
+        <br>If you don't want to show column headers, you can use <strong>no-header="true"</strong> attribute for ax-table. This attribute is effective only if you don't put custom header template or filter template.
+        <br><strong>No pagination</strong>
+        <br>Also is possible to hide pagination bar with <strong>paginator-show="false"</strong> attribute for ax-table.
+    </div>
+    <ax-code-tabs template-url="/app-modules/docs/ax-table/column-header/column-header-no-header.html"
+                  style="position:relative;height:400px;width:100%;"></ax-code-tabs>
+</div>

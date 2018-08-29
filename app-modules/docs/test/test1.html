@@ -1,0 +1,237 @@
+<div ng-controller="test1Ctrl" style="position:relative;width:100%;height:100%;padding:10px;overflow: auto">
+    <div class="info-text" style="margin-bottom:10px">Test case:  Change freezed column left/right position and check for correct display of columns and headers</div>
+	 <ax-table ng-if="true" datasource="data"
+						left-freezed-columns="2"
+						right-freezed-columns="3"
+						style="position:relative;width:100%;height:300px;margin-bottom:10px">
+	 	<ax-toolbar>
+	 		<label class="header-title" toolbar="left">
+	 			Sample 1
+	 		</label>
+	 		<span>Freezed left columns: </span><label ng-bind="$ctrl.attrs.leftFreezedColumns"></label>
+	 		<span style="margin-left:5px;">Freezed right columns:</span><label ng-bind="$ctrl.attrs.rightFreezedColumns"></label>
+	 		<span style="margin-left:5px;">Hidden columns:</span><label ng-bind="$ctrl.attrs.hiddenColumns"></label>
+
+	 		<ax-button toolbar="right" button-type="refresh" style="width:120px" ng-click="$ctrl.$parent.loadData(100,removeSpinner)">
+	 			100 records
+	 		</ax-button>
+	 		<ax-button toolbar="right" button-type="refresh" style="width:120px" ng-click="$ctrl.$parent.loadData(1000,removeSpinner)">
+	 			1k records
+	 		</ax-button>
+	 		<ax-button toolbar="right" button-type="refresh" style="width:120px" ng-click="$ctrl.$parent.loadData(10000,removeSpinner)">
+	 			10k records
+	 		</ax-button>
+	 		<ax-button toolbar="right" button-type="refresh" style="width:120px" ng-click="$ctrl.$parent.loadData(100000,removeSpinner)">
+	 			100k records
+	 		</ax-button>
+	 		<ax-button button-type="export" toolbar="right"></ax-button>
+	 		<ax-button toolbar="right" button-type="groups-toggle"></ax-button>
+	 		<ax-button toolbar="right" button-type="settings"></ax-button>
+	 		<ax-button button-type="maximize"></ax-button>
+	 	</ax-toolbar>
+	 	<ax-groups>
+	 		<ax-group expression="true">
+	 			<ax-calculation column="Value" show-on="footer" aggregate-type="sum"></ax-calculation>
+	 		</ax-group>
+	 		<ax-group expression="dataItem.deliveryCountry" order-by="deliveryCountryInvariant" label="Country">
+	 			<ax-calculation column="Value" show-on="footer" aggregate-type="sum"></ax-calculation>
+	 		</ax-group>
+	 	</ax-groups>
+	 	<ax-column bind-to="customer" sortable="customerInvariant" header="Customer Name" width="250px" filter-menu="text">
+	 		<ax-column-header row-index="1" colspan="5">Customer</ax-column-header>
+	 		<ax-column-header row-index="2">Name</ax-column-header>
+	 	</ax-column>
+	 	<ax-column bind-to="customerCode" header="Customer Code" width="105px" filter-menu="text">
+	 		<ax-column-header row-index="2">Code</ax-column-header>
+	 	</ax-column>
+	 	<ax-column bind-to="deliveryCountry" sortable="deliveryCountryInvariant" header="Delivery Country" width="250px" filter-menu="text">
+	 		<ax-column-header row-index="2">Country</ax-column-header>
+	 	</ax-column>
+	 	<ax-column bind-to="deliveryCity" sortable="deliveryCityInvariant" header="Delivery City" width="150px" filter-menu="text">
+	 		<ax-column-header row-index="2">City</ax-column-header>
+	 	</ax-column>
+	 	<ax-column bind-to="deliveryAddress" header="Delivery Address" width="250px" filter-menu="text">
+	 		<ax-column-header row-index="2">Street</ax-column-header>
+	 	</ax-column>
+	 	<ax-column bind-to="createdBy" hidden-column header="Created By" width="130px" filter-menu="text">
+	 		<ax-column-header row-index="1" colspan="2">Created</ax-column-header>
+	 		<ax-column-header row-index="2">User Name</ax-column-header>
+	 	</ax-column>
+	 	<ax-column bind-to="insideUE" header="Inside UE" width="80px" filter-menu="boolean" view-type="boolean-checkbox" edit-type="checkbox">
+	 		<ax-column-header row-index="1" rowspan="2">Inside UE</ax-column-header>
+	 	</ax-column>
+	 	<ax-column bind-to="number" hidden-column header="Order ID" width="100px" filter-menu="number" view-type="number" locale="en-US" decimals="0">
+	 		<ax-column-header row-index="1" colspan="2">Order</ax-column-header>
+	 		<ax-column-header row-index="2">ID</ax-column-header>
+	 	</ax-column>
+	 	<ax-column bind-to="value" header="Value" width="100px" filter-menu="number" view-type="number" locale="en-US" decimals="0">
+	 		<ax-column-header row-index="1" rowspan="2">Value</ax-column-header>
+	 	</ax-column>
+	 	<ax-column bind-to="date" sortable header="Order date" width="140px" style="text-align:center" filter-menu="date" view-type="date">
+	 		<ax-column-header row-index="2">Date</ax-column-header>
+	 	</ax-column>
+	 	<ax-column bind-to="createdAt" header="Created At" width="150px" filter-menu="datetime" view-type="datetime">
+	 		<ax-column-header row-index="2">Datetime</ax-column-header>
+	 	</ax-column>
+
+	 </ax-table>
+    <ax-table ng-if="true" datasource="data"
+                   left-freezed-columns="2"
+                   right-freezed-columns="3"
+                   style="position:relative;width:100%;height:300px;margin-bottom:10px">
+        <ax-toolbar>
+            <label class="header-title" toolbar="left">
+                Sample 2
+            </label>
+
+            <span>Freezed left columns: </span><label ng-bind="$ctrl.attrs.leftFreezedColumns"></label>
+            <span style="margin-left:5px;">Freezed right columns:</span><label ng-bind="$ctrl.attrs.rightFreezedColumns"></label>
+            <span style="margin-left:5px;">Hidden columns:</span><label ng-bind="$ctrl.attrs.hiddenColumns"></label>
+
+            <ax-button toolbar="right" button-type="refresh" style="width:120px" ng-click="$ctrl.$parent.loadData(100,removeSpinner)">
+                100 records
+            </ax-button>
+            <ax-button toolbar="right" button-type="refresh"  style="width:120px" ng-click="$ctrl.$parent.loadData(1000,removeSpinner)">
+                1k records
+            </ax-button>
+            <ax-button toolbar="right" button-type="refresh" style="width:120px" ng-click="$ctrl.$parent.loadData(10000,removeSpinner)">
+                10k records
+            </ax-button>
+            <ax-button toolbar="right" button-type="refresh"  style="width:120px" ng-click="$ctrl.$parent.loadData(100000,removeSpinner)">
+                100k records
+            </ax-button>
+            <ax-button button-type="export" toolbar="right"
+                       ></ax-button>
+            <ax-button toolbar="right" button-type="groups-toggle"></ax-button>
+            <ax-button toolbar="right" button-type="settings"></ax-button>
+            <ax-button button-type="maximize"></ax-button>
+        </ax-toolbar>
+        <ax-groups>
+            <ax-group expression="true">
+                <ax-calculation column = "Value" show-on="footer" aggregate-type="sum"></ax-calculation>
+            </ax-group>
+            <ax-group expression="dataItem.deliveryCountry" order-by="deliveryCountryInvariant" label="Country">
+                <ax-calculation column = "Value" show-on="header" aggregate-type="sum"></ax-calculation>
+            </ax-group>
+        </ax-groups>
+        <ax-column bind-to="number" header="Order ID" width="100px" filter-menu="number" view-type="number" locale="en-US" decimals="0">
+            <ax-column-header row-index="1" colspan="2">Order</ax-column-header>
+            <ax-column-header row-index="2">ID</ax-column-header>
+        </ax-column>
+        <ax-column bind-to="date" sortable header="Order date" width="140px" style="text-align:center" filter-menu="date" view-type="date">
+            <ax-column-header  row-index="2">Date</ax-column-header>
+        </ax-column>
+        <ax-column bind-to="customer" sortable="customerInvariant" header="Customer Name" width="250px" filter-menu="text">
+            <ax-column-header row-index="1" colspan="5">Customer</ax-column-header>
+            <ax-column-header row-index="2">Name</ax-column-header>
+        </ax-column>
+        <ax-column bind-to="customerCode" header="Customer Code" width="105px" filter-menu="text">
+            <ax-column-header row-index="2">Code</ax-column-header>
+        </ax-column>
+        <ax-column bind-to="deliveryCountry" sortable="deliveryCountryInvariant" header="Delivery Country" width="250px" filter-menu="text">
+            <ax-column-header row-index="2">Country</ax-column-header>
+        </ax-column>
+        <ax-column bind-to="deliveryCity" sortable="deliveryCityInvariant" header="Delivery City" width="150px" filter-menu="text">
+            <ax-column-header row-index="2">City</ax-column-header>
+        </ax-column>
+        <ax-column bind-to="deliveryAddress" header="Delivery Address" width="250px" filter-menu="text">
+            <ax-column-header row-index="2">Street</ax-column-header>
+        </ax-column>
+        <ax-column bind-to="insideUE" header="Inside UE" width="80px" filter-menu="boolean" view-type="boolean-checkbox" edit-type="checkbox">
+            <ax-column-header row-index="1" rowspan="2">Inside UE</ax-column-header>
+        </ax-column>
+        <ax-column bind-to="createdBy" header="Created By" width="130px" filter-menu="text">
+            <ax-column-header row-index="1" colspan="2">Created</ax-column-header>
+            <ax-column-header row-index="2">User Name</ax-column-header>
+        </ax-column>
+        <ax-column bind-to="createdAt" header="Created At" width="150px" filter-menu="datetime" view-type="datetime">
+            <ax-column-header row-index="2">Datetime</ax-column-header>
+        </ax-column>
+        <ax-column bind-to="value" header="Value" width="100px" filter-menu="number" view-type="number" locale="en-US" decimals="0">
+            <ax-column-header row-index="1" rowspan="2">Value</ax-column-header>
+        </ax-column>
+    </ax-table>
+    <ax-table ng-if="true" datasource="data"
+                   left-freezed-columns="1"
+                   right-freezed-columns="2"
+	               style="position:relative;width:100%;height:300px;margin-bottom:10px">
+		<ax-toolbar>
+			<label class="header-title" toolbar="left">
+				Sample 3
+			</label>
+            <span>Freezed left columns: </span><label ng-bind="$ctrl.attrs.leftFreezedColumns"></label>
+            <span style="margin-left:5px;">Freezed right columns:</span><label ng-bind="$ctrl.attrs.rightFreezedColumns"></label>
+            <span style="margin-left:5px;">Hidden columns:</span><label ng-bind="$ctrl.attrs.hiddenColumns"></label>
+
+            <ax-button button-type="refresh" style="width:120px" ng-click="$ctrl.$parent.loadData(100,removeSpinner)">
+                100 records
+            </ax-button>
+            <ax-button button-type="refresh" style="width:120px" ng-click="$ctrl.$parent.loadData(1000,removeSpinner)">
+                1k records
+            </ax-button>
+            <ax-button button-type="refresh" style="width:120px" ng-click="$ctrl.$parent.loadData(10000,removeSpinner)">
+                10k records
+            </ax-button>
+            <ax-button button-type="refresh" style="width:120px" ng-click="$ctrl.$parent.loadData(100000,removeSpinner)">
+                100k records
+            </ax-button>
+            <ax-button button-type="export" toolbar="right"
+                       ></ax-button>
+
+            <ax-button toolbar="right" button-type="settings"></ax-button>
+            <ax-button button-type="maximize"></ax-button>
+		</ax-toolbar>
+		<ax-groups>
+			<ax-group expression="true">
+				<ax-calculation column = "Value"
+				                      show-on="false"
+				                      name="sum-value"
+				                      initial-value="0"
+				                      aggregate-type="sum"></ax-calculation>
+			</ax-group>
+		</ax-groups>
+		<ax-column bind-to="number" sortable header="Order ID" width="150px" view-type="text" style="text-align:right;padding-right:10px" filter-menu="number">
+			<ax-column-header row-index="1" header-title = "Superior" colspan="4">
+				<div ng-bind="$ctrl.$parent.customHeader('Superior')"></div>
+			</ax-column-header>
+			<ax-column-header row-index="2" colspan="2"  >
+				<div>Any html</div>
+			</ax-column-header>
+			<ax-column-header row-index="3" header-title = "Custom Header">
+				<div ng-bind="$ctrl.$parent.customHeader('ID')"></div>
+			</ax-column-header>
+		</ax-column>
+		<ax-column bind-to="date" sortable view-type="date" date-format="dd.MM.yyyy" header="Order date" width="140px" style="text-align:center" filter-menu="date">
+			<ax-column-header row-index="3">
+				<div>Date</div>
+			</ax-column-header>
+		</ax-column>
+		<ax-column bind-to="customer" sortable="customerInvariant" header="Customer Name" width="250px" filter-menu="text">
+			<ax-column-header row-index="2" colspan="2" >Customer</ax-column-header>
+			<ax-column-header row-index="3">Customer Name</ax-column-header>
+		</ax-column>
+		<ax-column header="Address" width="300px">
+			<ax-column-header row-index="3">Address</ax-column-header>
+			<ax-column-view view-type="custom" >
+				<span ng-bind="::(dataItem.deliveryCity + ' ' + dataItem.deliveryAddress)"></span>
+			</ax-column-view>
+		</ax-column>
+		<ax-column bind-to="insideUE" sortable header="Inside UE" width="80px" view-type="boolean-checkbox">
+
+        </ax-column>
+        <ax-column bind-to="createdBy" sortable header="Created By" width="180px" >
+            <ax-column-header row-index="1" rowspan="2" colspan="2" >Created</ax-column-header>
+            <ax-column-header row-index="3">User</ax-column-header>
+
+        </ax-column>
+        <ax-column bind-to="createdAt" sortable header="Created At" width="180px" view-type="datetime" >
+            <ax-column-header row-index="3">Time</ax-column-header>
+        </ax-column>
+		<ax-column bind-to="value" sortable header="Value" width="150px" view-type="number" locale="en-US" decimals="2">
+			<ax-column-header row-index="1" rowspan="1">Value</ax-column-header>
+			<ax-column-header row-index="2" rowspan="2"><span ng-bind="'Total: ' + $ctrl.getCalculation('sum-value',0)"></span></ax-column-header>
+		</ax-column>
+	</ax-table>
+
+
+</div>

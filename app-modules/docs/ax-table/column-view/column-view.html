@@ -1,0 +1,46 @@
+<div class="form-title">Column view template
+</div>
+<div ng-style="{'top':(dataStore.formTitleHeight()+10)+'px'}" style="position: absolute;bottom:10px;left:10px;right:10px;overflow: auto;padding-right:10px">
+	<div class="info-text">
+		<div style="display:inline-flex;">
+			<div style="margin-right:10px;">
+				<strong>Built-in view template</strong>
+				<pre
+					ng-bind="'<ax-column bind-to=\'Value\' sortable header=\'Value\' width=\'140px\' filter-menu=\'number\'>\n\t<ax-column-view view-type=\'number\' locale=\'en-US\' decimals=\'2\' ></ax-column-view>\n</ax-column>'"></pre>
+				<strong>Attributes:</strong>
+				<ax-attr>bind-to</ax-attr> the property name (field) of row object (<code>dataItem</code> - as scope variable), if is not the same as ax-column parent element. Required if you want to use a built-in type view template.
+				<ax-attr>view-type</ax-attr> can be one of values <strong>text, number, date, datetime, boolean-checkbox, boolean-radio, gutter-icons, crud-buttons, custom</strong>. This will create a ax-column-view template with type = view-type.
+				<ax-attr>double-binding</ax-attr> can be <strong>true</strong> for built-in view template, if column could be changed by user editing in other column.In usual case, one time binding is used for column view template.
+				<ax-attr>style</ax-attr> the css style for ax-column-view template. Here you can use padding-left:0 to eliminate the default padding-left, or overflow-y=hidden if you have same problem with display elements, and the default overflow-y=scroll is not suitable for the case.
+				<ax-attr>date-format</ax-attr> date-format if <strong>view-type = date</strong>
+				<ax-attr>datetime-format</ax-attr> datetime-format if <strong>view-type = datetime</strong>
+				<ax-attr>locale</ax-attr> locale format for <strong>view-type = number</strong>
+				<ax-attr>decimals</ax-attr> decimals number for <strong>view-type = number</strong>
+				<ax-attr>use-grouping</ax-attr> if use thousand separator for <strong>view-type = number</strong>
+				<ax-attr>minimum-fraction-digits</ax-attr> minimum fraction digits for <strong>view-type = number</strong>
+				<ax-attr>maximum-fraction-digits</ax-attr> maximum fraction digits for <strong>view-type = number</strong>
+				<ax-attr>format-style</ax-attr> style attribute for toLocaleString option</strong>
+				<br/><br/><strong>Custom view template:</strong><ax-show-hide element-id="customTemplate"></ax-show-hide>
+                <div id="customTemplate">
+				<pre
+					ng-bind="'<ax-column header=\'Full name\' width=\'240px\'>\n\t<ax-column-view view-type=\'custom\' style=\'background-color: #2182ff;text-align:center;color:white\'>\n\t\t<span ng-bind=\'::(dataItem.FirstName.trim() + \' \' + dataItem.LastName)\'></span>\n\t</ax-column-view>\n</ax-column>'"></pre>
+				For <strong>custom</strong> view-type, the current row object is named <code style="width:auto">dataItem</code>, which can be used to create your custom view. You can access the
+				ax-table parent scope with <code>$ctrl.$parent</code> ($ctrl.$parent.myVariable).
+				<br>For ax-table performance in custom ax-column-view, use <strong>one time binding</strong><code>::</code>, if expression will not be changed by user while is viewed.
+				<br/>For custom view, you cannot sort, or filter data. In this case a better approach is to use axDataAdapter to create a new column, which will be sortable and filterable.
+				<br/><strong>Custom view can be used for view nested properties, custom actions or anything else. This accept any html you need</strong>.
+                </div>
+                <br><Strong>Dynamic row css classes</Strong><ax-show-hide element-id="row-css-classes"></ax-show-hide>
+                <div id="row-css-classes">
+				To achieve this, you must use <strong>row-css-classes</strong> a-data-table attribute to get expression to evaluate each row css classes, to create a list of css classes on each row
+				<strong>row-class</strong> attribute separated by space.
+				Then use css rule like:
+				<pre ng-bind="'[row-class~=intra-ue] td[column-for=\'Inside UE\'] > div {\nbackground-color: green !important;\n}'"></pre>
+                </div>
+			</div>
+		</div>
+	</div>
+	<ax-code-tabs template-url="/app-modules/docs/ax-table/column-view/column-view-1.html"
+	              style="position:relative;height:400px;width:100%;"></ax-code-tabs>
+
+</div>

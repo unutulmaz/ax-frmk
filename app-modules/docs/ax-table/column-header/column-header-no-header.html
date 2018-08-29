@@ -1,0 +1,17 @@
+<div ng-controller="columnHeaderNoHeaderCtrl" style="position:relative;width:100%;height:100%">
+    <ax-table datasource="data"
+                   no-header="true"
+                   paginator-show="false"
+                   left-freezed-columns="2"
+                   right-freezed-columns="1"
+                   style="position:relative;width:100%;height:100%">
+        <ax-column bind-to="number" sortable header="Order ID" width="150px" view-type="text" style="text-align:right;padding-right:10px" ></ax-column>
+        <ax-column bind-to="date" sortable view-type="date" date-format="dd.MM.yyyy" header="Order date" width="140px" style="text-align:center" ></ax-column>
+        <ax-column bind-to="customer" sortable="customerInvariant" header="Customer Name" width="250px" ></ax-column>
+        <ax-column bind-to= "deliveryAddress"header="Address" width="300px"></ax-column>
+        <ax-column bind-to="insideUE" sortable header="Inside UE" width="80px" view-type="boolean-checkbox"></ax-column>
+        <ax-column bind-to="createdBy" sortable header="Created By" width="180px" ></ax-column>
+        <ax-column bind-to="createdAt" sortable header="Created At" width="180px" view-type="datetime" ></ax-column>
+        <ax-column bind-to="value" sortable header="Value" width="150px" view-type="number" locale="en-US" decimals="2"></ax-column>
+    </ax-table>
+</div>

@@ -1,0 +1,22 @@
+<div class="form-title">Exporting data
+</div>
+<div ng-style="{'top':(dataStore.formTitleHeight()+10)+'px'}"
+	  style="position: absolute;top:45px;bottom:10px;left:10px;right:10px;overflow: auto;padding-right:10px" ng-controller="exportingDataCtrl">
+    <div class="info-text" ng-if="true">
+        At this moment you can export to excel or as html page (ready to print). Data export is defined with an <strong>ax-export</strong> element as ax-table child.By default export is enabled. To disable export must user <strong>disable-export</strong>=<strong>true</strong> ax-data-tyable attribute.
+        <pre ng-bind="code.html" style="width:1200px"></pre>
+        <strong>Export template</strong> has attributes:
+        <ax-attr>file-name</ax-attr> a name for generated file and report title.
+        <ax-attr>export-type</ax-attr> with values: [<var>client</var>, <var>server</var>].
+        <ax-attr>api-controller</ax-attr> if <strong>export-type</strong> = <strong>server</strong> the api controller for backend. This controller must have actions xlsExport - for xls export, and htmlExport for print export. For .NetCore you can use axTableController.cs
+        <ax-attr>data-value</ax-attr> if <strong>export-type</strong> = <strong>client</strong>, how to fill cells. values are [<var>bind-to</var>,<var>view</var>].
+        <ax-attr>view-template-limit</ax-attr> integer for switch to bind-to fill cells type, if <strong>export-type</strong> = <strong>client</strong>.
+        <br><br><strong>Access for user to export</strong> is made by pressing upload <i class="fa fa-upload"></i> button in Settings button
+
+    </div>
+    <ax-code-tabs ng-if="true"
+                  template-url="/app-modules/docs/ax-table/records-grouping/records-grouping-1.html"
+                  style="position:relative;height:700px;width:100%;"
+                  source-code="code"></ax-code-tabs>
+
+</div>

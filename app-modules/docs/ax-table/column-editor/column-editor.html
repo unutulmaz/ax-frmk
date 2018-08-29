@@ -1,0 +1,21 @@
+<div class="form-title">Column editor template
+</div>
+<div ng-style="{'top':(dataStore.formTitleHeight()+10)+'px'}" style="position: absolute;top:45px;bottom:10px;left:10px;right:10px;overflow: auto;padding-right:10px" ng-controller="columnEditorCtrl">
+    <div class="info-text">
+        For more information, see <a ui-sref="ax-table/records-editing"><strong>Records editing</strong></a>.
+        <br><strong>Column editor template</strong>
+        <br>When you need to define special control for editor other then then ax-column-edit template, you'll define ax-column-editor.
+        <br/>1. With <strong>ax-dynamic-template-url</strong>
+        <pre ng-bind="code.buitInTemplate1" style="width:700px"></pre>
+        2. or with html content
+        <pre ng-bind="code.buitInTemplate2" style="width:700px"></pre>
+        <br/><strong>Attributes:</strong>
+        <ax-attr>width</ax-attr> attribute to overwrite column width, which is default width for editor control.
+        <ax-attr>colspan</ax-attr> attribute for columns table, which is created with ax-form control. See <a ui-sref="ax-table/records-editing">Record editing</a> for more detials.
+        <ax-attr>editor-column-index</ax-attr> column-index (1 based) where to add control in editor, when editor has more than one column for arrange controls (columns-no attribute of ax-grid-editor).
+    </div>
+	 <ax-code-tabs template-url="/app-modules/docs/ax-table/records-editing/records-editing-1.html"
+					  style="position:relative;height:600px;width:100%;"
+					  source-code="code"></ax-code-tabs>
+
+</div>

@@ -1,0 +1,73 @@
+<style>
+	[filter-type=date] {
+		height: initial !important;
+	}
+
+	.custom [filter-for][filter-type=date] > div {
+		display: initial !important;
+	}
+
+	.custom th [filter-for][filter-type=date] > div > .operator {
+		display: none !important;
+	}
+</style>
+<div ng-controller="columnFilterCtrl" style="position:relative;width:100%;height:100%">
+	<ax-table datasource="data"
+	               config="datatable1"
+                   right-freezed-columns="1"
+                   sync-headers-rows-height="true"
+	               class="custom"
+	               style="position:relative;width:100%;height:100%">
+		<ax-toolbar>
+			<label class="header-title" toolbar="left">
+				Column filter
+			</label>
+			<ax-button toolbar="right" button-type="settings"></ax-button>
+		</ax-toolbar>
+		<ax-column bind-to="date" sortable view-type="date" date-format="dd.MM.yyyy" header="Order date" width="230px" style="text-align:center">
+			<ax-column-header row-index="1">Order Date</ax-column-header>
+			<ax-column-header row-index="2">date-custom css</ax-column-header>
+			<ax-column-filter filter-type="date" show-config="true" ></ax-column-filter>
+		</ax-column>
+		<ax-column bind-to="createdAt" sortable header="Created At" width="280px" view-type="datetime" style="text-align: center">
+			<ax-column-header row-index="1">Created at</ax-column-header>
+			<ax-column-header row-index="2">datetime in popup</ax-column-header>
+			<ax-column-filter filter-type="datetime" show-in-popup="true" popup-width="285px" show-config="false" ></ax-column-filter>
+		</ax-column>
+		<ax-column bind-to="customer" sortable="customerInvariant" header="Customer Name" width="250px">
+			<ax-column-header row-index="1">Customer Name</ax-column-header>
+			<ax-column-header row-index="2">text with invariant</ax-column-header>
+			<ax-column-filter filter-type="text" show-config="true" show-in-popup="false"></ax-column-filter>
+		</ax-column>
+		<ax-column header="Address" width="300px">
+			<ax-column-header row-index="1">Address</ax-column-header>
+			<ax-column-header row-index="2">custom filter</ax-column-header>
+			<ax-column-filter filter-type="custom">
+				<input type="text"
+				         ng-model="$ctrl.$parent.customFilter.value"
+				         role="column-filter"
+				         class="form-control "
+				         ng-change="$ctrl.filterApply()"
+				         ng-disabled="$ctrl.getCollection('initial').length==0"
+				         style="width: 100%;margin-right:42px" tabindex="0">
+				</input>
+				<button class="btn icon fa fa-eraser"
+				        style="position: absolute;right:0;margin-right:2px;"
+				        ng-click="$ctrl.$parent.customFilter.clear($event)"></button>
+			</ax-column-filter>
+			<ax-column-view view-type="custom">
+				<span ng-bind="::(dataItem.deliveryCity + ' ' + dataItem.deliveryAddress)"></span>
+			</ax-column-view>
+		</ax-column>
+		<ax-column bind-to="insideUE" sortable header="Inside UE" width="120px" view-type="boolean-checkbox">
+			<ax-column-header row-index="1">Inside UE</ax-column-header>
+			<ax-column-header row-index="2">boolean</ax-column-header>
+			<ax-column-filter filter-type="boolean"></ax-column-filter>
+		</ax-column>
+		<ax-column bind-to="value" sortable header="Value" width="150px" view-type="number" locale="en-US" decimals="2">
+			<ax-column-header row-index="1">Value</ax-column-header>
+			<ax-column-header row-index="2">number</ax-column-header>
+			<ax-column-filter filter-type="number" show-config="true" show-in-popup="true" popup-width="285px" ></ax-column-filter>
+		</ax-column>
+	</ax-table>
+</div>

@@ -1,0 +1,126 @@
+ax-code-tabs {
+	display: block;
+	background-color: white;
+}
+
+ax-code-tabs > .code-tabs-maximize {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+}
+
+ax-code-tabs.maximized {
+	position: absolute !important;
+	top: 0 !important;
+	left: 0 !important;
+	right: 0 !important;
+	bottom: 0 !important;
+	height: initial !important;
+	width: initial !important;
+	margin: 0 !important;
+}
+
+hint {
+	display: none
+}
+
+ax-code-tabs > ax-tabs > ax-tab-view {
+	background-color: aliceblue !important;
+}
+
+code {
+	background-color: initial;
+	border-radius: 0;
+	font-weight: bold;
+}
+
+#right-pane > div[ng-controller] {
+	height: initial;
+	width: initial;
+	max-width: initial;
+}
+
+button.ax-show-hide {
+	border: none;
+	margin-left: 5px;
+	border-radius: 8px;
+}
+
+a {
+	white-space: nowrap;
+}
+
+ax-dropdown-popup > button.no-border {
+	border: none !important;
+}
+
+.see-also > a {
+	color: black;
+	cursor: pointer;
+}
+
+.see-also {
+	padding: 3px 10px;
+	display: flex !important;
+	flex-direction: column;
+}
+
+ax-attr {
+	margin-left: 20px;
+}
+
+.dimensions-large ax-code-tabs ax-tab-view > div > div > label {
+	padding-left: 45px;
+	padding-right: 5px;
+	line-height: 36px;
+}
+
+.dimensions-normal ax-code-tabs ax-tab-view > div > div > label {
+	padding-left: 40px;
+	padding-right: 5px;
+	line-height: 32px;
+}
+.dimensions-normal  .btn.toggle-show{
+	line-height: 28px !important;
+}
+ax-code-tabs ax-tab-view > div > div > .toggle-show {
+	position: absolute;
+	top: 0;
+	left: 0;
+
+}
+
+ax-code-tabs ax-tab-view > div > div > .copy-code {
+	right: 3px;
+	background-color: buttonface;
+}
+
+pre {
+	margin-bottom: 0px;
+	tab-size: 20px;
+	overflow: initial;
+}
+
+button.copy-code {
+	position: absolute;
+	top: 0;
+	right: 18px;
+}
+
+button.btn.copy-code.form-control > .fa {
+	line-height: 18px;
+}
+
+pre {
+	display: block;
+	padding: 9.5px;
+	margin: 0 0 10px;
+	font-size: 13px;
+	line-height: 1.42857143;
+	color: #333;
+	word-break: break-all;
+	word-wrap: break-word;
+	background-color: #f5f5f5;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+}

@@ -1,0 +1,76 @@
+<style>
+	.groups-controls > *:not(:last-child) {
+		margin-bottom: 3px;
+	}
+
+	.groups-controls ax-radio-options > ax-radio-option {
+		width: 50%;
+	}
+</style>
+<div class="dropdown-header" ng-bind="launcher.title"></div>
+<div style="padding:10px" class="groups-controls" ng-click="$event.stopPropagation()">
+	<ax-radio-options class="form-control" options="launcher.typeOptions" ng-model="launcher.filterType" ng-change="launcher.typeChange()"></ax-radio-options>
+	<label>Groups: </label>
+	<div ng-repeat="group in launcher.groups" ng-if="group.expression !=='true'">
+		<div class="inline" style="">
+			<div ng-bind="group.label" style="width:150px;overflow:hidden"></div>
+			<ax-dropdown-list datasource="launcher.operators"
+									dropdown-model="group.operator"
+									dropdown-model-type="id-field"
+									list-item-id-field="id"
+									list-order-by="index"
+									list-height="125px"
+									on-selection-change="launcher.operatorChange()"
+									ng-disabled="launcher.typeOptions[0] === launcher.filterType"
+									class="form-control"
+									style="width:160px;margin-right:5px;"></ax-dropdown-list>
+			<ax-text ng-if="group.operator !=='In list'"
+						ng-model="group.value"
+						class="form-control"
+						ng-disabled="launcher.typeOptions[0] === launcher.filterType"
+						style="width:200px;"></ax-text>
+			<ax-dropdown-list ng-if="group.operator==='In list'"
+									datasource="group.distinctValues"
+									dropdown-model="group.arrayValues"
+									dropdown-model-type="id-field"
+									list-selectable-rows="multiple"
+									list-item-id-field="id"
+									list-show-search="true"
+									list-show-uncheck-all="true"
+									list-show-check-all="true"
+									close-on-mouseleave1="false"
+									class="form-control"
+									style="width:200px;"></ax-dropdown-list>
+		</div>
+	</div>
+</div>
+<div style="text-align: left;margin-left:10px;margin-bottom:10px;line-height:30px;">
+	<button ng-click="launcher.applySpinner.do($event)"
+			  class="btn btn-primary" style="width:105px;">
+		<ax-i-spinner config="launcher.applySpinner"
+						  i-class="fa fa-check"
+						  i-height="16"
+						  style="margin-right:3px"
+						  has-callback="true"
+						  action="launcher.confirm(removeSpinner)">
+		</ax-i-spinner>
+		{{launcher.applySpinner.working?launcher.applyingText :launcher.applyText }}
+	</button>
+	<button ng-click="launcher.clearSpinner.do($event)"
+			  class="btn btn-primary" style="width:105px;">
+		<ax-i-spinner config="launcher.clearSpinner"
+						  i-class="fa fa-times"
+						  i-height="16"
+						  style="margin-right:3px"
+						  has-callback="true"
+						  action="launcher.clear(removeSpinner)">
+		</ax-i-spinner>
+		{{launcher.clearSpinner.working?launcher.applyingText :launcher.clearText }}
+	</button>
+
+	<button ng-click="launcher.close($event)" class="btn btn-primary" style="width:105px">
+		<i class="fa fa-ban"></i>
+		{{launcher.cancelText}}
+	</button>
+</div>
+

@@ -1,0 +1,23 @@
+<div ng-controller="dropdownSamples" style="position:relative;width:100%;height:100%">
+    <ax-dropdown-popup ctrl="popup1"
+                       style="height:24px;width:150px;line-height: 24px"
+                       caret-style="margin-top:8px"
+                       open-params="true;object1"
+                       btn-text="'Popup1'">
+        <div style="padding:10px">
+            <div>Simple popup</div>
+            <ax-text class="form-control" style="width:200px;margin-bottom:10px;"
+                     ng-model="launcher.object1.text1"></ax-text>
+            <button ng-click="launcher.confirm($event)">Save</button>
+            <button ng-click="launcher.close($event)">Close</button>
+        </div>
+    </ax-dropdown-popup>
+    <ax-dropdown-popup style="height:24px;width:300px;line-height: 24px;display:block;margin-top:10px"
+                       caret-style="margin-top:8px"
+                       popup-height="500px"
+                       popup-width="1200px"
+                       close-on-mouseleave="false"
+                       close-on-blur="true"
+                       template-url="'/app-modules/docs/ax-table/records-grouping/records-grouping-1.html'"
+                       btn-text="'Template-url with ax-table inside'"></ax-dropdown-popup>
+</div>

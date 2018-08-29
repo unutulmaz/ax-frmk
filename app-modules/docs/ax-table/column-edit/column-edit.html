@@ -1,0 +1,39 @@
+<div class="form-title">Column edit template
+</div>
+<div ng-style="{'top':(dataStore.formTitleHeight()+10)+'px'}" style="position: absolute;top:45px;bottom:10px;left:10px;right:10px;overflow: auto;padding-right:10px" ng-controller="columnEditCtrl">
+    <div class="info-text">
+        For more information, see <a ui-sref="ax-table/records-editing"><strong>Records editing</strong></a>.
+        <br><strong>Built-in edit template</strong>
+        <br>1. Simple mode as attribute edit-type for ax-column template
+        <pre ng-bind="code.buitInTemplate1" style="width:1000px"></pre>
+        2. or with more details as ax-column-edit template
+        <pre ng-bind="code.buitInTemplate2" style="width:1000px"></pre>
+        <br/><strong>Attributes:</strong>
+        <ax-attr>bind-to</ax-attr> the property name (field) of row object (<code>dataItem</code> - as scope variable), if is not the same as ax-column parent element. Required if you want to use a built-in type view template.
+        <ax-attr>ng-model</ax-attr> if you need to bind a property which is not a direct property of dataItem (row object) you must use ng-model.
+        <ax-attr>edit-type</ax-attr> can be one of ax-framework controls implementation: <strong>text, text-with-zoom, date, datetime, checkbox, dropdown-list</strong>
+                or browser native input types implementation: <strong>input-text, input-number, input-checkbox, input-radio, input-range, input-date, input-datetime</strong> or <strong>custom</strong> for particulary implementation.
+        <ax-attr>ng-disabled</ax-attr> expression to conditional disable control input.
+        <ax-attr>tooltip</ax-attr> with no value if you want to use getTooltipFor method to retrieve tooltip html content, or expression which evaluated for an uib-popover directive.</span>
+        <ax-attr>style</ax-attr> the css style for ax-column-edit template. Here you can use padding-left:0 to eliminate the default padding-left, or overflow-y=hidden if you have same problem with display elements, and the default overflow-y=scroll is not suitable for the case</span>
+        <br><strong>ng-focus, ng-blur, ng-change</strong> attributes cannot be used for built-in ax-column-edit templates, will be overwrite. If you needed, you must use custom type for ax-column-edit template.
+        <br/><br/><strong>Custom edit template:</strong>
+        <ax-show-hide element-id="customTemplate"></ax-show-hide>
+        <div id="customTemplate">
+            <pre ng-bind="code.custom" style="width:1000px"></pre>
+            For <strong>custom</strong> type, the current row object is named <code style="width:auto">dataItem</code>, which can be used to create your custom edit. You can access the
+            ax-table parent scope with <code>$ctrl.$parent</code> ($ctrl.$parent.myVariable).
+            <br/><strong>Custom edit can be used for edit nested properties, custom actions or anything else. This accept any html you need</strong>.
+            <br/><span style="padding-left:0"><strong>has-input</strong> - it's necessary for tab navigation between controls: only controls with has-input attribute will receive focus</span>
+            <br/><span style="padding-left:0"><strong>ng-focus = "$ctrl.objectHasFocus($event, $parent.$parent.dataItem, fieldName);"</strong> - it's necessary for tab navigation too. This method add hasFocus class for current focused control, and remove  for previous. Also set currentColumnIndex, and currentField ax-table properties.</span>
+            <pre ng-bind="code.objectHasFocus" style="width:1000px"></pre>
+            <span style="padding-left:0px"><strong>ng-blur="$ctrl.$validateField(fieldName, $parent.$parent.dataItem)"</strong> - it's recommended to use $validateField method for validate Field data on blur.</span>
+            <pre ng-bind="code.validateField" style="width:1000px"></pre>
+
+        </div>
+    </div>
+	 <ax-code-tabs template-url="/app-modules/docs/ax-table/records-editing/records-editing-1.html"
+					  style="position:relative;height:600px;width:100%;"
+					  source-code="code"></ax-code-tabs>
+
+</div>

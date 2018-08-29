@@ -1,0 +1,26 @@
+<div class="form-title">Records filtering
+
+	<ax-see-also style="right:30px" btn-text="'See Also'">
+		<ax-see-also-option route="ax-table/column-filter">Column filter</ax-see-also-option>
+		<ax-see-also-option route="ax-table/column-filter-menu">Column filter menu</ax-see-also-option>
+	</ax-see-also>
+
+
+</div>
+<div ng-style="{'top':(dataStore.formTitleHeight()+10)+'px'}"
+	  style="position: absolute;bottom:10px;left:10px;right:10px;overflow: auto;padding-right:10px" ng-controller="recordsFilteringTabsCtrl">
+	<div class="info-text">
+		Records filtering can be made by end user with Global search input box control, or by choosing from Column filter menu a control for filter.
+		A filter menu (<a ui-sref="ax-table/column-filter-menu"><strong>ax-column-filter-menu</strong></a>) is defined with <a ui-sref="ax-table/column-filter"><strong>ax-column-filter</strong></a> elements as options.
+		<br><br><strong>Global search</strong> is defined with an <strong>ax-global-search</strong> toolbar element (can be used only inside ax-table ax-toolbar).
+		<pre ng-bind="code.globalSearch" style="width:700px"></pre>
+		You can specify which columns are searched by default, by <strong>search-columns</strong> attribute: a list separated by comma. User can change this by selecting columns he wants, in Global search options popup.
+		<br>If you want to create your own, you need to store value in <strong>$ctrl.filters.globalSearch</strong>, and for filter apply use method <strong>$ctrl.filterApply()</strong> without arguments.
+		Columns list must be stored in <strong>$ctrl.filters.config.globalSearch.columns</strong>. You can also use method <strong>$ctrl.itemCustomFilter</strong> for custom filtering.
+	</div>
+	<ax-code-tabs template-url="/app-modules/docs/ax-table/records-filtering/records-filtering-1.html"
+					  style="position:relative;height:500px;width:100%;"
+					  source-code="code"></ax-code-tabs>
+
+</div>
+</div>

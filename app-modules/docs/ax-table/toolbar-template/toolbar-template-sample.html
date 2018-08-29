@@ -1,0 +1,65 @@
+<style>
+	.calculation-result.value-min, .calculation-result.value-max {
+		min-width: 45px !important;
+	}
+
+	.calculation-result.value-sum {
+		min-width: 70px !important;
+		width: 100%;
+	}
+
+	tr[level='0'] .calculation-result.value-sum {
+		width: 100% !important;
+	}
+
+	.timings-msg strong {
+		position: absolute;
+		right: 5px;
+	}
+
+	ax-form ax-checkbox[bind-to=insideUE] {
+		max-width: 26px;
+	}
+</style>
+<div ng-controller="toolbarSampleCtrl" style="position:relative;width:100%;height:100%">
+	<ax-table config="datatable1"
+				 datasource="datatable1.data"
+				 auto-focus="true"
+				 style="position:relative;width:100%;height:100%">
+		<hint>
+			ax-scroller is a directive which split toolbar in three sections: left (toolbar = left), right (toolbar = right), and in the middle (no toolbar attribute) a scrollable content.
+			You can disable adding ax-scroller directive including ax-scroller = false attribute for ax-toolbar.
+		</hint>
+		<ax-toolbar ax-scroller="true" min-width="930">
+			<label toolbar="left" class="header-title">
+				Toolbar sample
+			</label>
+
+			<ax-dropdown-popup ctrl="$ctrl.$parent.loadDataPopup"
+									 style="width: 200px; padding: 0;margin: auto 0 "
+									 btn-class="btn btn-primary load-data"
+									 close-on-mouseleave="true"
+									 caret-class="fa fa-caret-down"
+									 popup-class="dropdown-popup-menu"
+									 popup-width="200px"
+									 btn-html="<i class='fa fa-refresh btn-spinner'></i>Load data"
+									 close-on-blur="true">
+				<ul>
+					<li ng-click="launcher.select(100)">100 records</li>
+					<li ng-click="launcher.select(1000)">1k records</li>
+					<li ng-click="launcher.select(10000)">10k records</li>
+					<li ng-click="launcher.select(100000)">100k records</li>
+				</ul>
+			</ax-dropdown-popup>
+
+			<ax-global-search toolbar="right" search-columns="" style="width:200px;margin-right:3px"></ax-global-search>
+			<ax-button toolbar="right" button-type="settings" show-title="true"></ax-button>
+		</ax-toolbar>
+
+		<ax-column header="Order ID" bind-to="number" width="100px" view-type="text" decimals="0" style="text-align:right;padding-right:20px;"></ax-column>
+		<ax-column header="Order Date" bind-to="date" view-type="date" date-format="dd.MM.yyyy" width="140px"></ax-column>
+		<ax-column header="Customer Name" bind-to="customer" width="250px"></ax-column>
+		<ax-column header="Customer Code" bind-to="customerCode" width="120px"></ax-column>
+		<ax-column header="Delivery Country" bind-to="deliveryCountry" width="250px"></ax-column>
+	</ax-table>
+</div>

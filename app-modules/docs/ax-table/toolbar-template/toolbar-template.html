@@ -1,0 +1,39 @@
+<div class="form-title">Toolbar template</div>
+<div style="position: absolute;bottom:10px;left:10px;right:10px;overflow: auto;padding-right:10px" ng-controller="toolbarTemplateTabsCtrl" ng-style="{'top':(dataStore.formTitleHeight()+10)+'px'}">
+	<div class="info-text">
+		<div style="display:inline-flex;">
+			<div style="margin-right:10px;">
+				Toolbar is defined with an ax-toolbar template. axTable element accept one ax-toolbar template as child element. In this template you can use some built-in controls, for add axTable commands.
+				<br>AxToolbar is a scrollable element: has an ax-scroller directive which permit to split toolbar in three sections: <strong>left</strong> (<strong>toolbar = left</strong>), <strong>right</strong> (<strong>toolbar = right</strong>), and in the
+				<strong>middle</strong> (<strong>no toolbar attribute</strong>) a scrollable content.
+				<br>With <strong>min-width</strong> toolbar attribute you can fix when toolbar is shown in a popup for mobile devices.
+				<br>You can disable adding ax-scroller directive including <strong>ax-scroller = false</strong> attribute for ax-toolbar.
+				<pre ng-bind="code.sample1"></pre>
+				<strong>ax-button Button-type values</strong>
+				<br/><span style="padding-left:20px">- <strong>refresh</strong>  - button for load data (when you define an api-controller for ax-table)</span>
+				<br/><span style="padding-left:20px">- <strong>check-all</strong>  - button for select all records when <strong>selectable-rows = multiple</strong></span>
+				<br/><span style="padding-left:20px">- <strong>uncheck-all</strong>  - button for clear selection records when <strong>selectable-rows = multiple</strong></span>
+				<br/><span style="padding-left:20px">- <strong>initial-select</strong>  - button for execute method <strong>loadInitialData</strong> view controller method for reports</span>
+				<br/><span style="padding-left:20px">- <strong>groups-toggle</strong>  - button for toggle collapse/expand records grouping</span>
+				<br/><span style="padding-left:20px">- <strong>maximize</strong>  - button for toggle maximize/restore ax-table on his parent</span>
+				<br/><span style="padding-left:20px">- <strong>settings</strong>  - button for display ax-table setting options. This button has an attribute <strong>show-title</strong> which can control if button title is shown or not. Below are some <strong>ax-table attributes</strong> which enable/disable settings buttons</span>
+				<br/><span style="padding-left:87px">- <strong>customizable-config</strong> true/false for show/hide config option.</span>
+				<br/><span style="padding-left:87px">- <strong>customizable-pivot-table</strong> true/false for show/hide pivot table option.</span>
+				<br/><span style="padding-left:87px">- <strong>columns-autofit-enabled</strong> true/false for show/hide all columns autofit widths option.</span>
+				<br/><span style="padding-left:87px">- <strong>export-disabled</strong> true/false for show/hide export options.</span>
+				<br/><span style="padding-left:87px">- <strong>customizable-edit-mode</strong> true/false for show/hide edit mode options.</span>
+				<br/><span style="padding-left:87px">- <strong>show-change-edit</strong> true/false for show/hide change edit button for inline-cell edit mode.</span>
+				<br/><span style="padding-left:87px">- <strong>can-add</strong> true/false for show/hide add button button.</span>
+				<br/><span style="padding-left:87px">- <strong>apply-changes-on-save</strong> true/false for show/hide apply changes button.</span>
+
+				<br/><br/><strong>ax-global-search</strong> - object for create a input box for global search
+
+				<br><strong>Developer can overwrite ng-click event and button innerHTML (label)</strong>.
+				<br><br>To use these built-in toolbar object is optional.
+
+			</div>
+		</div>
+	</div>
+	<ax-code-tabs template-url="/app-modules/docs/ax-table/toolbar-template/toolbar-template-sample.html"
+					  style="position:relative;height:400px;width:100%;"></ax-code-tabs>
+</div>

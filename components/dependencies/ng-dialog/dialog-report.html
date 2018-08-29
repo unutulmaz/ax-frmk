@@ -1,0 +1,10 @@
+<style>
+	.ngdialog-content {
+		height: 100%;
+		width: 100%;
+	}
+</style>
+<div ng-controller="dialogReportController">
+	<div class="form-title" ng-bind="$confirm.title"></div>
+	<div ax-dynamic-template="$confirm.template"></div>
+</div>

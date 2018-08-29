@@ -1,0 +1,32 @@
+<div ng-controller="recordsOrderingCtrl" style="position:relative;width:100%;height:100%">
+	<hint>
+		Use order-by ax-table attribute to set an initial sorting.
+		User can change this order from each column menu , or global from Records sorting settings popup for set multiple sorting columns
+	</hint>
+	<ax-table datasource="data"
+				 config="datatable1"
+				 auto-focus="false"
+				 order-by="deliveryCityInvariant, -date"
+				 style="position:relative;width:100%;height:100%">
+		<ax-toolbar>
+			<label class="header-title" toolbar="left">Records ordering</label>
+			<ax-button toolbar="right" button-type="settings"></ax-button>
+		</ax-toolbar>
+		<hint>
+			Use sortable attribute for ax-column without value - that mean will be sort by column provided in bind-to attribute.
+			Use value for sortable to sort by an invariant column
+		</hint>
+		<ax-column bind-to="number" sortable header="Order ID" width="100px" view-type="number" locale="en-US" decimals="0"></ax-column>
+		<ax-column bind-to="date" sortable view-type="date" date-format="dd.MM.yyyy" header="Order date" width="140px" style="text-align:center"></ax-column>
+		<ax-column bind-to="customer" sortable="customerInvariant" header="Customer Name" width="250px"></ax-column>
+		<ax-column bind-to="customerCode" sortable header="Customer Code" width="105px"></ax-column>
+		<ax-column bind-to="deliveryCountry" sortable="deliveryCountryInvariant" header="Delivery Country" width="250px"></ax-column>
+		<ax-column bind-to="deliveryCity" sortable="deliveryCityInvariant" header="Delivery City" width="180px"></ax-column>
+		<ax-column bind-to="deliveryCityInvariant" header="Customer Invariant City" width="180px"></ax-column>
+		<ax-column bind-to="deliveryAddress" sortable header="Delivery Address" width="250px"></ax-column>
+		<ax-column bind-to="insideUE" sortable header="Inside UE" width="80px" view-type="boolean-checkbox"></ax-column>
+		<ax-column bind-to="value" sortable header="Value" width="170px" view-type="number" locale="en-US" decimals="0"></ax-column>
+		<ax-column bind-to="createdBy" sortable header="Created By" width="200px"></ax-column>
+		<ax-column bind-to="createdAt" sortable header="Created At" width="250px" view-type="datetime"></ax-column>
+	</ax-table>
+</div>

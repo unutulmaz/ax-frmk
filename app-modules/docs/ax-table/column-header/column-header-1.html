@@ -1,0 +1,63 @@
+<div ng-controller="columnHeaderCtrl" style="position:relative;width:100%;height:100%">
+    <ax-table datasource="data"
+              left-freezed-columns="2"
+              right-freezed-columns="1"
+              style="position:relative;width:100%;height:100%">
+        <ax-toolbar min-width="530px">
+            <label class="header-title" toolbar="left">
+                Column header
+            </label>
+            <ax-button toolbar="right" button-type="settings"></ax-button>
+        </ax-toolbar>
+        <ax-groups>
+            <ax-group expression="true">
+                <ax-calculation column="Value"
+                                show-on="false"
+                                name="sum-value"
+                                aggregate-type="sum"></ax-calculation>
+            </ax-group>
+        </ax-groups>
+        <ax-column bind-to="number" sortable header="Order ID" width="150px" view-type="text" style="text-align:right;padding-right:10px" filter-menu="number">
+            <ax-column-header row-index="1" header-title="Superior" colspan="4">
+                <div ng-bind="$ctrl.$parent.customHeader('Superior')"></div>
+            </ax-column-header>
+            <ax-column-header row-index="2" colspan="2" style="background-color: #7ed268">
+                <div>Any html</div>
+            </ax-column-header>
+            <ax-column-header row-index="3" header-title="Custom Header">
+                <div>{{$ctrl.$parent.customHeader('ID')}}</div>
+            </ax-column-header>
+        </ax-column>
+        <ax-column bind-to="date" sortable view-type="date" date-format="dd.MM.yyyy" header="Order date" width="180px" style="text-align:center" filter-menu="date">
+            <ax-column-header row-index="3">
+                <div>Date</div>
+            </ax-column-header>
+        </ax-column>
+        <ax-column bind-to="customer" sortable="customerInvariant" header="Customer Name" width="250px" filter-menu="text">
+            <ax-column-header row-index="2" colspan="2" style="background-color: #2aabd2">Customer</ax-column-header>
+            <ax-column-header row-index="3">Customer Name</ax-column-header>
+        </ax-column>
+        <ax-column header="Address" width="300px">
+            <ax-column-header row-index="3">Address</ax-column-header>
+            <ax-column-view view-type="custom" style="background-color: #2182ff;text-align:center;color:white">
+                <span ng-bind="::(dataItem.deliveryCity + ' ' + dataItem.deliveryAddress)"></span>
+            </ax-column-view>
+        </ax-column>
+        <ax-column bind-to="insideUE" sortable header="Inside UE" width="120px" view-type="boolean-checkbox">
+
+        </ax-column>
+        <ax-column bind-to="createdBy" sortable header="Created By" width="180px">
+            <ax-column-header row-index="1" rowspan="2" colspan="2" style="background-color: #2aabd2">Created</ax-column-header>
+            <ax-column-header row-index="3">User</ax-column-header>
+
+        </ax-column>
+        <ax-column bind-to="createdAt" sortable header="Created At" width="250px" view-type="datetime">
+            <ax-column-header row-index="3">Time</ax-column-header>
+        </ax-column>
+        <ax-column bind-to="value" sortable header="Value" width="150px" view-type="number" locale="en-US" decimals="2">
+            <hint>BY default header-menu is sown on first header with colspan=1, but we want header menu on second row. In this case we disable header-menu for first row</hint>
+            <ax-column-header row-index="1" rowspan="1" header-menu="false">Value</ax-column-header>
+            <ax-column-header row-index="2" rowspan="2" header-title="Dynamic header" ><span ng-bind="'Total: ' + $ctrl.getCalculation('sum-value').toLocaleString(axNumberFormat.locale)"></span></ax-column-header>
+        </ax-column>
+    </ax-table>
+</div>

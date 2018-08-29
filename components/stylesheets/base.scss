@@ -1,0 +1,328 @@
+#right-pane {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+#right-pane [role=column-view], #right-pane pre, textarea, input, span.key {
+  -webkit-touch-callout: initial;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+input {
+  padding-top: 0;
+  padding-bottom: 0;
+  min-width: 1px;
+}
+
+
+#right-pane > div[ng-controller] {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.inline {
+  display: -moz-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  align-self: auto;
+  vertical-align: top;
+}
+
+.allWidth {
+  width: 100%;
+}
+
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.labelTop {
+  float: left;
+}
+
+.center {
+  text-align: center !important;
+}
+
+.right {
+  float: right;
+}
+
+.left {
+  float: left;
+}
+
+.dropdown-toggle::after {
+  display: none;
+}
+
+:focus {
+  outline: none !important;
+}
+
+.btn:focus, .btn.focus {
+  outline: 0;
+  box-shadow: none;
+}
+
+.app-header .btn:focus {
+  box-shadow: none;
+}
+
+button, html input[type="button"], input[type="reset"], input[type="submit"] {
+  -webkit-appearance: button;
+  cursor: pointer;
+  white-space: normal;
+  border-style: outset;
+  border-color: buttonface;
+  border-image: initial;
+}
+
+.fa {
+  cursor: pointer;
+  text-align: center;
+}
+
+label {
+  margin-bottom: 0;
+  white-space: nowrap;
+}
+
+ax-popup > ul.dropdown-menu {
+  width: 100%;
+  border: none;
+}
+
+body {
+  overscroll-behavior-y: contain;
+}
+
+.btn.icon > .caret-holder {
+  width: 100% !important;
+  position: relative;
+}
+
+.btn.icon > .caret-holder
+th > [filter-for] > ax-dropdown-popup[btn-class~=filter-config] {
+  display: none;
+}
+
+th > [filter-for][show-config=true] > ax-dropdown-popup[btn-class~=filter-config] {
+  display: inline-flex;
+}
+
+.app-header {
+  width: 100%;
+  position: relative;
+}
+
+button.icon, .column-cmd {
+  outline: none;
+  box-shadow: none;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  top: initial;
+  font-size: inherit;
+  text-align: center;
+}
+
+.btn {
+  width: auto;
+  font-size: inherit;
+  border-style: outset;
+}
+
+ax-popup > ul.dropdown-menu {
+  display: block;
+  top: 0;
+  position: relative;
+  min-width: initial;
+}
+
+ax-dropdown-list.form-control,
+ax-dropdown-popup.form-control {
+  padding: 0;
+  border: none;
+}
+
+.form-control {
+  background-color: transparent;
+  height: initial;
+}
+
+.form-control:focus > button.icon:focus,
+.form-control.hasFocus > button.icon:focus {
+  //border-color: transparent !important;
+}
+
+.scroller-menu-option > * {
+  width: 100%;
+  margin: 0 !important;
+}
+
+.scroller-popup-menu {
+  max-height: 100%;
+  max-width: 100%;
+  overflow: auto;
+}
+
+.printable {
+  display: none;
+}
+
+ax-list > ax-table-content > [role=toolbar] .btn {
+  line-height: inherit;
+}
+
+.btn-primary {
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  align-self: auto;
+  vertical-align: top;
+  cursor: pointer;
+  outline: 0;
+  padding: 0px 6px 0px 6px;
+
+  &.fa {
+    font: normal normal normal 14px/1 FontAwesome;
+  }
+}
+
+.config-body > * {
+  position: relative;
+}
+
+td {
+  vertical-align: top;
+}
+
+ax-form-section-header > button.btn.icon {
+  height: 100%;
+}
+
+ax-table-editor > .editor-content > ax-form {
+  padding: 0 10px;
+}
+
+.editor-content [role=toolbar] {
+  display: inline-flex;
+}
+
+@mixin vertical-align($align: middle) {
+  &:before {
+    content: "";
+    display: inline-block;
+    height: 100%;
+    vertical-align: $align;
+    // you can add font-size 0 here and restore in the children to prevent
+    // the inline-block white-space to mess the width of your elements
+    font-size: 0;
+  }
+  & > * {
+    vertical-align: $align;
+    // although you need to know the font-size, because "inherit" is 0
+    font-size: 14px;
+  }
+}
+
+.info-text {
+  width: 100%;
+  position: relative;
+  overflow: auto;
+
+}
+
+[role=input-error] span, [role=form-error] div {
+  display: list-item;
+  list-style: none;
+  margin-left: 0px;
+}
+
+@keyframes scale-vertically-in {
+	0% {
+		-moz-transform: scaleY(0);
+		-ms-transform: scaleY(0);
+		-o-transform: scaleY(0);
+		-webkit-transform: scaleY(0);
+		transform: scaleY(0);
+	}
+
+	100% {
+		-moz-transform: scaleY(1);
+		-ms-transform: scaleY(1);
+		-o-transform: scaleY(1);
+		-webkit-transform: scaleY(1);
+		transform: scaleY(1);
+	}
+}
+
+@keyframes scale-vertically-out {
+	0% {
+		-moz-transform: scaleY(1);
+		-ms-transform: scaleY(1);
+		-o-transform: scaleY(1);
+		-webkit-transform: scaleY(1);
+		transform: scaleY(1);
+	}
+
+	100% {
+		-moz-transform: scaleY(0);
+		-ms-transform: scaleY(0);
+		-o-transform: scaleY(0);
+		-webkit-transform: scaleY(0);
+		transform: scaleY(0);
+		display: none;
+	}
+}
+
+@keyframes scale-horizontally-in {
+	0% {
+		-moz-transform: scaleX(0);
+		-ms-transform: scaleX(0);
+		-o-transform: scaleX(0);
+		-webkit-transform: scaleX(0);
+		transform: scaleX(0);
+	}
+
+	100% {
+		-moz-transform: scaleX(1);
+		-ms-transform: scaleX(1);
+		-webkit-transform: scaleY(1);
+		transform: scaleX(1);
+	}
+}
+
+@keyframes scale-horizontally-out {
+	0% {
+		-moz-transform: scaleX(1);
+		-ms-transform: scaleX(1);
+		-o-transform: scaleX(1);
+		-webkit-transform: scaleX(1);
+		transform: scaleX(1);
+	}
+
+	100% {
+		-moz-transform: scaleX(0);
+		-ms-transform: scaleX(0);
+		-o-transform: scaleX(0);
+		-webkit-transform: scaleX(0);
+		transform: scaleX(0);
+		display: none;
+	}
+}
+
+[popup-class="scroller-popup-menu"]{
+  margin-left:3px !important;
+}

@@ -1,0 +1,64 @@
+/* Structure */
+ax-tree-view, ax-tree-view-node {
+	box-sizing: border-box;
+	display: block;
+}
+
+ax-tree-view *,
+ax-tree-view *:before,
+ax-tree-view *:after {
+	box-sizing: border-box;
+}
+
+ax-tree-view .node-label {
+	vertical-align: middle;
+}
+
+ax-tree-view .expandable {
+	position: relative;
+}
+
+ax-tree-view .expandable::before {
+	pointer-events: none;
+}
+
+ax-tree-view .expandable::before,
+ax-tree-view-node.expandable > .node-item {
+	cursor: pointer;
+}
+
+ax-tree-view li,
+ax-tree-view ul {
+	list-style: none;
+}
+
+ax-tree-view li {
+	line-height: 1.5em;
+}
+
+ax-tree-view .node-label {
+	color: black;
+	font-weight: bold;
+	padding: 0px 10px 5px 15px;
+}
+
+ax-tree-view .node-label::after {
+	content: '';
+}
+
+ax-tree-view ax-tree-view-node.expandable:not([is-root])::before {
+	content: '\25b6';
+	position: absolute;
+	left: 0px;
+	font-size: 10px;
+	-webkit-transition: -webkit-transform .1s ease;
+	transition: -webkit-transform .1s ease;
+	transition: transform .1s ease;
+	transition: transform .1s ease, -webkit-transform .1s ease;
+}
+
+ax-tree-view ax-tree-view-node.expandable.expanded::before {
+	-webkit-transform: rotate(90deg);
+	transform: rotate(90deg);
+}
+

@@ -1,0 +1,138 @@
+<style>
+    .calculation-result.value-min, .calculation-result.value-max {
+        min-width: 45px !important;
+    }
+
+    .calculation-result.value-sum {
+        min-width: 70px !important;
+        width: 100%;
+    }
+
+    tr[level='0'] .calculation-result.value-sum {
+        width: 100% !important;
+    }
+
+    .timings-msg strong {
+        position: absolute;
+        right: 5px;
+    }
+
+    ax-form ax-checkbox[bind-to=insideUE] {
+        max-width: 26px;
+    }
+</style>
+<div ng-controller="toolbarSample11Ctrl" style="position:relative;width:100%;height:100%">
+    <ax-table config="datatable1"
+              datasource="datatable1.data"
+              debug="false"
+              edit-row="editor"
+              auto-focus="true"
+              customizable-pivot-table="true"
+              distinct-values-datasource="distinctValues"
+              style="position:relative;width:100%;height:100%">
+        <hint>
+            ax-scroller is a directive which split toolbar in three sections: left (toolbar = left), right (toolbar = right), and in the middle (no toolbar attribute) a scrollable content.
+            You can disable adding ax-scroller directive including ax-scroller = false attribute for ax-toolbar.
+        </hint>
+        <ax-toolbar ax-scroller="true">
+            <label toolbar="left" class="header-title">
+                Table with edit-row=editor
+            </label>
+            <ax-dropdown-popup ctrl="$ctrl.config.loadDataPopup"
+                               style="width: 120px; height:30px; line-height:30px; padding: 0 "
+                               btn-class="btn btn-primary load-data"
+                               close-on-mouseleave="true"
+                               caret-class="fa fa-caret-down"
+                               popup-class="dropdown-popup-menu"
+                               popup-width="120px"
+                               btn-html="<i class='fa fa-refresh btn-spinner'></i>Load data"
+                               close-on-blur="true">
+                <ul>
+                    <li ng-click="launcher.select(100)">100 records</li>
+                    <li ng-click="launcher.select(1000)">1k records</li>
+                    <li ng-click="launcher.select(10000)">10k records</li>
+                    <li ng-click="launcher.select(100000)">100k records</li>
+                </ul>
+            </ax-dropdown-popup>
+
+            <ax-dropdown-popup ctrl="$ctrl.$parent.timings"
+                               style="width: 28px; height:30px; padding: 0 "
+                               close-on-mouseleave="true"
+                               close-on-blur="true"
+                               btn-class="btn btn-primary"
+                               btn-html="<i class='fa fa-clock-o'></i>"
+                               caret-class="fa"
+                               uib-tooltip="View data load timings">
+                <div class="dropdown-header" style="padding-right:30px">Data load timings</div>
+                <div style="background-color:white;z-index:100;position:relative;margin:10px;max-height:300px;overflow: auto;padding-right:100px"
+                     class="timings-msg" bind-html-compile="launcher.msg"></div>
+            </ax-dropdown-popup>
+            <ax-global-search toolbar="right" search-columns="" style="width:200px;"></ax-global-search>
+
+            <ax-button toolbar="right" button-type="groups-toggle"></ax-button>
+            <ax-button toolbar="right" button-type="settings" show-title="true"></ax-button>
+        </ax-toolbar>
+
+        <ax-column header="Gutter Icons" hidden-column width="24px" view-type="gutter-icons" show-header="false"></ax-column>
+        <ax-column header="Order ID" bind-to="number" sortable width="100px" filter-menu="number" view-type="text" decimals="0" style="text-align:right;padding-right:20px;">
+        </ax-column>
+        <ax-column header="Order Date" bind-to="date" sortable view-type="date" date-format="dd.MM.yyyy" width="140px" filter-menu="date" edit-type="date"
+                   show-in-editor="true"
+                   initial-filter-option="Filter by input value">
+        </ax-column>
+        <ax-column header="Customer Name" bind-to="customer" sortable="customerInvariant" width="250px" filter-menu="text" edit-type="text" show-in-editor="true">
+        </ax-column>
+        <ax-column header="Customer Code" bind-to="customerCode" sortable width="105px" filter-menu="text" edit-type="text" show-in-editor="false">
+        </ax-column>
+        <ax-column header="Delivery Country" bind-to="deliveryCountry" sortable="deliveryCountryInvariant" width="250px" filter-menu="text" show-in-editor="true">
+        </ax-column>
+        <ax-column header="Delivery City"
+                   bind-to="deliveryCity"
+                   sortable="deliveryCityInvariant"
+                   width="150px"
+                   filter-menu="text"
+                   show-in-editor="true"
+                   initial-filter-option="Filter by input value">
+            <ax-column-header row-index="2">
+                City
+                <i class="btn icon fa fa-question-circle"
+                   style="height:24px;line-height:20px;"
+                   tabindex="-1"
+                   uib-popover-html="$ctrl.config.getTooltipFor('deliveryCity')"
+                   popover-append-to-body="true"
+                   popover-placement="bottom-right"
+                   popover-trigger="'mouseenter'"></i>
+            </ax-column-header>
+            <ax-column-edit type="autocomplete"
+                            bind-to="deliveryCityId"
+                            datasource="$ctrl.$parent.cities"
+                            datasource-filter="$ctrl.config.getCitiesForCountry(datasource,param)"
+                            datasource-filter-param="$parent.$parent.dataItem.deliveryCountryId"
+                            item-id-field="id"
+                            item-display-field="name"
+                            item-invariant-field="nameInvariant"></ax-column-edit>
+        </ax-column>
+        <ax-column header="Delivery Address" bind-to="deliveryAddress" sortable width="250px" filter-menu="text" edit-type="text" show-in-editor="true">
+            <ax-column-header row-index="2">Street</ax-column-header>
+
+        </ax-column>
+        <ax-column header="Created By" bind-to="createdBy" sortable width="200px" filter-menu="text" edit-type="text" show-in-editor="true">
+            <ax-column-header row-index="1" colspan="2" style="background-color: lightgreen;">Created</ax-column-header>
+            <ax-column-header row-index="2">By</ax-column-header>
+
+        </ax-column>
+        <ax-column header="Created At" bind-to="createdAt" sortable width="180px" view-type="datetime" filter-menu="datetime" edit-type="datetime" initial-filter-option="Filter by input value" show-in-editor="true">
+            <ax-column-header row-index="2">At</ax-column-header>
+
+        </ax-column>
+        <ax-column header="Inside UE" bind-to="insideUE" sortable width="80px" filter-menu="boolean" view-type="boolean-checkbox" edit-type="checkbox" show-in-editor="true">
+            <ax-column-header row-index="1" colspan="2" style="background-color: #90eeed;">Value</ax-column-header>
+            <ax-column-header row-index="2">Inside UE</ax-column-header>
+        </ax-column>
+        <ax-column header="Value" bind-to="value" sortable width="150px" filter-menu="number" view-type="number" locale="en-US" decimals="0" initial-filter-option="Filter by input value" show-in-editor="true">
+            <ax-column-header row-index="2">Value</ax-column-header>
+            <ax-column-edit type="text" tooltip="$ctrl.config.customTooltipMethod('value')"></ax-column-edit>
+        </ax-column>
+        <ax-column header="Actions" hidden-column width="65px" view-type="crud-buttons"></ax-column>
+    </ax-table>
+</div>

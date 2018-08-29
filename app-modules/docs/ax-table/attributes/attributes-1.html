@@ -1,0 +1,20 @@
+<div ng-controller="Attributes1Ctrl" style="position:relative;width:100%;height:100%">
+    <ax-table datasource="data"
+              config="dataTable1"
+              customizable-edit-mode="false"
+              style="position:relative;width:100%;height:100%">
+        <ax-toolbar>
+            <label class="header-title" toolbar="left">
+                Relative position
+            </label>
+            <ax-button button-type="refresh" ng-click="$ctrl.$parent.loadData(removeSpinner)">100 records</ax-button>
+            <ax-button toolbar="right" button-type="settings"></ax-button>
+            <ax-button toolbar="right" button-type="maximize"></ax-button>
+        </ax-toolbar>
+        <ax-column bind-to="number" header="Order ID" width="100px" view-type="number" locale="en-US" decimals="0"></ax-column>
+        <ax-column bind-to="customer" header="Customer Name" width="250px"></ax-column>
+        <ax-column bind-to="customerCode" header="Customer Code" width="105px"></ax-column>
+        <ax-column bind-to="deliveryCity" header="Delivery City" width="180px"></ax-column>
+        <ax-column bind-to="deliveryAddress" header="Delivery Address" width="250px"></ax-column>
+    </ax-table>
+</div>

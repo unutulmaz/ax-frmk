@@ -1,0 +1,52 @@
+<div class="form-title">Column template</div>
+<div style="position: absolute;bottom:10px;left:10px;right:10px;overflow: auto;padding-right:10px" ng-style="{'top':(dataStore.formTitleHeight()+10)+'px'}">
+    <div class="info-text">
+        <div style="display:inline-flex;">
+            <div style="margin-right:10px;">
+                axTable columns are defined with <strong>ax-column</strong> template like this:
+                <pre style="width:1200px"
+                     ng-bind="'<ax-column bind-to=\'date\' sortable view-type=\'date\' date-format=\'dd.MM.yyyy\' header=\'Order date\' width=\'140px\' style=\'text-align:center\' filter-menu=\'date\'>\n</ax-column>'"></pre>
+                <strong>Attributes:</strong>
+                <ax-attr>bind-to</ax-attr> the property name (field) of row object (dataItem - as scope variable). Required if you need to sort ,filter or grouping with this column.
+                <ax-attr>invariant-field</ax-attr> the invariant field for bindTo field of row object (dataItem - as scope variable). It is used fort sorting, filtering, or grouping. You can use the adapter (see js tab), to create invariant column.
+                <ax-attr>sortable</ax-attr> if no value given, is default bind-to field, else will be an invariant column.
+                <ax-attr>header</ax-attr> <strong>required</strong>, column title - used to display in sort, group, toggle hide columns popups, this must be an <strong>unique</strong> value (is used as column identifier).
+                <ax-attr>header-title</ax-attr> column label (optional). Column can have multiple headers. Each header can have his own header-title (in this case is used only if ax-column-header template is not defined).
+                <ax-attr>show-header = 'false'</ax-attr> when you don't wanna display column header (and no ax-column-header template it's defined).
+                <ax-attr>header-menu = 'false'</ax-attr> when you don't wanna create column menu.
+                <ax-attr>width</ax-attr> <strong>required</strong>. You can have just one column with 100%, the rest must be in pixels
+                <ax-attr>column-type</ax-attr> can be one of values <strong>string, number, date,datetime,boolean-checkbox,boolean-radio,gutter-icons,crud-buttons</strong>. If not view-type attribute provided, or ax-column-view template, view-type will take value from column-type.
+                <ax-attr>view-type</ax-attr> can be one of values as column-type attribute values. This will create a ax-column-view template with type = view-type. It's now need to use this if you set a column-type attribute.
+                <ax-attr>double-binding</ax-attr> can be <strong>true</strong> for built-in view template, if column could be changed by user editing in other column. In usual case, one time binding is used for column view template.
+                <ax-attr>edit-type</ax-attr>can be one of values <strong>text, text-with-zoom, date, datetime, checkbox, dropdown-list</strong>
+                or browser native input types implementation: <strong>input-text, input-number, input-checkbox, input-radio, input-range, input-date, input-datetime</strong>.
+                This will create a ax-column-edit template with type = edit-type. It's now need to use this attribute if column is not editable.
+                <ax-attr>edit-tooltip</ax-attr> if column is editable, a tooltip to help user to understand what is about in the column.
+                <ax-attr>show-in-editor</ax-attr> = false for hide/show column in editor. This attribute overwrite hidden column state, which also hide/show column in editor if show-in-editor attribute is not defined.
+                <ax-attr>editor-column-index</ax-attr> column-index (1 based) where to add control in editor, when editor has more than one column for arrange controls (columns-no attribute of ax-grid-editor).
+                <ax-attr>filter-menu</ax-attr> the built-in filter options for data type: <strong>string, number, date, datetime, boolean</strong>
+                <ax-attr>initial-filter-option</ax-attr> the initial selected filter type for the column.
+                <ax-attr>hideable = "false"</ax-attr> When you need to interdict column hidden, otherwise column is hideable
+                <ax-attr>hidden-column</ax-attr> if you need to hide column, otherwise si visible.
+                <ax-attr>exportable = "false"</ax-attr> if you need to disabled column for export, otherwise column is exportable.
+                <ax-attr>class</ax-attr> the css class for ax-column-view template - if not is explicitly defined.
+                <ax-attr>style</ax-attr> the css style for ax-column-view template - if not is explicitly defined.
+                <ax-attr>date-format</ax-attr> date-format for ax-column-view template - if not is explicitly defined
+                <ax-attr>datetime-format</ax-attr> datetime-format if view-type=datetime for ax-column-view template - if not is explicitly defined
+                <ax-attr>locale</ax-attr> locale format for view-type=number if view-type=number for ax-column-view template - if not is explicitly defined
+                <ax-attr>decimals</ax-attr> decimals number for view-type=number if view-type=number for ax-column-view template - if not is explicitly defined
+                <br><br><strong>ax-column</strong> element has some templates for provide special header, view, edit or filter capabilities:
+                <br><span style="padding-left:20px">- <a ui-sref="ax-table/column-header"><strong>ax-column-header</strong></a></span>
+                <br><span style="padding-left:20px">- <a ui-sref="ax-table/column-view"><strong>ax-column-view</strong></a></span>
+                <br><span style="padding-left:20px">- <a ui-sref="ax-table/column-edit"><strong>ax-column-edit</strong></a></span>
+                <br><span style="padding-left:20px">- <a ui-sref="ax-table/column-editor"><strong>ax-column-editor</strong></a></span>
+                <br><span style="padding-left:20px">- <a ui-sref="ax-table/column-filter"><strong>ax-column-filter</strong></a></span>
+                <br><span style="padding-left:20px">- <a ui-sref="ax-table/column-filter-menu"><strong>ax-column-filter-menu</strong></a></span>
+            </div>
+        </div>
+    </div>
+    <div style="display:inline-flex;width:100%">
+        <ax-code-tabs template-url="/app-modules/docs/ax-table/column/column-1.html"
+                      style="position:relative;height:400px;width:100%;"></ax-code-tabs>
+    </div>
+</div>

@@ -1,0 +1,76 @@
+<div style="position:relative;width:100%;padding-left:6px;background-color:#f1f1f1">
+	<div>Hidden/Total: {{launcher.columnsLayout.columnsHidden}}/{{launcher.columnsLayout.columnsNo}}</div>
+	<div style="position:absolute;top:0;right:0;height:100%;" class="inline">
+		<button class="btn icon fa fa-eye"
+				  uib-tooltip="Show all columns"
+				  ng-click="$parent.launcher.columnsLayout.showAll($event)"></button>
+		<button class="btn icon fa fa-eye-slash"
+				  uib-tooltip="Hide all columns"
+				  ng-click="$parent.launcher.columnsLayout.hideAll($event)"></button>
+		<button class="btn icon fa fa-times"
+				  uib-tooltip="Remove all freezed columns"
+				  ng-click="$parent.launcher.columnsLayout.clearFreeze()"></button>
+	</div>
+</div>
+<div style="padding:0" as-sortable="launcher.columnsLayout.freezedSortable"
+	  ng-model="launcher.columnsLayout.columns">
+	<ax-tree-view datasource="launcher.columnsLayout"
+					  config="$parent.launcher.columnsLayout.tree"
+					  start-expanded="true"
+					  children="children">
+		<div ng-show="node.canView">
+			<div class="column-group"
+				  ng-if="!node.isRoot"
+				  as-sortable-item-handle
+				  ng-class="{'cut':node.hidden, 'hideable': !(node.children.length>0)}">
+				<div ng-if="node.freezeBar==='left'" style="width:100%;position:relative" class="freeze-bar"
+					  uib-tooltip="Drag up or down to change left freezed columns number">
+					<div style="position:absolute;left:0;right:0;top:-8px;text-align:center">
+						<span style="background-color:white;padding:0 5px;color:#07578c">Left freezed columns<i class="fa fa-level-up" style="margin-left:5px"></i></span>
+					</div>
+					<hr style="margin:9px -5px;border-top: 2px solid black"/>
+				</div>
+				<div ng-if="node.freezeBar==='right'" style="width:100%;position:relative" class="freeze-bar"
+					  uib-tooltip="Drag up or down to change right freezed columns number">
+					<div style="position:absolute;left:0;right:0;text-align:center">
+						<span style="background-color:white;padding:0 5px;color:#07578c">Right freezed columns<i class="fa fa-level-down" style="margin-left:5px"></i></span>
+					</div>
+					<hr style="margin:9px -5px;border-top: 2px solid black"/>
+				</div>
+				<div ng-if="!node.freezeBar" class="inline"
+					  ng-class="{'freezed':node.freezed}"
+					  ng-click="node.children.length? node.collapsed = !node.collapsed: true"
+					  style="width:100%;position:relative"
+					  title1="Index: {{node.index}}, colSpan: {{node.colSpan}}"
+					  ng-style="{'padding-left':(node.$level)*14 +'px'}">
+									<span class="fa "
+											style="line-height:inherit;width:15px;"
+											ng-class="{'fa-caret-right': node.children.length>0 && node.collapsed , 'fa-caret-down':node.children.length>0 && !node.collapsed}"></span>
+					<div  title="{{node.title}}">{{node.headerTitle}}</div>
+					<div style="position:absolute;right:0px;top:0;">
+						<button class="btn icon fa fa-eye grid-cell-btn"
+								  ng-click="$event.stopPropagation();parentScope.$parent.launcher.columnsLayout.changeHiddenState(node, $event, true)"
+								  ng-if="node.hideable  && (node.hidden || node.children.length>0)"></button>
+						<button class="btn icon fa fa-eye-slash grid-cell-btn"
+								  ng-click="$event.stopPropagation();parentScope.$parent.launcher.columnsLayout.changeHiddenState(node, $event, false)"
+								  ng-if="node.hideable  && (!node.hidden || node.children.length>0)"></button>
+					</div>
+
+				</div>
+			</div>
+			<ul style="padding-left:0"
+				 ng-if="!node.collapsed "
+				 as-sortable="parentScope.$parent.launcher.columnsLayout.freezedSortable"
+				 ng-model="node.children">
+				<li ng-repeat="column in node.children track by $index"
+					 ng-model="column"
+					 ng-attr-left-freeze="{{column.freezeBar==='left'}}"
+					 ng-attr-right-freeze="{{column.freezeBar==='right'}}"
+					 as-sortable-item
+					 ng-if="column.headerTitle && column.headerTitle !=='Empty column' && column.canView">
+					<ax-tree-view-node-template node="column" start-expanded="true"></ax-tree-view-node-template>
+				</li>
+			</ul>
+		</div>
+	</ax-tree-view>
+</div>

@@ -1,0 +1,11 @@
+<ul class="group-toogle-popup">
+	<li ng-repeat="group in launcher.groups">
+		<div class="inline" style="width:100%;position:relative;padding-right:100px">
+			<div ng-bind="group.label" ng-style="{'padding-left': (group.level-1)*10 + 'px'}"></div>
+			<div class="inline" style="position: absolute;top:0;right:0">
+				<i class="btn icon glyphicon glyphicon-minus" ng-click="launcher.collapse(group.level, $event)"></i>
+				<i class="btn icon glyphicon glyphicon-plus" ng-click="launcher.expand(group.level, $event)"></i>
+			</div>
+		</div>
+	</li>
+</ul>

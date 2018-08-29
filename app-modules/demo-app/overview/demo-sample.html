@@ -1,0 +1,746 @@
+<style>
+	.calculation-result.value-min, .calculation-result.value-max {
+		min-width: 45px !important;
+	}
+
+	.calculation-result.value-sum {
+		min-width: 70px !important;
+		width: 100%;
+	}
+
+	tr[level='0'] .calculation-result.value-sum {
+		width: 100% !important;
+	}
+
+	.timings-msg strong {
+		position: absolute;
+		right: 5px;
+	}
+
+	ax-form ax-checkbox[bind-to=insideUE] {
+		max-width: 40px;
+	}
+</style>
+<div ng-controller="demoCtrl" style="position:relative;width:100%;height:100%">
+	<ax-grid config="datatable1"
+				datasource="datatable1.data"
+				debug="false"
+				edit-row="editor"
+				auto-focus="true"
+				right-freezed-columns1="2"
+				customizable-pivot-table="true"
+				distinct-values-datasource="distinctValues"
+				style="position:relative;width:100%;height:100%">
+
+
+		<ax-toolbar ax-scroller="true" min-width="1200px">
+			<label toolbar="left" class="header-title">
+				Table with edit-row=editor
+			</label>
+			<ax-dropdown-popup ctrl="$ctrl.config.loadDataPopup"
+									 style="padding: 0;margin:auto 0;width:162px"
+									 btn-class="btn btn-primary load-data"
+									 close-on-mouseleave="true"
+									 caret-class="fa fa-caret-down"
+									 popup-class="dropdown-popup-menu"
+									 popup-width="162px"
+									 btn-html="<i class='fa fa-refresh btn-spinner'></i><span style='margin-left:5px;margin-right:25px'>Load data</span>"
+									 close-on-blur="true">
+				<ul class="dropdown-menu">
+					<li ng-click="launcher.select(100)">100 records</li>
+					<li ng-click="launcher.select(1000)">1k records</li>
+					<li ng-click="launcher.select(10000)">10k records</li>
+					<li ng-click="launcher.select(100000)">100k records</li>
+				</ul>
+			</ax-dropdown-popup>
+
+			<ax-dropdown-popup ctrl="$ctrl.$parent.timings"
+									 style="padding: 0;margin:auto 5px "
+									 close-on-mouseleave="true"
+									 close-on-blur="true"
+									 btn-class="btn btn-primary"
+									 btn-style="padding: 0 2px"
+									 btn-html="<i class='fa fa-clock-o'></i><span style='margin-left:5px;margin-right:25px'>Timing</span>"
+									 caret-class="fa"
+									 uib-tooltip="View data load timings">
+				<div class="dropdown-header" style="padding-right:30px;min-width:550px">Data load timings</div>
+				<div style="background-color:white;z-index:100;position:relative;margin:10px;max-height:300px;overflow: auto;padding-right:100px"
+					  class="timings-msg" bind-html-compile="launcher.msg"></div>
+			</ax-dropdown-popup>
+			<ax-global-search toolbar="right" search-columns="" style="width:200px;"></ax-global-search>
+			<ax-button toolbar="right" button-type="groups-toggle"></ax-button>
+			<ax-button toolbar="right" button-type="settings" show-title="true" style="margin-left:3px;margin-right:3px;" class="btn btn-primary"></ax-button>
+		</ax-toolbar>
+
+		<ax-export export-type="client" file-name="invoice">
+			<ax-export-item>
+				<ax-export-style-print>
+					html, body {
+					height: 100%;
+					width: 100%;
+					position: fixed;
+					font: 10px/1.5 Arial, sans-serif !important;
+					margin: 0;
+					}
+					html * {
+					box-sizing:border-box;
+					}
+					div.editor-content{
+					width:710px;
+					}
+					.form-title {
+					height: 35px;
+					line-height: 35px;
+					margin-bottom: 10px;
+					font-weight: bold;
+					width: 100%;
+					padding: 0 10px;
+					font-size: 18px;
+					font-weight: bold;
+					position: relative;
+					border-bottom: 1px solid lightgray;
+					box-sizing: border-box;
+					}
+					table {
+					font-size:14px;
+					table-layout:fixed;
+					width:1px;
+					border-spacing:0 !important;
+					}
+					table td:not([colspan]){
+					vertical-align:top;
+					padding:2px 4px;
+					}
+					table td[role=input] {
+					font-weight:bold;
+					}
+					ax-form{
+					position:relative !important;
+					width:100% !important;
+					top:initial !important;
+					bottom:initial !important;
+					left:initial !important;
+					right:initial !important;
+					}
+					ax-form-section-header{
+					font-weight:bold;
+					font-size:16px;
+					padding:2px 10px ;
+					display:block;
+					width:100%;
+					box-sizing: border-box;
+					border-bottom:1px solid lightgray;
+					}
+					ax-form-section>table td[role=label]{
+					padding-left:10px;
+					}
+					ax-form >table td[role=label][column-index='1']{
+					padding-left:50px;
+					}
+					ax-form >table >colgroup col:first-child{width:100px !important;}
+					ax-form >table >colgroup col:nth-child(2){width:300px !important;}
+					ax-form table.form-section-body >colgroup col:first-child{width:100px !important;}
+					ax-form table.form-section-body >colgroup col:nth-child(2){width:300px !important;}
+
+					ax-form table td[role=input]>div{
+					width:100% !important;
+					box-sizing: border-box;
+					}
+
+
+				</ax-export-style-print>
+				<ax-export-style-xls>
+					<!--table
+			  @page
+					{mso-number-format:"\#\,\#\#0\.00";
+					mso-page-orientation:portrait; }
+
+			  .style0
+					{font-style:normal;
+					font-family:Arial;}
+
+			  td
+					{mso-style-parent:style0;
+					font-style:normal;
+					font-family:Arial;}
+
+			  -->
+				</ax-export-style-xls>
+			</ax-export-item>
+		</ax-export>
+		<ax-grid-editor width="450px"
+							 position="right"
+							 cols-width="120px,100%"
+							 show-fields-errors-as="icons"
+							 group-controls-in-sections="true"
+							 toolbar-ax-scroller="true"
+							 initial-state="visible"></ax-grid-editor>
+		<ax-groups>
+			<ax-all-levels-calculations1 show-on="header">
+				<ax-calculation column="Value" name="value-sum" display-label="false" aggregate-type="sum"></ax-calculation>
+			</ax-all-levels-calculations1>
+			<ax-group1 expression="true" show-calculations-on="both" all-levels-calculations="true">
+				<ax-group-header label="All records" show-value="false" show-counter="false" show-filter="false" label-indent="10"></ax-group-header>
+				<ax-group-footer label-indent="350"
+									  show-value="false"
+									  show-counter="false"
+									  label="General totals:"></ax-group-footer>
+			</ax-group1>
+		</ax-groups>
+
+		<ax-column header="Gutter Icons" hidden-column width="42px" view-type="gutter-icons" show-header="false"></ax-column>
+		<ax-column header="Order ID" bind-to="number" sortable width="140px" filter-menu="number" view-type="text" decimals="0" style="text-align:right;padding-right:20px;">
+			<ax-column-header row-index="1" colspan="2" style="background-color: deepskyblue">Order</ax-column-header>
+			<ax-column-header row-index="2">Id</ax-column-header>
+		</ax-column>
+		<ax-column header="Order Date" bind-to="date" sortable view-type="date" date-format="dd.MM.yyyy" width="190px" filter-menu="date" edit-type="date"
+					  show-in-editor="true"
+					  initial-filter-option="Filter by input value">
+			<ax-column-header row-index="2">Date</ax-column-header>
+		</ax-column>
+		<ax-column header="Customer Name" bind-to="customer" sortable="customerInvariant" width="300px" filter-menu="text" edit-type="text" show-in-editor="true">
+			<ax-column-header row-index="1" colspan="5" style="background-color: darkturquoise">Customer</ax-column-header>
+			<ax-column-header row-index="2">Name</ax-column-header>
+
+		</ax-column>
+		<ax-column header="Customer Code" bind-to="customerCode" sortable width="130px" filter-menu="text" edit-type="text" show-in-editor="false">
+			<ax-column-header row-index="2">Code</ax-column-header>
+
+		</ax-column>
+		<ax-column header="Delivery Country"
+					  bind-to="deliveryCountry"
+					  sortable="deliveryCountryInvariant" width="250px" filter-menu="text" show-in-editor="true">
+			<ax-column-header row-index="2">Country</ax-column-header>
+			<ax-column-edit type="autocomplete"
+								 bind-to="deliveryCountryId"
+								 datasource="$ctrl.$parent.countries"
+								 on-model-changed="$ctrl.config.clearCity(selected,$parent.$parent.dataItem); "
+								 item-id-field="id"
+								 item-display-field="name"
+								 item-invariant-field="nameInvariant"></ax-column-edit>
+		</ax-column>
+		<ax-column header="Delivery City"
+					  bind-to="deliveryCity"
+					  sortable="deliveryCityInvariant"
+					  width="150px"
+					  filter-menu="text"
+					  show-in-editor="true"
+					  initial-filter-option="Filter by input value">
+			<ax-column-header row-index="2">
+				City
+				<i class="btn icon fa fa-question-circle"
+					tabindex="-1"
+					uib-popover-html="$ctrl.config.getTooltipFor('deliveryCity')"
+					popover-append-to-body="true"
+					popover-placement="bottom-right"
+					popover-trigger="'mouseenter'"></i>
+			</ax-column-header>
+			<ax-column-edit type="autocomplete"
+								 bind-to="deliveryCityId"
+								 datasource="$ctrl.$parent.cities"
+								 datasource-filter="$ctrl.config.getCitiesForCountry(datasource,param)"
+								 datasource-filter-param="$parent.$parent.dataItem.deliveryCountryId"
+								 item-id-field="id"
+								 item-display-field="name"
+								 item-invariant-field="nameInvariant"></ax-column-edit>
+		</ax-column>
+		<ax-column header="Delivery Address" bind-to="deliveryAddress" sortable width="250px" filter-menu="text" edit-type="text" show-in-editor="true">
+			<ax-column-header row-index="2">Street</ax-column-header>
+
+		</ax-column>
+		<ax-column header="Created By" bind-to="createdBy" sortable width="200px" filter-menu="text" edit-type="text" show-in-editor="true">
+			<ax-column-header row-index="1" colspan="2" style="background-color: lightgreen;">Created</ax-column-header>
+			<ax-column-header row-index="2">By</ax-column-header>
+		</ax-column>
+		<ax-column header="Created At" bind-to="createdAt" sortable width="280px" view-type="datetime" filter-menu="datetime" edit-type="datetime" initial-filter-option="Filter by input value" show-in-editor="true">
+			<ax-column-header row-index="2">At</ax-column-header>
+
+		</ax-column>
+		<ax-column header="Inside UE" bind-to="insideUE" sortable width="120px" filter-menu="boolean" view-type="boolean-checkbox" edit-type="checkbox" show-in-editor="true">
+			<ax-column-header row-index="1" colspan="2" style="background-color: #90eeed;">Value</ax-column-header>
+			<ax-column-header row-index="2">Inside UE</ax-column-header>
+		</ax-column>
+		<ax-column header="Value" bind-to="value" sortable width="200px" filter-menu="number" view-type="number" locale="en-US" decimals="0" initial-filter-option="Filter by input value" show-in-editor="true">
+			<ax-column-header row-index="2">Value</ax-column-header>
+			<ax-column-edit type="text" tooltip="$ctrl.config.customTooltipMethod('value')"></ax-column-edit>
+		</ax-column>
+		<ax-column header="Actions" hidden-column width="84px" view-type="crud-buttons"></ax-column>
+		<ax-profiles>
+			<ax-profile name="1. Editor edit mode">
+				<ax-description>Sample with ax-table editing in popup without any layout feature</ax-description>
+				<ax-columns-layout hidden-columns="Gutter Icons,Actions" left-freezed-columns="0" right-freezed-columns="0">
+					<ax-table-attributes order-by="" edit-row="editor"></ax-table-attributes>
+					<ax-toolbar ax-scroller="true">
+						<label toolbar="left" class="header-title">
+							Table with edit-row=editor
+						</label>
+						<ax-dropdown-popup ctrl="$ctrl.config.loadDataPopup"
+												 style="padding: 0;margin:auto 0;"
+												 btn-class="btn btn-primary load-data"
+												 close-on-mouseleave="true"
+												 caret-class="fa fa-caret-down"
+												 popup-class="dropdown-popup-menu"
+												 btn-html="<i class='fa fa-refresh btn-spinner'></i><span style='margin-left:5px;margin-right:25px'>Load data</span>"
+												 close-on-blur="true">
+							<ul class="dropdown-menu">
+								<li ng-click="launcher.select(100)">100 records</li>
+								<li ng-click="launcher.select(1000)">1k records</li>
+								<li ng-click="launcher.select(10000)">10k records</li>
+								<li ng-click="launcher.select(100000)">100k records</li>
+							</ul>
+						</ax-dropdown-popup>
+
+						<ax-dropdown-popup ctrl="$ctrl.$parent.timings"
+												 style="padding: 0;margin:auto 5px "
+												 close-on-mouseleave="true"
+												 close-on-blur="true"
+												 btn-class="btn btn-primary"
+												 btn-style="padding: 0 2px"
+												 btn-html="<i class='fa fa-clock-o'></i><span style='margin-left:5px;margin-right:25px'>Timing</span>"
+												 caret-class="fa"
+												 uib-tooltip="View data load timings">
+							<div class="dropdown-header" style="padding-right:30px;min-width:550px">Data load timings</div>
+							<div style="background-color:white;z-index:100;position:relative;margin:10px;max-height:300px;overflow: auto;padding-right:100px"
+								  class="timings-msg" bind-html-compile="launcher.msg"></div>
+						</ax-dropdown-popup>
+						<ax-global-search toolbar="right" search-columns="" style="width:200px;"></ax-global-search>
+
+						<ax-button toolbar="right" button-type="groups-toggle"></ax-button>
+						<ax-button toolbar="right" button-type="settings" style="margin-left:3px;margin-right:3px;"></ax-button>
+					</ax-toolbar>
+				</ax-columns-layout>
+				<ax-groups></ax-groups>
+			</ax-profile>
+			<ax-profile name="2. Inline edit mode">
+				<ax-description>Table with edit-row="inline"</ax-description>
+				<ax-columns-layout hidden-columns="" left-freezed-columns="2" right-freezed-columns="1">
+					<ax-table-attributes edit-row="inline" order-by="customerInvariant,date"></ax-table-attributes>
+					<ax-toolbar ax-scroller="true">
+						<label toolbar="left" class="header-title">
+							Inline edit mode
+						</label>
+						<ax-dropdown-popup ctrl="$ctrl.config.loadDataPopup"
+												 style="padding: 0;margin:auto 0;"
+												 btn-class="btn btn-primary load-data"
+												 close-on-mouseleave="true"
+												 caret-class="fa fa-caret-down"
+												 popup-class="dropdown-popup-menu"
+												 btn-html="<i class='fa fa-refresh btn-spinner'></i><span style='margin-left:5px;margin-right:25px'>Load data</span>"
+												 close-on-blur="true">
+							<ul class="dropdown-menu">
+								<li ng-click="launcher.select(100)">100 records</li>
+								<li ng-click="launcher.select(1000)">1k records</li>
+								<li ng-click="launcher.select(10000)">10k records</li>
+								<li ng-click="launcher.select(100000)">100k records</li>
+							</ul>
+						</ax-dropdown-popup>
+						<ax-dropdown-popup ctrl="$ctrl.$parent.timings"
+												 style="padding: 0;margin:auto 5px "
+												 close-on-mouseleave="true"
+												 close-on-blur="true"
+												 btn-class="btn btn-primary"
+												 btn-style="padding: 0 2px"
+												 btn-html="<i class='fa fa-clock-o'></i><span style='margin-left:5px;margin-right:25px'>Timing</span>"
+												 caret-class="fa"
+												 uib-tooltip="View data load timings">
+							<div class="dropdown-header" style="padding-right:30px;min-width:550px">Data load timings</div>
+							<div style="background-color:white;z-index:100;position:relative;margin:10px;max-height:300px;overflow: auto;padding-right:100px"
+								  class="timings-msg" bind-html-compile="launcher.msg"></div>
+						</ax-dropdown-popup>
+						<ax-global-search toolbar="right" search-columns="" style="width:200px;"></ax-global-search>
+						<ax-button toolbar="right" button-type="groups-toggle"></ax-button>
+						<ax-button toolbar="right" button-type="settings" style="margin-left:3px;margin-right:3px;"></ax-button>
+					</ax-toolbar>
+				</ax-columns-layout>
+				<ax-groups></ax-groups>
+			</ax-profile>
+			<ax-profile name="3. Inline-cell edit mode">
+				<ax-description>Table with edit-row="inline-cell"</ax-description>
+				<ax-columns-layout hidden-columns="" left-freezed-columns="2" right-freezed-columns="1">
+					<ax-table-attributes edit-row="inline-cell" order-by="customerInvariant,-deliveryCityInvariant"></ax-table-attributes>
+					<ax-toolbar ax-scroller="true">
+						<label toolbar="left" class="header-title">
+							Inline-cell edit mode
+						</label>
+						<ax-dropdown-popup ctrl="$ctrl.config.loadDataPopup"
+												 style="padding: 0;margin:auto 0;"
+												 btn-class="btn btn-primary load-data"
+												 close-on-mouseleave="true"
+												 caret-class="fa fa-caret-down"
+												 popup-class="dropdown-popup-menu"
+												 btn-html="<i class='fa fa-refresh btn-spinner'></i><span style='margin-left:5px;margin-right:25px'>Load data</span>"
+												 close-on-blur="true">
+							<ul class="dropdown-menu">
+								<li ng-click="launcher.select(100)">100 records</li>
+								<li ng-click="launcher.select(1000)">1k records</li>
+								<li ng-click="launcher.select(10000)">10k records</li>
+								<li ng-click="launcher.select(100000)">100k records</li>
+							</ul>
+						</ax-dropdown-popup>
+
+						<ax-dropdown-popup ctrl="$ctrl.$parent.timings"
+												 style="padding: 0;margin:auto 5px "
+												 close-on-mouseleave="true"
+												 close-on-blur="true"
+												 btn-class="btn btn-primary"
+												 btn-style="padding: 0 2px"
+												 btn-html="<i class='fa fa-clock-o'></i><span style='margin-left:5px;margin-right:25px'>Timing</span>"
+												 caret-class="fa"
+												 uib-tooltip="View data load timings">
+							<div class="dropdown-header" style="padding-right:30px;min-width:550px">Data load timings</div>
+							<div style="background-color:white;z-index:100;position:relative;margin:10px;max-height:300px;overflow: auto;padding-right:100px"
+								  class="timings-msg" bind-html-compile="launcher.msg"></div>
+						</ax-dropdown-popup>
+						<ax-global-search toolbar="right" search-columns="" style="width:200px;"></ax-global-search>
+						<ax-button toolbar="right" button-type="groups-toggle"></ax-button>
+						<ax-button toolbar="right" button-type="settings" style="margin-left:3px;margin-right:3px;"></ax-button>
+					</ax-toolbar>
+				</ax-columns-layout>
+				<ax-groups></ax-groups>
+			</ax-profile>
+			<ax-profile name="4. Group by Order Date">
+				<ax-description>Data is grouping by Order Date, with calculations for sum</ax-description>
+				<ax-columns-layout hidden-columns="Gutter Icons,Actions,Order Date, Created By, Created At" left-freezed-columns="0" right-freezed-columns="2">
+					<ax-table-attributes order-by="" edit-row=""></ax-table-attributes>
+					<ax-toolbar ax-scroller="true">
+						<label toolbar="left" class="header-title">
+							Group by Order Date
+						</label>
+						<ax-dropdown-popup ctrl="$ctrl.config.loadDataPopup"
+												 style="padding: 0;margin:auto 0;"
+												 btn-class="btn btn-primary load-data"
+												 close-on-mouseleave="true"
+												 caret-class="fa fa-caret-down"
+												 popup-class="dropdown-popup-menu"
+												 btn-html="<i class='fa fa-refresh btn-spinner'></i><span style='margin-left:5px;margin-right:25px'>Load data</span>"
+												 close-on-blur="true">
+							<ul class="dropdown-menu">
+								<li ng-click="launcher.select(100)">100 records</li>
+								<li ng-click="launcher.select(1000)">1k records</li>
+								<li ng-click="launcher.select(10000)">10k records</li>
+								<li ng-click="launcher.select(100000)">100k records</li>
+							</ul>
+						</ax-dropdown-popup>
+
+						<ax-dropdown-popup ctrl="$ctrl.$parent.timings"
+												 style="padding: 0;margin:auto 5px "
+												 close-on-mouseleave="true"
+												 close-on-blur="true"
+												 btn-class="btn btn-primary"
+												 btn-style="padding: 0 2px"
+												 btn-html="<i class='fa fa-clock-o'></i><span style='margin-left:5px;margin-right:25px'>Timing</span>"
+												 caret-class="fa"
+												 uib-tooltip="View data load timings">
+							<div class="dropdown-header" style="padding-right:30px;min-width:550px">Data load timings</div>
+							<div style="background-color:white;z-index:100;position:relative;margin:10px;max-height:300px;overflow: auto;padding-right:100px"
+								  class="timings-msg" bind-html-compile="launcher.msg"></div>
+						</ax-dropdown-popup>
+						<ax-global-search toolbar="right" search-columns="" style="width:200px;"></ax-global-search>
+
+						<ax-button toolbar="right" button-type="groups-toggle"></ax-button>
+						<ax-button toolbar="right" button-type="settings" style="margin-left:3px;margin-right:3px;"></ax-button>
+					</ax-toolbar>
+				</ax-columns-layout>
+
+				<ax-groups>
+					<ax-all-levels-calculations show-on="header">
+						<ax-calculation column="Value" name="value-sum" display-label="false" aggregate-type="sum"></ax-calculation>
+					</ax-all-levels-calculations>
+					<ax-group expression="true" show-calculations-on="both" all-levels-calculations="true">
+						<ax-group-header label="All records" show-value="false" show-counter="false" show-filter="false" label-indent="10"></ax-group-header>
+						<ax-group-footer label-indent="350"
+											  show-value="false"
+											  show-counter="false"
+											  label="General totals:"></ax-group-footer>
+					</ax-group>
+					<ax-group collapsible="true"
+								 collapsed="false"
+								 all-levels-calculations="false"
+								 expression="dataItem.date"
+								 order-by="date"
+								 show-calculation-on="footer"
+								 label="Order Date">
+						<ax-group-header label="Orders for date:" label-indent="0">
+							<ax-group-display label-indent="10"
+													show-toggle-collapsed="true"
+													show-filter="true"
+													show-value="true">Orders on date:<label style="margin-left:3px">{{::dataItem.value|date:'dd.MM.yyyy'}}</label></ax-group-display>
+						</ax-group-header>
+						<ax-group-footer>
+							<ax-group-display label-indent="200"
+													show-value="false"
+													show-counter="false">Total for date:<label style="margin-left:3px">{{::dataItem.value|date:'dd.MM.yyyy'}}</label></ax-group-display>
+						</ax-group-footer>
+						<ax-calculation column="Value" show-on="footer" display-label="false" name="value-sum1" aggregate-type="sum"></ax-calculation>
+					</ax-group>
+				</ax-groups>
+			</ax-profile>
+			<ax-profile name="5. Grouping with full row group header">
+				<ax-description>Grouping on two levels and group header is always visible even on horizontal scroll to left</ax-description>
+				<ax-columns-layout hidden-columns="Gutter Icons,Actions,Delivery Country, Delivery City" left-freezed-columns="0" right-freezed-columns="3">
+					<ax-table-attributes order-by="" edit-row=""></ax-table-attributes>
+					<ax-toolbar ax-scroller="true">
+						<label toolbar="left" class="header-title">
+							Grouping with full row group header
+						</label>
+						<ax-dropdown-popup ctrl="$ctrl.config.loadDataPopup"
+												 style="padding: 0;margin:auto 0;"
+												 btn-class="btn btn-primary load-data"
+												 close-on-mouseleave="true"
+												 caret-class="fa fa-caret-down"
+												 popup-class="dropdown-popup-menu"
+												 btn-html="<i class='fa fa-refresh btn-spinner'></i><span style='margin-left:5px;margin-right:25px'>Load data</span>"
+												 close-on-blur="true">
+							<ul class="dropdown-menu">
+								<li ng-click="launcher.select(100)">100 records</li>
+								<li ng-click="launcher.select(1000)">1k records</li>
+								<li ng-click="launcher.select(10000)">10k records</li>
+								<li ng-click="launcher.select(100000)">100k records</li>
+							</ul>
+						</ax-dropdown-popup>
+
+						<ax-dropdown-popup ctrl="$ctrl.$parent.timings"
+												 style="padding: 0;margin:auto 5px "
+												 close-on-mouseleave="true"
+												 close-on-blur="true"
+												 btn-class="btn btn-primary"
+												 btn-style="padding: 0 2px"
+												 btn-html="<i class='fa fa-clock-o'></i><span style='margin-left:5px;margin-right:25px'>Timing</span>"
+												 caret-class="fa"
+												 uib-tooltip="View data load timings">
+							<div class="dropdown-header" style="padding-right:30px;min-width:550px">Data load timings</div>
+							<div style="background-color:white;z-index:100;position:relative;margin:10px;max-height:300px;overflow: auto;padding-right:100px"
+								  class="timings-msg" bind-html-compile="launcher.msg"></div>
+						</ax-dropdown-popup>
+						<ax-global-search toolbar="right" search-columns="" style="width:200px;"></ax-global-search>
+
+						<ax-button toolbar="right" button-type="groups-toggle"></ax-button>
+						<ax-button toolbar="right" button-type="settings" style="margin-left:3px;margin-right:3px;"></ax-button>
+					</ax-toolbar>
+				</ax-columns-layout>
+
+				<ax-groups>
+					<ax-all-levels-calculations show-on="header">
+						<ax-calculation column="Value" show-on="footer" name="value-sum" display-label="false" aggregate-type="sum"></ax-calculation>
+					</ax-all-levels-calculations>
+					<ax-group expression="true" show-calculations-on="footer" header-label="All records">
+						<ax-group-footer label-indent="500"
+											  show-value="false"
+											  show-counter="false"
+											  label="General totals:"></ax-group-footer>
+					</ax-group>
+					<ax-group collapsible="true"
+								 collapsed="false"
+								 all-levels-calculations="true"
+								 expression="dataItem.deliveryCountry"
+								 order-by="deliveryCountryInvariant"
+								 label="Delivery Country">
+						<ax-group-header label="Country:" label-indent="0"></ax-group-header>
+						<ax-group-footer label="Total for country:" label-indent="350"></ax-group-footer>
+					</ax-group>
+					<ax-group collapsible="true"
+								 collapsed="true"
+								 all-levels-calculations="true"
+								 expression="dataItem.deliveryCity"
+								 order-by="deliveryCityInvariant"
+								 label="Delivery City">
+						<ax-group-header label="City:" label-indent="20"></ax-group-header>
+						<ax-group-footer label="Total for city:" label-indent="400"></ax-group-footer>
+					</ax-group>
+
+				</ax-groups>
+			</ax-profile>
+			<ax-profile name="6. Grouping with group header on grouping column">
+				<ax-description>Group header is on grouping column and calculations are shown on group footer</ax-description>
+				<ax-columns-layout hidden-columns="Gutter Icons,Actions, Delivery Country, Created By, Created At" left-freezed-columns="0" right-freezed-columns="2">
+					<ax-table-attributes order-by="" edit-row=""></ax-table-attributes>
+					<ax-toolbar ax-scroller="true">
+						<label toolbar="left" class="header-title">
+							Grouping with group header on grouping column
+						</label>
+						<ax-dropdown-popup ctrl="$ctrl.config.loadDataPopup"
+												 style="padding: 0;margin:auto 0;"
+												 btn-class="btn btn-primary load-data"
+												 close-on-mouseleave="true"
+												 caret-class="fa fa-caret-down"
+												 popup-class="dropdown-popup-menu"
+												 btn-html="<i class='fa fa-refresh btn-spinner'></i><span style='margin-left:5px;margin-right:25px'>Load data</span>"
+												 close-on-blur="true">
+							<ul class="dropdown-menu">
+								<li ng-click="launcher.select(100)">100 records</li>
+								<li ng-click="launcher.select(1000)">1k records</li>
+								<li ng-click="launcher.select(10000)">10k records</li>
+								<li ng-click="launcher.select(100000)">100k records</li>
+							</ul>
+						</ax-dropdown-popup>
+
+						<ax-dropdown-popup ctrl="$ctrl.$parent.timings"
+												 style="padding: 0;margin:auto 5px "
+												 close-on-mouseleave="true"
+												 close-on-blur="true"
+												 btn-class="btn btn-primary"
+												 btn-style="padding: 0 2px"
+												 btn-html="<i class='fa fa-clock-o'></i><span style='margin-left:5px;margin-right:25px'>Timing</span>"
+												 caret-class="fa"
+												 uib-tooltip="View data load timings">
+							<div class="dropdown-header" style="padding-right:30px;min-width:550px">Data load timings</div>
+							<div style="background-color:white;z-index:100;position:relative;margin:10px;max-height:300px;overflow: auto;padding-right:100px"
+								  class="timings-msg" bind-html-compile="launcher.msg"></div>
+						</ax-dropdown-popup>
+						<ax-global-search toolbar="right" search-columns="" style="width:200px;"></ax-global-search>
+
+						<ax-button toolbar="right" button-type="groups-toggle"></ax-button>
+						<ax-button toolbar="right" button-type="settings" style="margin-left:3px;margin-right:3px;"></ax-button>
+					</ax-toolbar>
+				</ax-columns-layout>
+
+				<ax-groups>
+					<ax-all-levels-calculations show-on="header">
+						<ax-calculation column="Value" show-on="footer" name="value-sum" display-label="false" aggregate-type="sum"></ax-calculation>
+					</ax-all-levels-calculations>
+					<ax-group expression="true" show-calculations-on="footer">
+						<ax-group-footer label-indent="500"
+											  show-value="false"
+											  show-counter="false"
+											  label="General totals:"></ax-group-footer>
+					</ax-group>
+					<ax-group collapsible="true"
+								 collapsed="true"
+								 all-levels-calculations="true"
+								 expression="dataItem.deliveryCountry"
+								 order-by="deliveryCountryInvariant"
+								 show-calculations-on="footer"
+								 label="Delivery Country">
+						<ax-group-header label="Country:">
+							<ax-group-column column-for="Grouping"
+												  label-indent="0"
+												  show-value="true"
+												  show-label="true"
+												  show-counter="true"
+												  show-filter="true"
+												  show-toggle="true"></ax-group-column>
+						</ax-group-header>
+						<ax-group-footer label="Totals for country:">
+							<ax-group-column column-for="Grouping"
+												  label-indent="50"
+												  show-value="true"
+												  show-label="true"
+												  show-toggle="true"></ax-group-column>
+						</ax-group-footer>
+					</ax-group>
+				</ax-groups>
+			</ax-profile>
+			<ax-profile name="7. Grouping with group header on a selected column">
+				<ax-description>Group header is on a dev selected column and calculations are shown on group footer. Developer (and end-user) can choose where to display group header or group footer for each group level.</ax-description>
+				<ax-columns-layout hidden-columns="Gutter Icons,Actions,Delivery Country, Created By, Created At" left-freezed-columns="0" right-freezed-columns="2">
+					<ax-table-attributes order-by="" edit-row=""></ax-table-attributes>
+					<ax-toolbar ax-scroller="true">
+						<label toolbar="left" class="header-title">
+							Grouping with group header on a selected column
+						</label>
+						<ax-dropdown-popup ctrl="$ctrl.config.loadDataPopup"
+												 style="padding: 0;margin:auto 0;"
+												 btn-class="btn btn-primary load-data"
+												 close-on-mouseleave="true"
+												 caret-class="fa fa-caret-down"
+												 popup-class="dropdown-popup-menu"
+												 btn-html="<i class='fa fa-refresh btn-spinner'></i><span style='margin-left:5px;margin-right:25px'>Load data</span>"
+												 close-on-blur="true">
+							<ul class="dropdown-menu">
+								<li ng-click="launcher.select(100)">100 records</li>
+								<li ng-click="launcher.select(1000)">1k records</li>
+								<li ng-click="launcher.select(10000)">10k records</li>
+								<li ng-click="launcher.select(100000)">100k records</li>
+							</ul>
+						</ax-dropdown-popup>
+
+						<ax-dropdown-popup ctrl="$ctrl.$parent.timings"
+												 style="padding: 0;margin:auto 5px "
+												 close-on-mouseleave="true"
+												 close-on-blur="true"
+												 btn-class="btn btn-primary"
+												 btn-style="padding: 0 2px"
+												 btn-html="<i class='fa fa-clock-o'></i><span style='margin-left:5px;margin-right:25px'>Timing</span>"
+												 caret-class="fa"
+												 uib-tooltip="View data load timings">
+							<div class="dropdown-header" style="padding-right:30px;min-width:550px">Data load timings</div>
+							<div style="background-color:white;z-index:100;position:relative;margin:10px;max-height:300px;overflow: auto;padding-right:100px"
+								  class="timings-msg" bind-html-compile="launcher.msg"></div>
+						</ax-dropdown-popup>
+						<ax-global-search toolbar="right" search-columns="" style="width:200px;"></ax-global-search>
+
+						<ax-button toolbar="right" button-type="groups-toggle"></ax-button>
+						<ax-button toolbar="right" button-type="settings" style="margin-left:3px;margin-right:3px;"></ax-button>
+					</ax-toolbar>
+				</ax-columns-layout>
+				<ax-groups>
+					<ax-all-levels-calculations show-on="header">
+						<ax-calculation column="Value" show-on="footer" name="value-sum" display-label="false" aggregate-type="sum"></ax-calculation>
+					</ax-all-levels-calculations>
+					<ax-group expression="true" show-calculations-on="footer">
+						<ax-group-footer label-indent="500"
+											  show-value="false"
+											  show-counter="false"
+											  label="General totals:"></ax-group-footer>
+					</ax-group>
+					<ax-group collapsible="true"
+								 collapsed="true"
+								 all-levels-calculations="true"
+								 expression="dataItem.deliveryCountry"
+								 order-by="deliveryCountryInvariant"
+								 show-calculations-on="footer"
+								 label="Delivery Country">
+						<ax-group-header label="Country:">
+							<ax-group-column column-for="Customer Name"
+												  label-indent="0"
+												  show-value="true"
+												  show-label="true"
+												  show-filter="true"
+												  show-counter="true"
+												  show-toggle="true"></ax-group-column>
+
+						</ax-group-header>
+						<ax-group-footer label="Totals for country:">
+							<ax-group-column column-for="Customer Name"
+												  label-indent="50"
+												  show-value="true"
+												  show-label="true"
+												  show-toggle="true"></ax-group-column>
+						</ax-group-footer>
+					</ax-group>
+				</ax-groups>
+			</ax-profile>
+			<ax-grid-pivot-table name="Pivot 1">
+				<ax-grid-pivot-table-row column="Delivery City" order-direction="DESC" width="220px"></ax-grid-pivot-table-row>
+				<ax-grid-pivot-table-value column="Value" type="sum" width="200px"></ax-grid-pivot-table-value>
+				<ax-grid-pivot-table-column column="Delivery Country" order-direction="ASC" show="true"></ax-grid-pivot-table-column>
+			</ax-grid-pivot-table>
+			<ax-grid-pivot-table name="Pivot 2">
+				<ax-grid-pivot-table-row column="Delivery City" order-direction="ASC" width="220px"></ax-grid-pivot-table-row>
+				<ax-grid-pivot-table-value column="Value" type="sum" width="140px"></ax-grid-pivot-table-value>
+				<ax-grid-pivot-table-value column="Delivery City" type="count" width="190px"></ax-grid-pivot-table-value>
+				<ax-grid-pivot-table-column column="Inside UE" order-direction="ASC" show="true"></ax-grid-pivot-table-column>
+			</ax-grid-pivot-table>
+			<ax-grid-pivot-table name="Pivot 3">
+				<ax-grid-pivot-table-row column="Order Date" order-direction="ASC" width="220px"></ax-grid-pivot-table-row>
+				<ax-grid-pivot-table-value column="Value" type="sum" width="200px"></ax-grid-pivot-table-value>
+				<ax-grid-pivot-table-column column="Delivery Country" order-direction="DESC" show="true"></ax-grid-pivot-table-column>
+				<ax-grid-pivot-table-column column="Inside UE" order-direction="ASC" width="200px" show="true"></ax-grid-pivot-table-column>
+			</ax-grid-pivot-table>
+
+			<ax-grid-pivot-table name="Pivot 4">
+				<ax-grid-pivot-table-row column="Order Date" order-direction="ASC" show="false"></ax-grid-pivot-table-row>
+				<ax-grid-pivot-table-row column="Inside UE" order-direction="ASC" width="300px"></ax-grid-pivot-table-row>
+				<ax-grid-pivot-table-value column="Value" type="sum" width="200px"></ax-grid-pivot-table-value>
+				<ax-grid-pivot-table-column column="Delivery Country" order-direction="ASC" show="true"></ax-grid-pivot-table-column>
+				<ax-grid-pivot-table-column column="Delivery City" order-direction="ASC" show="true"></ax-grid-pivot-table-column>
+			</ax-grid-pivot-table>
+			<ax-grid-pivot-table name="Pivot 5">
+				<ax-grid-pivot-table-row column="Delivery Country" order-direction="ASC" width="220px"></ax-grid-pivot-table-row>
+				<ax-grid-pivot-table-column column="Order Date" order-direction="ASC"></ax-grid-pivot-table-column>
+				<ax-grid-pivot-table-column column="Inside UE" order-direction="ASC" show="true"></ax-grid-pivot-table-column>
+				<ax-grid-pivot-table-value column="Value" type="sum" width="210px"></ax-grid-pivot-table-value>
+			</ax-grid-pivot-table>
+		</ax-profiles>
+	</ax-grid>
+</div>

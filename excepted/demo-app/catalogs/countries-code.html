@@ -1,0 +1,66 @@
+﻿<div ng-controller="countriesCodeCtrl">
+    <div class="form-title">
+        Countries
+    </div>
+    <ax-grid config="$parent.launcher.dataTable1"
+             order-by="nameInvariant"
+             item-id-field="id"
+             api-controller="countries"
+             edit-row="editor"
+             apply-changes-on-save="false"
+             auto-focus="true"
+             customizable-freezed-columns="false"
+             refresh-item-on-edit="true"
+				 ng-style="{'top':(dataStore.formTitleHeight()+10)+'px'}"
+             style="left:10px;right:10px;bottom:10px;">
+        <ax-toolbar min-width="590px">
+            <ax-button button-type="refresh"></ax-button>
+            <ax-button button-type="settings" ></ax-button>
+        </ax-toolbar>
+        <ax-grid-editor width="440px"
+                        position="right"
+                        cols-width="120px,100%"
+                        show-fields-errors-as="text"
+                        group-controls-in-sections="false"
+                        toolbar-ax-scroller="false"
+                        initial-state="visible"></ax-grid-editor>
+        <ax-groups>
+            <ax-group expression="dataItem.nameInvariant.substring(0,1)"
+                      label="Alphabetical"
+                      order-by="nameInvariant">
+                <ax-group-header show-counter="false"
+                                 show-label="false"></ax-group-header>
+            </ax-group>
+        </ax-groups>
+        <ax-column header="Country Name"
+                   hideable="false"
+                   bind-to="name"
+                   sortable="nameInvariant"
+                   width="300px">
+            <ax-column-filter filter-type="text"></ax-column-filter>
+            <ax-column-view view-type="text" style="padding-left:25px"></ax-column-view>
+            <ax-column-edit edit-type="text" style="padding-left:22px"></ax-column-edit>
+        </ax-column>
+        <ax-column header="Cities"
+                   hideable="true"
+                   width="75px">
+            <ax-column-view view-type="custom" style="padding:0 2px;">
+                <ax-dropdown-popup style="width:100%;margin:0"
+                                   ctrl="$ctrl.$parent.citiesPopup"
+                                   popup-height="200px"
+                                   button-class="btn icon fa fa-external-link"
+                                   caret-class="fa"
+                                   ng-disabled="$ctrl.$validateForm? !$ctrl.config.dataItem: !$parent.dataItem"
+                                   popup-width="500px"
+                                   open-params="$parent.dataItem"
+                                   template-url="'/app-modules/demo-app/catalogs/countries-cities.html'"></ax-dropdown-popup>
+            </ax-column-view>
+            <ax-column-editor ax-dynamic-template-url="'/app-modules/demo-app/catalogs/countries-cities.html'"
+                              colspan="2"
+                              style="width:100%;height:200px"
+            ></ax-column-editor>
+
+        </ax-column>
+        <ax-column header="Actions" show-header="false" view-type="crud-buttons" header-menu="false" width="95px"></ax-column>
+    </ax-grid>
+</div>

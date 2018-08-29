@@ -1,0 +1,445 @@
+<style>
+
+	.calculation-result.value-min {
+		/*width: 110px !important;*/
+	}
+
+	.calculation-result.value-max {
+		/*width: 110px !important;*/
+	}
+
+	.calculation-result.value-tva {
+		/*width: 150px !important;*/
+	}
+
+	.calculation-result.value-sum {
+		/*width: 100% !important;*/
+	}
+
+	tr[level='0'] .calculation-result.value-sum,
+	.calculation-result.value-value-with-taxes {
+		width: 100% !important;
+	}
+
+</style>
+<div ng-controller="recordsGroupingSample1Ctrl" style="position:relative;height:100%;width:100%;">
+	<div class="inline" style="padding: 10px 10px 0 10px;width:100%">
+		<label>
+			Last group (City first letter) has expression = deliveryCity.substring(0,1) for grouping data and calculation by expression = (Value*1.19)
+		</label>
+	</div>
+	<div class="inline" style="padding: 0 10px;width:100%">
+		<strong>Custom display for All records calculation group:</strong>
+		<strong style="margin-left:10px" ng-bind="datatable1.$ctrl.getCalculation('value-0').toLocaleString('ro-RO')"></strong>
+		<div class="ngdialog-close" ng-click="launcher.close()" toolbar="right" ng-if="launcher"></div>
+	</div>
+	<div class="inline" style="padding: 0 10px;width:100%">
+		<span>Choose a different profile in Settings </span>
+		<button class="fa fa-cogs" style="margin:0 2px;"></button>
+		to see other way to define data grouping and calculations.
+	</div>
+	<div class="inline" style="padding: 0 10px;width:100%">Check definition in Data grouping, group properties Advanced UI to see what user can customize.
+	</div>
+
+	<ax-table datasource="data"
+				 config="datatable1"
+				 left-freezed-columns="3"
+				 right-freezed-columns="1"
+				 style="top:140px">
+		<ax-toolbar>
+			<label style="white-space: nowrap;">Sample 1</label>
+			<ax-button toolbar="right" button-type="groups-toggle"></ax-button>
+			<ax-button toolbar="right" button-type="settings"></ax-button>
+		</ax-toolbar>
+		<ax-export file-name="Records grouping" export-type="client" data-value="view" api-controller="" view-template-limit="1001"></ax-export>
+		<ax-groups>
+			<ax-group expression="true">
+				<ax-calculation column="Value" show-on="both" name="value-0" aggregate-type="sum"></ax-calculation>
+				<ax-group-header show="true" show-filter="false" show-value="false" label="All records" label-indent="10"></ax-group-header>
+				<ax-group-footer show-value="false" label="Total general:" label-indent="300"></ax-group-footer>
+			</ax-group>
+			<ax-group header-indent="0"
+						 expression="dataItem.deliveryCountry"
+						 order-by="deliveryCountryInvariant"
+						 show-calculations-on="header"
+						 label="Country">
+				<ax-calculation column="Value" name="value-max" aggregate-type="max"></ax-calculation>
+				<ax-calculation column="Value"
+									 expression="dataItem.value*0.19"
+									 name="value-tva"
+									 aggregate-type="sum"
+									 display-label="tva"></ax-calculation>
+				<ax-calculation column="Value" name="value-sum" aggregate-type="sum"></ax-calculation>
+			</ax-group>
+			<ax-group1 expression="dataItem.deliveryCity.substring(0,1)"
+						  order-by="deliveryCityInvariant"
+						  collapsed="true"
+						  show-calculations-on="header"
+						  label="City first letter">
+				<ax-group-header background-color="rgb(218, 215, 215)" label-indent="20" label="City first letter:"></ax-group-header>
+				<ax-calculation column="Value" expression="dataItem.value*1.19" name="value-with-tva" aggregate-type="sum" display-label="Value with taxes">
+					<ax-calculation-result style="width:100%;font-weight: normal;text-align: center;display: block">
+						<div class="inline" style="width:100%;padding-left:10px;white-space: nowrap">
+							Value with taxes:
+							<div style="width:100%;font-weight:bold;margin-right:5px;text-align:right;" ng-bind="dataItem.calculations['value-with-tva'].toLocaleString()"></div>
+						</div>
+					</ax-calculation-result>
+				</ax-calculation>
+			</ax-group1>
+		</ax-groups>
+		<ax-column bind-to="number" header="Order ID" width="100px" filter-menu="number" view-type="number" locale="en-US" decimals="0">
+			<ax-column-header row-index="1" colspan="2">Order</ax-column-header>
+			<ax-column-header row-index="2">ID</ax-column-header>
+		</ax-column>
+		<ax-column bind-to="date" sortable header="Order date" width="140px" style="text-align:center" filter-menu="date" view-type="date">
+			<ax-column-header row-index="2">Date</ax-column-header>
+		</ax-column>
+		<ax-column bind-to="deliveryCountry" sortable="deliveryCountryInvariant" header="Delivery Country" width="300px" filter-menu="text">
+			<ax-column-header row-index="1" colspan="4">Customer</ax-column-header>
+			<ax-column-header row-index="2">Country</ax-column-header>
+		</ax-column>
+		<ax-column bind-to="deliveryCity" sortable="deliveryCityInvariant" header="Delivery City" width="300px" filter-menu="text">
+			<ax-column-header row-index="2">City</ax-column-header>
+		</ax-column>
+		<ax-column bind-to="customer" sortable="customerInvariant" header="Customer Name" width="250px" filter-menu="text">
+			<ax-column-header row-index="2">Name</ax-column-header>
+		</ax-column>
+		<ax-column bind-to="deliveryAddress" header="Delivery Address" width="250px" filter-menu="text">
+			<ax-column-header row-index="2">Street</ax-column-header>
+		</ax-column>
+		<ax-column bind-to="insideUE" header="Inside UE" width="80px" filter-menu="boolean" view-type="boolean-checkbox" edit-type="checkbox">
+			<ax-column-header row-index="1" rowspan="2">Inside UE</ax-column-header>
+		</ax-column>
+		<ax-column bind-to="createdBy" header="Created By" width="180px" filter-menu="text">
+			<ax-column-header row-index="1" colspan="2">Created</ax-column-header>
+			<ax-column-header row-index="2">User Name</ax-column-header>
+		</ax-column>
+		<ax-column bind-to="createdAt" header="Created At" width="250px" filter-menu="datetime" view-type="datetime">
+			<ax-column-header row-index="2">Datetime</ax-column-header>
+		</ax-column>
+		<ax-column bind-to="value" header="Value" width="760px" filter-menu="number" view-type="number" locale="en-US" decimals="0">
+			<ax-column-header row-index="1" rowspan="2">Value</ax-column-header>
+		</ax-column>
+		<ax-profiles>
+			<ax-profile name="Sample 1">
+				<ax-description>Calculations are shown on header</ax-description>
+				<ax-columns-layout hidden-columns="Delivery Country">
+					<ax-table-attributes left-freezed-columns="3"
+												right-freezed-columns="1"></ax-table-attributes>
+					<ax-toolbar ax-scroller="true">
+						<label toolbar="left" class="header-title">
+							Sample 1
+						</label>
+						<ax-button toolbar="right" button-type="groups-toggle"></ax-button>
+						<ax-button toolbar="right" button-type="settings"></ax-button>
+					</ax-toolbar>
+				</ax-columns-layout>
+				<ax-groups>
+					<ax-group expression="true">
+						<ax-calculation column="Value" show-on="both" name="value-0" aggregate-type="sum"></ax-calculation>
+						<ax-group-footer show-value="false" label="Total general:" label-indent="300"></ax-group-footer>
+					</ax-group>
+					<ax-group header-indent="0"
+								 expression="dataItem.deliveryCountry"
+								 order-by="deliveryCountryInvariant"
+								 show-calculations-on="header"
+								 label="Country">
+						<ax-calculation column="Value" name="value-min" aggregate-type="min"></ax-calculation>
+						<ax-calculation column="Value" name="value-max" aggregate-type="max"></ax-calculation>
+						<ax-calculation column="Value"
+											 expression="dataItem.value*0.19"
+											 name="value-tva"
+											 aggregate-type="sum"
+											 display-label="tva"></ax-calculation>
+						<ax-calculation column="Value" name="value-sum" aggregate-type="sum"></ax-calculation>
+					</ax-group>
+					<ax-group expression="dataItem.deliveryCity.substring(0,1)"
+								 order-by="deliveryCityInvariant"
+								 collapsed="true"
+								 show-calculations-on="header"
+								 label="City first letter">
+						<ax-group-header background-color="rgb(218, 215, 215)" label-indent="20" label="City first letter:"></ax-group-header>
+						<ax-calculation column="Value" expression="dataItem.value*1.19" name="value-with-tva" aggregate-type="sum" display-label="Value with taxes">
+							<ax-calculation-result style="width:100%;font-weight: normal;text-align: center;display: block">
+								<div class="inline" style="width:100%;padding-left:10px">
+									Value with taxes:
+									<div style="width:100%;font-weight:bold;margin-right:5px;text-align:right;" ng-bind="dataItem.calculations['value-with-tva'].toLocaleString()"></div>
+								</div>
+							</ax-calculation-result>
+						</ax-calculation>
+					</ax-group>
+				</ax-groups>
+			</ax-profile>
+			<ax-profile name="Sample 2">
+				<ax-description>Calculations are shown on footer</ax-description>
+				<ax-columns-layout hidden-columns="Delivery Country">
+					<ax-table-attributes left-freezed-columns="1"
+												right-freezed-columns="1"></ax-table-attributes>
+					<ax-toolbar ax-scroller="true">
+						<label toolbar="left" class="header-title">
+							Sample 2
+						</label>
+						<ax-button toolbar="right" button-type="groups-toggle"></ax-button>
+						<ax-button toolbar="right" button-type="settings"></ax-button>
+					</ax-toolbar>
+				</ax-columns-layout>
+				<ax-groups>
+					<ax-group expression="true">
+						<ax-calculation column="Value" show-on="both" aggregate-type="sum"></ax-calculation>
+						<ax-group-footer label="Total general:" label-indent="300"></ax-group-footer>
+					</ax-group>
+					<ax-group header-indent="0"
+								 expression="dataItem.deliveryCountry"
+								 order-by="deliveryCountryInvariant"
+								 label="Country">
+						<ax-group-footer label-indent="250" label="Total value for:" show-counter="false"></ax-group-footer>
+						<ax-calculation column="Value" show-on="footer" name="value-min" aggregate-type="min"></ax-calculation>
+						<ax-calculation column="Value" show-on="footer" name="value-max" aggregate-type="max"></ax-calculation>
+						<ax-calculation column="Value"
+											 expression="dataItem.value*0.19"
+											 name="value-tva"
+											 show-on="footer"
+											 aggregate-type="sum"
+											 display-label="tva"></ax-calculation>
+						<ax-calculation column="Value" show-on="footer" name="value-sum" aggregate-type="sum"></ax-calculation>
+					</ax-group>
+					<ax-group expression="dataItem.deliveryCity.substring(0,1)"
+								 order-by="deliveryCityInvariant"
+								 collapsed="true"
+								 label="City first letter">
+						<ax-group-header background-color="rgb(218, 215, 215)" label-indent="20" label="City first letter:"></ax-group-header>
+						<ax-group-footer label-indent="200" label="Total with taxes for:" show-counter="false"></ax-group-footer>
+						<ax-calculation column="Value" expression="dataItem.value*1.19" name="value-with-tva" show-on="footer" aggregate-type="sum" display-label="Value with taxes">
+							<ax-calculation-result style="width:100%;font-weight: normal;text-align: center;display: block">
+								<div class="inline" style="width:100%;padding-left:10px">
+									Value with taxes:
+									<div style="width:100%;font-weight:bold;margin-right:5px;text-align:right;" ng-bind="dataItem.calculations['value-with-tva'].toLocaleString()"></div>
+								</div>
+							</ax-calculation-result>
+						</ax-calculation>
+					</ax-group>
+				</ax-groups>
+			</ax-profile>
+			<ax-profile name="Sample 3">
+				<ax-description>Groups headers and footer are shown in Grouping column</ax-description>
+				<ax-columns-layout hidden-columns="Delivery Country">
+					<ax-table-attributes left-freezed-columns="1"
+												right-freezed-columns="1"></ax-table-attributes>
+					<ax-toolbar ax-scroller="true">
+						<label toolbar="left" class="header-title">
+							Sample 3
+						</label>
+						<ax-button toolbar="right" button-type="groups-toggle"></ax-button>
+						<ax-button toolbar="right" button-type="settings"></ax-button>
+					</ax-toolbar>
+				</ax-columns-layout>
+				<ax-groups>
+					<ax-group expression="true">
+						<ax-calculation column="Value" show-on="both" name="value-0" aggregate-type="sum"></ax-calculation>
+						<ax-group-footer label="Total general:">
+							<ax-group-column column-for="Grouping"
+												  label-indent="60"
+												  show-value="true"
+												  show-label="true"
+												  show-counter="false"></ax-group-column>
+
+						</ax-group-footer>
+					</ax-group>
+					<ax-group expression="dataItem.deliveryCountry"
+								 order-by="deliveryCountryInvariant"
+								 label="Country">
+						<ax-group-header background-color="#efeded" label="Country">
+							<ax-group-column column-for="Grouping"
+												  label-indent="0"
+												  show-value="true"
+												  show-label="true"
+												  show-counter="true"
+												  show-filter="true"
+												  show-toggle="true"></ax-group-column>
+						</ax-group-header>
+
+						<ax-group-footer label="Total value for:">
+							<ax-group-column column-for="Grouping"
+												  label-indent="100"
+												  show-value="true"
+												  show-label="true"
+												  show-counter="false"></ax-group-column>
+
+						</ax-group-footer>
+						<ax-calculation column="Value" show-on="footer" name="value-min" aggregate-type="min"></ax-calculation>
+						<ax-calculation column="Value" show-on="footer" name="value-max" aggregate-type="max"></ax-calculation>
+						<ax-calculation column="Value"
+											 expression="dataItem.value*0.19"
+											 name="value-tva"
+											 show-on="footer"
+											 aggregate-type="sum"
+											 display-label="tva"></ax-calculation>
+						<ax-calculation column="Value" show-on="footer" name="value-sum" aggregate-type="sum"></ax-calculation>
+					</ax-group>
+					<ax-group expression="dataItem.deliveryCity.substring(0,1)"
+								 order-by="deliveryCityInvariant"
+								 collapsed="true"
+								 label="City first letter">
+						<ax-group-header background-color="rgb(218, 215, 215)" label="City first letter:">
+							<ax-group-column column-for="Grouping"
+												  label-indent="20"
+												  show-value="true"
+												  show-label="true"
+												  show-counter="true"
+												  show-filter="true"
+												  show-toggle="true"></ax-group-column>
+						</ax-group-header>
+						<ax-group-footer label="Total with taxes for:">
+							<ax-group-column column-for="Grouping"
+												  label-indent="120"
+												  show-value="true"
+												  show-label="true"
+												  show-counter="false"></ax-group-column>
+						</ax-group-footer>
+						<ax-calculation column="Value" expression="dataItem.value*1.19" name="value-with-tva" show-on="footer" aggregate-type="sum" display-label="Value with taxes">
+							<ax-calculation-result style="width:100%;font-weight: normal;text-align: center;display: block">
+								<div class="inline" style="width:100%;padding-left:10px">
+									Value with taxes:
+									<div style="width:100%;font-weight:bold;margin-right:5px;text-align:right;" ng-bind="dataItem.calculations['value-with-tva'].toLocaleString()"></div>
+								</div>
+							</ax-calculation-result>
+						</ax-calculation>
+					</ax-group>
+				</ax-groups>
+			</ax-profile>
+			<ax-profile name="Sample 4">
+				<ax-description>Groups headers and footer are shown in on a different column for each level</ax-description>
+				<ax-columns-layout hidden-columns="Delivery Country">
+					<ax-table-attributes left-freezed-columns="3"
+												right-freezed-columns="1"></ax-table-attributes>
+					<ax-toolbar ax-scroller="true">
+						<label toolbar="left" class="header-title">
+							Sample 4
+						</label>
+						<ax-button toolbar="right" button-type="groups-toggle"></ax-button>
+						<ax-button toolbar="right" button-type="settings"></ax-button>
+					</ax-toolbar>
+				</ax-columns-layout>
+				<ax-groups>
+					<ax-group expression="true">
+						<ax-calculation column="Value" show-on="both" name="value-0" aggregate-type="sum"></ax-calculation>
+						<ax-group-footer label="Total general:" label-indent="300" show-label="true" show-counter="false">
+						</ax-group-footer>
+					</ax-group>
+					<ax-group expression="dataItem.deliveryCountry"
+								 order-by="deliveryCountryInvariant"
+								 label="Country">
+						<ax-group-header background-color="#efeded" label="Country">
+							<ax-group-column column-for="Delivery Country"
+												  label-indent="0"
+												  show-value="true"
+												  show-label="true"
+												  show-counter="true"
+												  show-filter="true"
+												  show-toggle="true"></ax-group-column>
+							<ax-group-column column-for="Customer Name"
+												  show-value="false"
+												  show-label="false"
+												  show-toggle-collapsed="false"
+												  show-counter="false">
+								<strong>Custom html: {{::dataItem.firstDataItem.customer}}</strong>
+							</ax-group-column>
+						</ax-group-header>
+
+						<ax-group-footer label="Total value for:">
+							<ax-group-column column-for="Delivery Country"
+												  label-indent="50"
+												  show-value="true"
+												  show-label="true"
+												  show-counter="false"></ax-group-column>
+
+						</ax-group-footer>
+						<ax-calculation column="Value" show-on="footer" name="value-min" aggregate-type="min"></ax-calculation>
+						<ax-calculation column="Value" show-on="footer" name="value-max" aggregate-type="max"></ax-calculation>
+						<ax-calculation column="Value"
+											 expression="dataItem.value*0.19"
+											 name="value-tva"
+											 show-on="footer"
+											 aggregate-type="sum"
+											 display-label="tva"></ax-calculation>
+						<ax-calculation column="Value" show-on="footer" name="value-sum" aggregate-type="sum"></ax-calculation>
+					</ax-group>
+					<ax-group expression="dataItem.deliveryCity.substring(0,1)"
+								 order-by="deliveryCityInvariant"
+								 collapsed="true"
+								 label="City first letter">
+						<ax-group-header background-color="rgb(218, 215, 215)" label="City first letter:">
+							<ax-group-column column-for="Delivery City"
+												  label-indent="0"
+												  show-value="true"
+												  show-label="true"
+												  show-counter="true"
+												  show-filter="true"
+												  show-toggle="true"></ax-group-column>
+						</ax-group-header>
+						<ax-group-footer label="Total with taxes for:">
+							<ax-group-column column-for="Delivery City"
+												  label-indent="50"
+												  show-value="true"
+												  show-label="true"
+												  show-counter="false"></ax-group-column>
+						</ax-group-footer>
+						<ax-calculation column="Value" expression="dataItem.value*1.19" name="value-with-tva" show-on="footer" aggregate-type="sum" display-label="Value with taxes">
+							<ax-calculation-result style="width:100%;font-weight: normal;text-align: center;display: block">
+								<div class="inline" style="width:100%;padding-left:10px">
+									Value with taxes:
+									<div style="width:100%;font-weight:bold;margin-right:5px;text-align:right;" ng-bind="dataItem.calculations['value-with-tva'].toLocaleString()"></div>
+								</div>
+							</ax-calculation-result>
+						</ax-calculation>
+					</ax-group>
+				</ax-groups>
+			</ax-profile>
+			<ax-profile name="Sample 5">
+				<ax-description>Calculations are shown on header with ax-all-levels-calculations template</ax-description>
+				<ax-columns-layout hidden-columns="Delivery Country">
+					<ax-table-attributes left-freezed-columns="1"
+												right-freezed-columns="1"></ax-table-attributes>
+					<ax-toolbar ax-scroller="true">
+						<label toolbar="left" class="header-title">
+							Sample 1
+						</label>
+						<ax-button toolbar="right" button-type="groups-toggle"></ax-button>
+						<ax-button toolbar="right" button-type="settings"></ax-button>
+					</ax-toolbar>
+				</ax-columns-layout>
+				<ax-groups>
+					<ax-all-levels-calculations show-on-header>
+						<ax-calculation column="Value" name="value-min" aggregate-type="min"></ax-calculation>
+						<ax-calculation column="Value" name="value-max" aggregate-type="max"></ax-calculation>
+						<ax-calculation column="Value"
+											 expression="dataItem.value*0.19"
+											 name="value-tva"
+											 aggregate-type="sum"
+											 display-label="tva"></ax-calculation>
+						<ax-calculation column="Value" name="value-sum" aggregate-type="sum"></ax-calculation>
+					</ax-all-levels-calculations>
+					<ax-group expression="true" show-calculations-on="both">
+						<ax-group-footer show-value="false" label="Total general:" label-indent="300"></ax-group-footer>
+					</ax-group>
+					<ax-group header-indent="0"
+								 expression="dataItem.deliveryCountry"
+								 order-by="deliveryCountryInvariant"
+								 show-calculations-on="header"
+								 label="Country">
+					</ax-group>
+					<ax-group expression="dataItem.deliveryCity.substring(0,1)"
+								 order-by="deliveryCityInvariant"
+								 collapsed="true"
+								 show-calculations-on="header"
+								 label="City first letter">
+						<ax-group-header background-color="rgb(218, 215, 215)"
+											  label-indent="20"
+											  label="City first letter:"></ax-group-header>
+					</ax-group>
+				</ax-groups>
+			</ax-profile>
+
+		</ax-profiles>
+	</ax-table>
+</div>

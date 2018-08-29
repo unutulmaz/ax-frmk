@@ -1,0 +1,22 @@
+<div class="form-title">Records ordering
+</div>
+<div ng-style="{'top':(dataStore.formTitleHeight()+10)+'px'}"
+	  style="position: absolute;top:45px;bottom:10px;left:10px;right:10px;overflow: auto;padding-right:10px">
+	<div class="info-text">
+		<div style="display:inline-flex;">
+			<div style="margin-right:10px;">
+				<strong>Developer</strong>
+				<br/><span style="padding-left:20px">- ax-table attribute <strong>order-by = "Column1,-Column2,Column3"</strong>  columns list, separated by comma and using minus sign for descending order.</span>
+				<br/><span style="padding-left:20px">- ax-column attribute <strong>sortable = "ColumnNameInvariant"</strong>  or empty. If empty the sorting will be made for column name defined in bind-to attribute. ColumnNameInvariant is a hidden column with value for ColumnName without accents. Can be created with axDataAdapter, open Javascript tab to see how.</span>
+				<br/><span style="padding-left:20px">- ax-column-header attribute <strong>sortable = "ColumnNameInvariant"</strong>  or empty. If empty the sorting will be made for column name defined in bind-to attribute.</span>
+				<br/><br/><strong>End user - UI</strong>
+				<br/><span style="padding-left:20px">- each column has a menu activated by click on the last level header.</span>
+				<br/><span style="padding-left:20px">- on axTable Settings button <i class="fa fa-cogs"></i> open a config popup where you can set sorting by drag & drop. Here can be set order by multiple columns.</span>
+				<br>In this sample data are filtered with a custom filter by deliveryCity which has accents or non-alphabetic characters in name.
+			</div>
+		</div>
+	</div>
+	<ax-code-tabs template-url="/app-modules/docs/ax-table/records-ordering/records-ordering-1.html"
+					  style="position:relative;height:400px;width:100%;"
+					  source-code="code"></ax-code-tabs>
+</div>

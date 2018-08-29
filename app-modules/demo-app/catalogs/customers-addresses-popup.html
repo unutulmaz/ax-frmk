@@ -1,0 +1,92 @@
+﻿<ax-table api-controller="customers-addresses"
+          load-data-responses="countries=>launcher.dataSet.countries;cities=>launcher.dataSet.cities"
+          order-by="countryInvariant,cityInvariant,name"
+          config="launcher.dataTable1"
+          selectable-rows-model-type="id-field"
+          selectable-rows-model="launcher.currentSelection"
+          style="height:100%"
+          item-id-field="id"
+          selectable-rows="single"
+          edit-row="inline"
+          apply-changes-on-save="false"
+          auto-focus="true"
+          right-freezed-columns="1"
+          customizable-freezed-columns="false"
+          customizable-config="false"
+          customizable-edit-mode="false"
+          columns-autofit-enabled="false"
+          export-disabled="true"
+          dont-close-popup="true"
+          refresh-item-on-edit="true">
+    <ax-toolbar>
+        <button toolbar="right"
+                class="btn btn-primary"
+                style="width:auto;margin-right:3px"
+                ng-disabled="($ctrl.$parent.launcher.readOnly || !$ctrl.currentItem) ? true: false"
+                ng-click="$ctrl.$parent.launcher.confirm($event)">
+            <i class="fa fa-check"></i>Select
+        </button>
+        <ax-button toolbar="right"
+                   show-title="false"
+                   style="margin-right:0"
+                   button-type="settings"></ax-button>
+        <div toolbar="right"
+             class="ngdialog-close"
+             style="position:relative;display:inline-flex"
+             ng-click="$ctrl.$parent.popupClose($event)"></div>
+    </ax-toolbar>
+    <ax-column header="Name"
+               bind-to="name"
+               hideable="false"
+               width="100px">
+        <ax-column-filter filter-type="text"></ax-column-filter>
+        <ax-column-edit edit-type="text"></ax-column-edit>
+    </ax-column>
+    <ax-column header="Country"
+               bind-to="countryId"
+               sortable="countryInvariant"
+               width="150px">
+        <ax-column-filter filter-type="text"></ax-column-filter>
+        <ax-column-view view-type="text" bind-to="country"></ax-column-view>
+        <ax-column-edit edit-type="autocomplete"
+                        datasource="$ctrl.$parent.launcher.dataSet.countries"
+                        item-id-field="id"
+                        item-display-field="name"
+                        item-invariant-field="nameInvariant">
+            <ax-dropdown-popup template-url="'/app-modules/demo-app/catalogs/countries-code-popup.html'"
+                               caret-class="fa fa-edit"
+                               ctrl="$parent.$ctrl.$parent.launcher.countriesEdit"
+                               popup-height="305px"
+                               popup-width="300px"></ax-dropdown-popup>
+        </ax-column-edit>
+    </ax-column>
+    <ax-column header="City"
+               bind-to="cityId"
+               sortable="cityInvariant"
+               width="150px">
+        <ax-column-filter filter-type="text"></ax-column-filter>
+        <ax-column-view view-type="text" bind-to="city"></ax-column-view>
+        <ax-column-edit edit-type="autocomplete"
+                        datasource="$ctrl.$parent.launcher.dataSet.cities"
+                        datasource-filter="$ctrl.$parent.launcher.getCitiesForCountry(datasource,param)"
+                        datasource-filter-param="$parent.$parent.dataItem.countryId"
+                        item-id-field="id"
+                        item-display-field="name"
+                        item-invariant-field="nameInvariant">
+            <ax-dropdown-popup template-url="'/app-modules/demo-app/catalogs/cities-code-popup.html'"
+                               caret-class="fa fa-edit"
+                               ctrl="$parent.$ctrl.$parent.launcher.citiesEdit"
+                               open-params="$parent.$parent.$ctrl.$parent.launcher.getDataItemCountry($parent.$parent.$parent.dataItem)"
+                               popup-height="200px"
+                               popup-width="405px"></ax-dropdown-popup>
+        </ax-column-edit>
+    </ax-column>
+    <ax-column header="Address"
+               bind-to="address"
+               width="300px">
+        <ax-column-filter filter-type="text"></ax-column-filter>
+        <ax-column-view view-type="text"></ax-column-view>
+        <ax-column-edit edit-type="text-with-zoom"></ax-column-edit>
+    </ax-column>
+    <ax-column header="Actions" show-header="false" view-type="crud-buttons" width="60px"></ax-column>
+</ax-table>

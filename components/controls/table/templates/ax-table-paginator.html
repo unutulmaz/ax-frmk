@@ -1,0 +1,20 @@
+<div style="width:260px;padding:10px">
+	<style>
+		button.selected {
+			background-color: orange;
+		}
+	</style>
+	<div class="dropdown-header" ng-bind="launcher.title"></div>
+	<div class="inline allWidth" style="margin:10px auto">
+		<button class="form-control"
+						ng-repeat="size in launcher.sizes"
+						ng-click="launcher.pageSize=size"
+						ng-class="{'selected': launcher.pageSize===size}"
+						ng-if="launcher.hasVariableRowHeight? size !=='ALL':true"
+						ng-bind="size"></button>
+	</div>
+	<div style="text-align: left">
+		<button ng-click="launcher.confirm($event)" class="btn btn-primary" style="width:115px;margin-right:6px"><i class="fa fa-check"></i> {{launcher.applyText || 'Apply'}}</button>
+		<button ng-click="launcher.close($event)" class="btn btn-primary" style="width:115px"> <i class="fa fa-ban"></i>{{launcher.cancelText || 'Cancel'}}</button>
+	</div>
+</div>

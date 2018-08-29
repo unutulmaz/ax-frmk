@@ -1,0 +1,43 @@
+<style>
+	.records-editing code {
+		color: black;
+		font-weight: bold;
+		font-family: Consolas;
+		font-size: 14px;
+	}
+</style>
+<div class="form-title">
+	Records editing
+</div>
+<div ng-style="{'top':(dataStore.formTitleHeight()+10)+'px'}"
+	  style="position: absolute;top:45px;bottom:10px;left:10px;right:10px;overflow: auto;padding-right:10px" ng-controller="recordsEditingCtrl">
+	<div class="info-text records-editing" ng-if="true">
+		For edit data inside ax-table, you need to 
+		<br />1. Set axTable attributes:
+		<ax-attr>edit-row</ax-attr> with one of these values <strong>inline</strong>, <strong>inline-cell</strong> or <strong>popup</strong>.
+		<ax-attr>apply-changes-on-save</ax-attr> true or false. By default is false for data-table and true for data-list. For <strong>edit-row</strong> = <strong>inline-cell</strong> is false and not assignable.
+		<br /> 2. Add some button to <a ui-sref="ax-table/toolbar-template"><strong>ax-toolbar</strong></a>
+		<ax-attr><code ng-bind="'<ax-button toolbar=\'right\' button-type=\'add\'></ax-button>'"></code></ax-attr> button for add new records
+		<ax-attr><code ng-bind="'<ax-button toolbar=\'right\' button-type=\'edit\'></ax-button>'"></code></ax-attr> button to enable edit mode for <strong>edit-row</strong>=<strong>inline-cell</strong> type.
+		<br />3. Add two columns:
+		<ax-attr><code ng-bind="'<ax-column header=\'Icons\' width=\'20px\' view-type=\'gutter-icons\'></ax-column>'"></code></ax-attr> for global messages error icon and save icon (which is shown if data is saved, and disapear after 300ms). If you don have global record error message and don't want semnalize to user when data si saved, you don't need to add this column.
+		<ax-attr><code ng-bind="'<ax-column header=\'Actions\' width=\'80px\' view-type=\'crud-buttons\'></ax-column>'"></code></ax-attr> a column with buttons: view, edit, delete, save and undo, depending on edit-row type, and operation executed by the user.
+		<br />4. Setup <a ui-sref="ax-table/column-edit"><strong>ax-column-edit</strong></a> template for each column you need for data edit.
+		<br /><br /><strong>Inline edit mode</strong>
+		<br /> - In this mode, editing controls are shown after user press edit button from Actions column, or pressing F2.
+		<br /> - Data is saved when user press save button from Actions column, or when press Ctrl+S. Use can also choose to undo changes (Escape). Calculations are updated after save.
+		<br /> - User can edit just one row at the time.
+		<br /> - If <strong>apply-changes-on-save</strong> = <strong>false</strong> user must press Apply changes Settings button for order and filter apply.
+		<br /><br /><strong>Inline-cell edit mode</strong>
+		<br /> - In this mode, editing controls are shown after user press Edit Data button from toolbar.
+		<br /> - Data is saved when user leave current control. User cannot undo changes. Calculations are updated after save.
+		<br /> - Data is not saved if validations return errors. Row is marked as having errors - in gutter icons column and in the column with error are shown errors icons.
+		<br /> - User can edit current row.
+		<br /> - User must press Apply changes button for order and fitler apply.
+
+	</div>
+
+	<ax-code-tabs template-url="/app-modules/docs/ax-table/records-editing/records-editing-1.html"
+					  style="position:relative;height:600px;width:100%;"
+					  source-code="code"></ax-code-tabs>
+</div>

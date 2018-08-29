@@ -1,0 +1,103 @@
+<style>
+    [filter-type=date] {
+        height: initial !important;
+    }
+
+    .custom [filter-for][filter-type=date] > div {
+        display: initial !important;
+    }
+
+    .custom th [filter-for][filter-type=date] > div.between > ax-datetime {
+        width: initial;
+        margin-right: 25px;
+    }
+
+    .custom th [filter-for][filter-type=date] > div > .operator {
+        display: none !important;
+    }
+
+</style>
+<div ng-controller="columnFilterMenuCtrl" style="position:relative;width:100%;height:100%">
+    <ax-table datasource="data"
+                   config="datatable1"
+                   class="custom"
+                   style="position:relative;width:100%;height:100%">
+        <ax-toolbar>
+            <label class="header-title" toolbar="left">
+                Column filter menu
+            </label>
+            <ax-button toolbar="right" button-type="settings"></ax-button>
+        </ax-toolbar>
+        <ax-column bind-to="date" sortable view-type="date" filter-menu="date" header="Order date" width="200px" style="text-align:center">
+            <ax-column-header row-index="1">Order Date</ax-column-header>
+            <ax-column-header row-index="2">date-custom css</ax-column-header>
+            <ax-column-filter-menu data-type="date" initial-filter-option="Filter by input value"></ax-column-filter-menu>
+        </ax-column>
+        <ax-column bind-to="createdAt" sortable header="Created At" width="280px" view-type="datetime" style="text-align: center">
+            <ax-column-header row-index="1">Created at</ax-column-header>
+            <ax-column-header row-index="2">datetime</ax-column-header>
+            <ax-column-filter-menu data-type="datetime" initial-filter-option="Filter by input value"></ax-column-filter-menu>
+        </ax-column>
+        <ax-column bind-to="customer" sortable="customerInvariant" header="Customer Name" width="250px">
+            <ax-column-header row-index="1">Customer Name</ax-column-header>
+            <ax-column-header row-index="2">text with invariant</ax-column-header>
+            <ax-column-filter-menu bind-to="customer" invariant-field="customerInvariant" data-type="string"></ax-column-filter-menu>
+        </ax-column>
+        <ax-column header="Address" width="400px">
+            <ax-column-header row-index="1">Address</ax-column-header>
+            <ax-column-header row-index="2">custom filter</ax-column-header>
+            <ax-column-filter-menu data-type="custom">
+                <hint>This will be first option in Filter menu</hint>
+                <ax-column-filter filter-type="custom" label="Option Two">
+                    <button role="column-filter"
+                            class="form-control btn value1"
+                            placeholder="option filter 2"
+                            ng-click="$ctrl.$parent.customFilter.option2.setValue(1,$event);$ctrl.filterApply()"
+                            ng-disabled="$ctrl.getCollection('initial').length==0"
+                            style="width: 100%;margin-left:5px;margin-right:5px;background-color: lightseagreen;color:white" tabindex="0">
+                        Has word Road
+                    </button>
+                    <button role="column-filter"
+                            class="form-control btn value2"
+                            placeholder="option filter 2"
+                            ng-click="$ctrl.$parent.customFilter.option2.setValue(2, $event);$ctrl.filterApply()"
+                            ng-disabled="$ctrl.getCollection('initial').length==0"
+                            style="width: 100%;margin-right:40px;background-color: lightsalmon;" tabindex="0">
+                        Something Else
+                    </button>
+                    <button class="btn icon fa fa-eraser"
+                            style="position: absolute;right:0;"
+                            ng-click="$ctrl.$parent.customFilter.option2.clear($event)"></button>
+                </ax-column-filter>
+                <hint>This will be second option in Filter menu</hint>
+                <ax-column-filter filter-type="custom" label="Option One">
+                    <input type="text"
+                           ng-model="$ctrl.$parent.customFilter.option1.value"
+                           role="column-filter"
+                           class="form-control"
+                           placeholder="option filter 1"
+                           ng-change="$ctrl.filterApply()"
+                           ng-disabled="$ctrl.getCollection('initial').length==0"
+                           style="width: 100%;margin-right:40px" tabindex="0"/>
+                    
+                    <button class="btn icon fa fa-eraser"
+                            style="position: absolute;right:0;height:22px;line-height:22px"
+                            ng-click="$ctrl.$parent.customFilter.option1.clear($event)"></button>
+                </ax-column-filter>
+            </ax-column-filter-menu>
+            <ax-column-view view-type="custom">
+                <span ng-bind="::(dataItem.deliveryCity + ' ' + dataItem.deliveryAddress)"></span>
+            </ax-column-view>
+        </ax-column>
+        <ax-column bind-to="insideUE" sortable header="Inside UE" width="120px" view-type="boolean-checkbox">
+            <ax-column-header row-index="1">Inside UE</ax-column-header>
+            <ax-column-header row-index="2">boolean</ax-column-header>
+            <ax-column-filter-menu data-type="boolean"></ax-column-filter-menu>
+        </ax-column>
+        <ax-column bind-to="value" sortable header="Value" width="150px" view-type="number" locale="en-US" decimals="2">
+            <ax-column-header row-index="1">Value</ax-column-header>
+            <ax-column-header row-index="2">number</ax-column-header>
+            <ax-column-filter-menu data-type="number" initial-filter-option="Filter by input value"></ax-column-filter-menu>
+        </ax-column>
+    </ax-table>
+</div>

@@ -1,0 +1,45 @@
+Stop gulp dev-watch-es6 task if it's running.
+Choose the folder where to put something like app-modules/bower-libs.
+Than be sure the folder app-modules/bower-libs si setted in gulpfile.config.json like this:
+
+ {"path": {
+    "bowerLibs": [
+      "components/bower-libs",
+      "app-modules/bower-libs"
+    ],
+    }
+ }
+
+ Also the ckeditor folder must be marked as excepted in app-modules/gulp-config.json:
+ {
+	"task": ".js",
+	"outputFileName": "head.min.js",
+	"exceptions": [ "app-modules/bower-libs/ckeditor/" ],
+	"inputFiles": [
+		"app-modules/bower-libs/ckeditor/ckeditor.js",
+		"app-modules/bower-libs/angular-ckeditor.js",
+	]
+ },
+
+Copy in app-modules/bower-libs excepted/new-module/bower-libs/ckeditor folder and excepted/new-module/bower-libs/angular-ckeditor.js file.
+Remove all css file reference for files under ckeditor folder, if exists.
+Run dev-copy-es6 task.
+Reload dev-watch-es6 task.
+Add in "app-modules/angular-modules.js" ckeditor module: modules.push("ckeditor");
+
+implementing:
+ - in html <div ckeditor="ckeditorOptions" ng-model="content"  ng-readonly="ckeditorOptions.readOnly()" ready="ckeditorOptions.onReady()"></div>
+ - and in controller:
+ 		$scope.ckeditorOptions = {
+			language: 'ro',
+			allowedContent: true,
+			width: "100%",
+			height: "200px",
+			entities: false,
+			readOnly:function(){
+			    return false;
+			},
+			onReady: function () {
+			}
+		};
+		this config object is readed by ckeditor directive at initialization only,any future changes are not watched.

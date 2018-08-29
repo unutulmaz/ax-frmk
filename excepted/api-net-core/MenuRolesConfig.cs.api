@@ -1,0 +1,274 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace TS_GAP.Api.Configurations
+{
+    public static class MenuRolesConfig
+    {
+        public static List<MenuItem> GetMenuList()
+        {
+            List<MenuItem> menus = new List<MenuItem>
+            {
+                //{
+                //    "Home", "#/", "home", 1, null
+                //},
+                {
+                    "Admin", "", "admin", 2, "fa fa-angle-right",
+                    new List<MenuItem>
+                    {
+                        {"Users", "#/users", "admin.users", 1, "fa fa-universal-access", null},
+                        {"Evaluations", "#/evaluations", "admin.evaluations", 2, "fa fa-balance-scale", null},
+                    }
+                },
+                {
+                    "Developer", "", "dev", 2, "fa fa-angle-right",
+                    new List<MenuItem>
+                    {
+												{"Docs", "#/docs", "dev.tableView", 1, "fa fa-universal-access", null},
+												{"Table view", "#/table-view", "dev.tableView", 1, "fa fa-universal-access", null},
+												{"Tables join", "#/tables-join", "dev.tablesJoin", 2, "fa fa-balance-scale", null},
+                    }
+                },
+                {
+                    "Master Data", "", "catalogs", 3,"fa fa-angle-right",
+                    new List<MenuItem>
+                    {
+                        {"Skill Groups", "#/skills-groups", "catalogs.skill-groups", 1, "fa fa-object-ungroup", null},
+                        {"Skills", "#/skills", "catalogs.skills", 2, "fa fa-lightbulb-o", null},
+                        {"Course Groups", "#/courses-groups", "catalogs.course-groups", 3, "fa fa-object-group", null},
+                        {"Courses", "#/courses", "catalogs.courses", 4, "fa fa-sun-o", null},
+                        {"Areas", "#/areas", "catalogs.areas", 5, "fa fa-map", null},
+                        {"Countries", "#/countries", "catalogs.countries", 6, "fa fa-map-o", null},
+                        {"Locations", "#/locations", "catalogs.locations", 7, "fa fa-location-arrow", null},
+                        {"Teams", "#/teams", "catalogs.teams", 8, "fa fa-university", null},
+                        {"Plants", "#/plants", "catalogs.plants", 9, "fa fa-birthday-cake", null},
+                        {"Employees", "#/employees", "catalogs.employees", 10, "fa fa-users", null},
+                        {"Test", "#/test", "catalogs.test", 15, "fa fa-users", null}
+                    }
+                },
+                {
+                    "Quarter Setup", "", "currentEvaluation", 4, "fa fa-angle-right",
+                    new List<MenuItem>
+                    {
+                        //{"Users Roles", "#/users-x-evaluations", "currentEvaluation.users-x-evaluations", 0, null},
+                        {"Courses Groups", "#/coursegroups-x-evaluations", "currentEvaluation.coursegroups-x-evaluations", 1, "fa fa-object-group", null},
+                        {"Courses By Skills", "#/courses-x-skills", "currentEvaluation.cdr-matrix", 2, "fa fa-lightbulb-o", null},
+                        {"Areas", "#/areas-x-evaluations", "currentEvaluation.areas-x-evaluations", 3, "fa fa-map", null},
+                        {"Countries", "#/countries-x-evaluations", "currentEvaluation.countries-x-evaluations", 4, "fa fa-map-o", null},
+                        {"Locations", "#/locations-x-evaluations", "currentEvaluation.locations-x-evaluations", 5, "fa fa-location-arrow", null},
+                        {"Teams", "#/teams-x-evaluations", "currentEvaluation.teams-x-evaluations", 6, "fa fa-university", null},
+                        {"Plants", "#/plants-x-evaluations", "currentEvaluation.plants-x-evaluations", 7, "fa fa-birthday-cake", null},
+                        {"Employees", "#/employees-x-evaluations", "currentEvaluation.employees-x-evaluations", 8, "fa fa-users", null},
+                        {"Organisation Admin", "#/organisation-x-evaluation", "currentEvaluation.organisation-x-evaluation", 9, "fa fa-building", null}
+                    }
+                },
+                {
+                    "GAP", "", "gap", 5,"fa fa-angle-right",
+                    new List<MenuItem>
+                    {
+                        {"GAP", "#/gap", "gap.gap", 1, "fa fa-camera", null},
+                        {"Planning Overview", "#/plannings-overview", "gap.plannings-overview", 1, "fa fa-calendar-o", null},
+                        {"Import Agg Planning", "#/plannings-import", "gap.plannings-import", 1, "fa fa-calendar-plus-o", null},
+                    }
+                },
+                {
+                    "Reports", "", "reports", 6,"fa fa-angle-right",
+                    new List<MenuItem>
+                    {
+                        {"Plannings", "#/plannings-report", "reports.plannings-report", 1, "fa fa-line-chart", null},
+                        {"Budgets Overview", "#/budgeting", "reports.budgeting", 2, "fa fa-line-chart", null},
+                        {"GAPS Overview", "#/gaps-overview", "reports.gaps-overview", 5, "fa fa-line-chart", null},
+                        {"Employees Evolution", "#/employees-evolution", "reports.employees-evolution", 3, "fa fa-line-chart", null},
+                        {"Employee Overview", "#/employee-overview", "reports.employee-overview", 4, "fa fa-line-chart", null},
+                        {"Closed GAPS Cluster", "#/cluster-gaps", "reports.cluster-gaps", 6, "fa fa-line-chart", null},
+                        {"Closed GAPS by FSE", "#/closed-gaps-employee", "reports.closed-gaps-employee", 7, "fa fa-line-chart", null},
+                        {"Closed GAPS by Skill", "#/closed-gaps-skill", "reports.closed-gaps-skill", 8, "fa fa-line-chart", null},
+                    }
+                }
+            };
+            return menus;
+        }
+
+        public static List<RoleItem> GetRolesList()
+        {
+            List<RoleItem> roles = new List<RoleItem>
+            {
+                {
+                    "Developer",
+                    new List<Tuple<string, string>>
+                    {
+                        {CustomClaimTypes.Permission, "catalogs.manage"},
+                        {CustomClaimTypes.Permission, "evaluations.manage"},
+                        {CustomClaimTypes.Menu, "home"},
+                        {CustomClaimTypes.Menu, "dev.tableView"},
+                        {CustomClaimTypes.Menu, "dev.tablesJoin"},
+                        {CustomClaimTypes.Menu, "admin.users"},
+                        {CustomClaimTypes.Menu, "admin.evaluations"},
+                        {CustomClaimTypes.Menu, "catalogs.course-groups"},
+                        {CustomClaimTypes.Menu, "catalogs.courses"},
+                        {CustomClaimTypes.Menu, "catalogs.skill-groups"},
+                        {CustomClaimTypes.Menu, "catalogs.skills"},
+                        {CustomClaimTypes.Menu, "catalogs.areas"},
+                        {CustomClaimTypes.Menu, "catalogs.employees"},
+                        {CustomClaimTypes.Menu, "catalogs.teams"},
+                        {CustomClaimTypes.Menu, "catalogs.plants"},
+                        {CustomClaimTypes.Menu, "catalogs.countries"},
+                        {CustomClaimTypes.Menu, "catalogs.locations"},
+                        {CustomClaimTypes.Menu, "catalogs.test"},
+                        {CustomClaimTypes.Menu, "currentEvaluation.courses-x-groups"},
+                        {CustomClaimTypes.Menu, "currentEvaluation.coursegroups-x-evaluations"},
+                        {CustomClaimTypes.Menu, "currentEvaluation.cdr-matrix"},
+                        {CustomClaimTypes.Menu, "currentEvaluation.employees-x-evaluations"},
+                        {CustomClaimTypes.Menu, "currentEvaluation.locations-x-evaluations"},
+                        {CustomClaimTypes.Menu, "currentEvaluation.areas-x-evaluations"},
+                        {CustomClaimTypes.Menu, "currentEvaluation.teams-x-evaluations"},
+                        {CustomClaimTypes.Menu, "currentEvaluation.countries-x-evaluations"},
+                        {CustomClaimTypes.Menu, "currentEvaluation.plants-x-evaluations"},
+                        //{CustomClaimTypes.Menu, "currentEvaluation.users-x-evaluations"},
+                        {CustomClaimTypes.Menu, "currentEvaluation.organisation-x-evaluation"},
+                        {CustomClaimTypes.Menu, "gap.gap"},
+                        {CustomClaimTypes.Menu, "gap.plannings-overview"},
+                        {CustomClaimTypes.Menu, "gap.plannings-import"},
+                        {CustomClaimTypes.Menu, "reports.plannings-report"},
+                        {CustomClaimTypes.Menu, "reports.budgeting"},
+                        {CustomClaimTypes.Menu, "reports.gaps-overview"},
+                        {CustomClaimTypes.Menu, "reports.employees-evolution"},
+                        {CustomClaimTypes.Menu, "reports.employee-overview"},
+                        {CustomClaimTypes.Menu, "reports.cluster-gaps"},
+                        {CustomClaimTypes.Menu, "reports.closed-gaps-employee"},
+                        {CustomClaimTypes.Menu, "reports.closed-gaps-skill"},
+                    }
+                },
+                {
+                    CustomRoles.Administrator,
+                    new List<Tuple<string, string>>
+                    {
+                        {CustomClaimTypes.Permission, "catalogs.manage"},
+                        {CustomClaimTypes.Permission, "evaluations.manage"},
+                        {CustomClaimTypes.Menu, "home"},
+                        {CustomClaimTypes.Menu, "admin.users"},
+                        {CustomClaimTypes.Menu, "admin.evaluations"},
+                        {CustomClaimTypes.Menu, "catalogs.course-groups"},
+                        {CustomClaimTypes.Menu, "catalogs.courses"},
+                        {CustomClaimTypes.Menu, "catalogs.skill-groups"},
+                        {CustomClaimTypes.Menu, "catalogs.skills"},
+                        {CustomClaimTypes.Menu, "catalogs.areas"},
+                        {CustomClaimTypes.Menu, "catalogs.employees"},
+                        {CustomClaimTypes.Menu, "catalogs.teams"},
+                        {CustomClaimTypes.Menu, "catalogs.plants"},
+                        {CustomClaimTypes.Menu, "catalogs.countries"},
+                        {CustomClaimTypes.Menu, "catalogs.locations"},
+                        {CustomClaimTypes.Menu, "catalogs.test"},
+                        {CustomClaimTypes.Menu, "currentEvaluation.courses-x-groups"},
+                        {CustomClaimTypes.Menu, "currentEvaluation.coursegroups-x-evaluations"},
+                        {CustomClaimTypes.Menu, "currentEvaluation.cdr-matrix"},
+                        {CustomClaimTypes.Menu, "currentEvaluation.employees-x-evaluations"},
+                        {CustomClaimTypes.Menu, "currentEvaluation.locations-x-evaluations"},
+                        {CustomClaimTypes.Menu, "currentEvaluation.areas-x-evaluations"},
+                        {CustomClaimTypes.Menu, "currentEvaluation.teams-x-evaluations"},
+                        {CustomClaimTypes.Menu, "currentEvaluation.countries-x-evaluations"},
+                        {CustomClaimTypes.Menu, "currentEvaluation.plants-x-evaluations"},
+                        //{CustomClaimTypes.Menu, "currentEvaluation.users-x-evaluations"},
+                        {CustomClaimTypes.Menu, "currentEvaluation.organisation-x-evaluation"},
+                        {CustomClaimTypes.Menu, "gap.gap"},
+                        {CustomClaimTypes.Menu, "gap.plannings-overview"},
+                        {CustomClaimTypes.Menu, "gap.plannings-import"},
+                        {CustomClaimTypes.Menu, "reports.budgeting"},
+                        {CustomClaimTypes.Menu, "reports.gaps-overview"},
+                        {CustomClaimTypes.Menu, "reports.plannings-report"},
+                        {CustomClaimTypes.Menu, "reports.employees-evolution"},
+                        {CustomClaimTypes.Menu, "reports.employee-overview"},
+                        {CustomClaimTypes.Menu, "reports.cluster-gaps"},
+                        {CustomClaimTypes.Menu, "reports.closed-gaps-employee"},
+                        {CustomClaimTypes.Menu, "reports.closed-gaps-skill"},
+                    }
+                },
+                {
+                    CustomRoles.TeamLeader,
+                    new List<Tuple<string, string>>
+                    {
+                        {CustomClaimTypes.Menu, "gap.gap"},
+                        {CustomClaimTypes.Menu, "gap.plannings-overview"},
+                        {CustomClaimTypes.Menu, "reports.employees-evolution"},
+                        {CustomClaimTypes.Menu, "reports.plannings-report"},
+                        {CustomClaimTypes.Menu, "reports.employee-overview"},
+                    }
+                },
+                {
+                    CustomRoles.AreaManager,
+                    new List<Tuple<string, string>>
+                    {
+                        {CustomClaimTypes.Menu, "gap.gap"},
+                        {CustomClaimTypes.Menu, "gap.plannings-overview"},
+                        {CustomClaimTypes.Menu, "reports.employees-evolution"},
+                        {CustomClaimTypes.Menu, "reports.plannings-report"},
+                        {CustomClaimTypes.Menu, "reports.employee-overview"},
+                    }
+                },
+                {
+                    CustomRoles.Planner,
+                    new List<Tuple<string, string>>
+                    {
+                        {CustomClaimTypes.Menu, "gap.gap"},
+                        {CustomClaimTypes.Menu, "reports.gaps-overview"},
+                    }
+                }
+            };
+            return roles;
+        }
+    }
+
+    public static class MenuItemListExtensions
+    {
+        public static void Add(this List<MenuItem> list,
+            string title, string url, string claim, int order, string _cssClass, List<MenuItem> items)
+        {
+            list.Add(new MenuItem(title, url, claim, order, _cssClass, items));
+        }
+    }
+
+    public class MenuItem
+    {
+        public string title;
+        public string url;
+        public string claim;
+        public int order;
+        public List<MenuItem> items;
+        public bool showItems;
+        public string cssClass;
+
+        public MenuItem(string _title, string _url, string _claim, int _order, string _cssClass, List<MenuItem> _items)
+        {
+            title = _title;
+            url = _url;
+            claim = _claim;
+            order = _order;
+            items = _items;
+            cssClass = _cssClass;
+            showItems = true;
+        }
+    }
+
+    public static class RoleItemListExtensions
+    {
+        public static void Add(this List<RoleItem> list,
+            string title, List<Tuple<string, string>> claims)
+        {
+            list.Add(new RoleItem(title, claims));
+        }
+    }
+
+    public class RoleItem
+    {
+        public string roleName;
+        public List<Tuple<string, string>> claims;
+
+        public RoleItem(string _roleName, List<Tuple<string, string>> _claims)
+        {
+            roleName = _roleName;
+            claims = _claims;
+        }
+    }
+}

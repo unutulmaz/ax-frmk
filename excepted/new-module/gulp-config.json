@@ -1,0 +1,30 @@
+[
+  {
+    "task": ".css",
+    "outputFileName": "site.min.css",
+    "inputFiles": [
+      "app-modules/common/main/main.css",
+      "app-modules/common/main/main-menu.css",
+      "app-modules/modules.css"
+    ],
+    "exceptions": []
+  },
+  {
+    "task": ".js",
+    "outputFileName": "head.min.js",
+    "inputFiles": [],
+    "exceptions": []
+  },
+  {
+    "task": ".js",
+    "outputFileName": "body.min.js",
+    "exceptions": [],
+    "inputFiles": [
+      "app-modules/ax-components-config.js",
+      "app-modules/modules-vars.js",
+      "app-modules/ax-api-config.js",
+      "app-modules/common/login/login.js",
+      "app-modules/dev/table-view/table-view.js"
+    ]
+  }
+]

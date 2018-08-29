@@ -1,0 +1,43 @@
+<div style="display:none">
+	<ax-radio-options style="margin-bottom:1px"
+							ng-change="launcher.onChange()"
+							ng-model="launcher.settings.searchType"
+							options="['Starts with', 'Ends with', 'Includes']"></ax-radio-options>
+	<ax-checkbox style="width:105px;margin-bottom:3px;margin-left:4px"
+					 ng-change="launcher.onChange()"
+					 ng-model="launcher.settings.matchCase">Match case
+	</ax-checkbox>
+</div>
+<div class="dropdown-header" ng-bind="launcher.title"></div>
+<div style="padding:10px;">
+	<label>Search by columns:</label>
+	<ax-list datasource="launcher.columns"
+				show-search="true"
+				show-check-all="true"
+				show-uncheck-all="true"
+				show-close-popup="false"
+				selectable-rows="multiple"
+				selectable-rows-model-type="id-field"
+				selectable-rows-model="launcher.selected"
+				order-by="columnIndex"
+				item-id-field="bindTo"
+				item-display-field="title"
+				style="position:relative;height:250px;width:278px"></ax-list>
+</div>
+<div style="text-align: left;margin-left:10px;margin-bottom:10px;line-height:30px;">
+	<button ng-click="launcher.applySpinner.do($event)"
+			  class="btn btn-primary" style="width:135px;">
+		<ax-i-spinner config="launcher.applySpinner"
+						  i-class="fa fa-check"
+						  i-height="16"
+						  style="margin-right:3px"
+						  has-callback="true"
+						  action="launcher.confirm(removeSpinner)">
+		</ax-i-spinner>
+		{{launcher.applySpinner.working?launcher.applyingText :launcher.applyText }}
+	</button>
+	<button ng-click="launcher.close($event)" class="btn btn-primary" style="width:135px;margin-left:5px;">
+		<i class="fa fa-ban"></i>
+		{{launcher.cancelText}}
+	</button>
+</div>

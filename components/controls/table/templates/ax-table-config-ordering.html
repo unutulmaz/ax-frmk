@@ -1,0 +1,52 @@
+<ax-list config="launcher.dataOrder.orderedConfig"
+			datasource="launcher.dataOrder.ordered"
+			draggable="$ctrl.$parent.launcher.dataOrder.orderedSortable"
+			order-by=""
+			class="group-list order-container"
+			no-header="false"
+			auto-focus="false"
+			style="position:relative;border: 1px solid lightgray;height:150px;margin-bottom:10px;width:100%">
+	<ax-toolbar style="padding-left:6px;">
+		Ordered:
+		<button class="btn icon fa fa-times clear-ordering"
+				  uib-tooltip="Remove all ordered columns"
+				  style="position:absolute;right:1px;top:0px"
+				  ng-click="$ctrl.$parent.launcher.dataOrder.clear()"></button>
+	</ax-toolbar>
+	<ax-column bind-to="title" width="100%">
+		<ax-column-view type="custom" style="padding-left:6px;" no-drag="{{dataItem.fixed}}">
+			<div class="column" ng-bind="::dataItem.title">
+			</div>
+			<div class="inline" style="position: absolute;top:0;right:0">
+				<button class="btn icon fa grid-cell-btn"
+						  ng-click="$ctrl.$parent.launcher.dataOrder.change(dataItem)"
+						  ng-class="{'fa-long-arrow-up': dataItem.asc, 'fa-long-arrow-down':!dataItem.asc}"></button>
+				<button class="btn icon fa fa-times grid-cell-btn"
+						  ng-if="!dataItem.fixed"
+						  ng-click="$ctrl.$parent.launcher.dataOrder.remove(dataItem,$event)"
+				></button>
+			</div>
+		</ax-column-view>
+	</ax-column>
+</ax-list>
+<ax-list config="launcher.dataOrder.unorderedConfig"
+			datasource="launcher.dataOrder.unordered"
+			draggable="$ctrl.$parent.launcher.dataOrder.unorderedSortable"
+			row-is-disabled="dataItem.fixed"
+			order-by="index"
+			auto-focus="false"
+			class="group-list order-container"
+			no-header="false"
+			style="position:absolute;top:160px;bottom:0;border: 1px solid lightgray;width:100%">
+	<ax-toolbar style="padding-left:6px;">Sortable columns:</ax-toolbar>
+	<ax-column bind-to="title" width="100%">
+		<ax-column-view type="custom" style="padding-left:0;">
+			<div class="inline">
+				<ax-checkbox ng-model="dataItem.isTaken"
+								 ng-click="$ctrl.$parent.launcher.dataOrder.selectColumn(dataItem, true)"></ax-checkbox>
+				<div ng-bind="::dataItem.title"></div>
+			</div>
+		</ax-column-view>
+		<ax-column-filter type="text"></ax-column-filter>
+	</ax-column>
+</ax-list>

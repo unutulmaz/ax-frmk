@@ -1,0 +1,40 @@
+<div class="form-title">
+	Column filter menu template
+	<ax-see-also style="right:30px" btn-text="'See Also'">
+		<ax-see-also-option route="ax-table/column-filter">Column filter</ax-see-also-option>
+		<ax-see-also-option route="ax-table/records-filtering">Records filtering</ax-see-also-option>
+	</ax-see-also>
+
+</div>
+<div ng-style="{'top':(dataStore.formTitleHeight()+10)+'px'}" style="position: absolute;top:45px;bottom:10px;left:10px;right:10px;overflow: auto;padding-right:10px" ng-controller="columnFilterMenuTabsCtrl">
+	<div class="info-text">
+		<div style="display:inline-flex;">
+			<div style="margin-right:10px;">
+				<strong>Built-in filter menu template</strong>
+				<pre ng-bind="code.simple" style="width:1100px"></pre>
+				You can use filter-type for ax-column attribute or ax-column-menu-filter template with data-type attribute, both definitions are identical.
+				<br><strong>Attributes</strong> of ax-column-menu-filter template
+				<ax-attr>initial-filter-option</ax-attr> specify which filter menu option will be shown initial.
+				<ax-attr>data-type</ax-attr> can have one of the values <strong>string, date, datetime, boolean, number</strong>.
+				<ax-attr>bind-to</ax-attr> if not present, ax-column bind-to attribute will be used
+				<ax-attr>invariant-field</ax-attr> if column has an invariant field
+				<br><br><strong>Default options for built-in filter menus</strong>
+				<br>Options are readed from <strong>$axTableConfig().filters</strong> object (/components/ax-components-config.js file) and are overwriteables.
+				<ax-show-hide element-id="filterMenuDefs"></ax-show-hide>
+				<pre ng-bind="code.filterMenuDefs" style="width:1100px" id="filterMenuDefs"></pre>
+				<br><strong>Custom filter template</strong>
+				<ax-show-hide element-id="customTemplate"></ax-show-hide>
+				<div style="width:100%;" id="customTemplate">
+					HTML code
+					<pre ng-bind="code.customHtml" style="width:1100px"></pre>
+					Javascript code
+					<pre ng-bind="code.customJs" style="width:1100px;"></pre>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div style="display:inline-flex;width:100%">
+		<ax-code-tabs template-url="/app-modules/docs/ax-table/column-filter-menu/column-filter-menu-1.html"
+						  style="position:relative;height:400px;width:100%;"></ax-code-tabs>
+	</div>
+</div>

@@ -1,0 +1,36 @@
+<div ng-controller="datalistSamples" style="position:relative;width:100%;height:100%;display:inline-flex">
+	<ax-list datasource="data"
+				config="datatable1"
+				order-by="number"
+				item-id-field="number"
+				item-display-field="customer"
+				item-invariant-field="customerInvariant"
+				selectable-rows="multiple"
+				selectable-rows-model="datatable1.selected"
+				selectable-rows-model-type="object"
+				select-on-click-row="true"
+				show-search="true"
+				show-check-all="true"
+				show-uncheck-all="true"
+				show-close-popup="false"
+				on-selection-change="datatable1.onSelectionChange()"
+				style="position:relative;width:300px;height:201px">
+	</ax-list>
+	<ax-list config="datatable2"
+				item-id-field="number"
+				no-header="false"
+				order-by="number"
+				style="float:right;position:relative;width:645px;height:201px;margin-left:10px">
+		<ax-toolbar>
+			<span style="padding-left:20px">Selected items, you can remove with click on x</span>
+		</ax-toolbar>
+		<ax-column width="25px" show-header="false">
+			<ax-column-view style="padding:0;text-align:center" class="inline">
+				<i class="fa fa-close" ng-click="$ctrl.$parent.datatable1.removeItem(dataItem,$event)"></i>
+			</ax-column-view>
+		</ax-column>
+		<ax-column bind-to="number" sortable header="Order ID" width="120px" view-type="number" locale="en-US" decimals="0"></ax-column>
+		<ax-column bind-to="customer" sortable="customerInvariant" header="Customer Name" width="300px"></ax-column>
+		<ax-column bind-to="customerCode" sortable header="Customer Code" width="180px"></ax-column>
+	</ax-list>
+</div>

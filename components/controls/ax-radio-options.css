@@ -1,0 +1,18 @@
+﻿ax-radio-options {
+	display: block;
+}
+
+ax-radio-option {
+	display: inline-flex;
+	vertical-align: top;
+	cursor: pointer;
+	border: 1px solid transparent;
+}
+
+ax-radio-option > span {
+	white-space: nowrap
+}
+
+ax-radio-option > i {
+	line-height: inherit !important;
+}

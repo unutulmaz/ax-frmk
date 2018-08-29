@@ -1,0 +1,41 @@
+<div ng-controller="hidingColumnsSampleCtrl" style="position:relative;width:100%;height:100%">
+    <ax-table config="hiddingColumns"
+                   datasource="data"
+                   id="hidding"
+                   style="position:absolute;">
+        <ax-toolbar ax-scroller="true">
+            <label toolbar="left" class="header-title" >
+                Hide columns
+            </label>
+
+            <ax-button toolbar="right" button-type="settings"></ax-button>
+        </ax-toolbar>
+        <ax-groups>
+            <ax-group expression="true" display-name="General Total">
+                <hint>Calculation can be show on header or footer</hint>
+                <ax-calculation column="Value" show-on="footer" aggregate-type="sum"></ax-calculation>
+                <ax-group-footer show-value="false" label="General Total" show-counter="false" label-indent="600"></ax-group-footer>
+            </ax-group>
+            <ax-group expression="dataItem.deliveryCountryInvariant"
+                      order-by="deliveryCountryInvariant"
+                      label="Country">
+                <ax-calculation column="Value" show-on="footer" aggregate-type="sum">
+                </ax-calculation>
+                <ax-group-footer label="Total for country:" show-counter="false" label-indent="500"></ax-group-footer>
+            </ax-group>
+        </ax-groups>
+        <ax-column header="Gutter Icons" hidden-column width="24px" view-type="gutter-icons" show-header="false"></ax-column>
+        <ax-column bind-to="number" sortable header="Order ID" width="100px" view-type="number" locale="en-US" decimals="0"></ax-column>
+        <ax-column bind-to="date" hidden-column sortable view-type="date" date-format="dd.MM.yyyy" header="Order date" width="140px" style="text-align:center"  ></ax-column>
+        <ax-column bind-to="customer" sortable="customerInvariant" header="Customer Name" width="250px" ></ax-column>
+        <ax-column bind-to="customerCode" sortable header="Customer Code" width="105px" hidden-column ></ax-column>
+        <ax-column bind-to="deliveryCountry" hidden-column sortable="deliveryCountryInvariant" header="Delivery Country" width="250px" ></ax-column>
+        <ax-column bind-to="deliveryCity" sortable="deliveryCityInvariant" header="Delivery City" width="150px" ></ax-column>
+        <ax-column bind-to="deliveryAddress" sortable header="Delivery Address" width="250px" ></ax-column>
+        <ax-column bind-to="insideUE" sortable header="Inside UE" width="120px" view-type="boolean-checkbox" ></ax-column>
+        <ax-column bind-to="createdBy" sortable header="Created By" width="200px" ></ax-column>
+        <ax-column bind-to="createdAt" sortable header="Created At" width="250px" view-type="datetime" ></ax-column>
+        <ax-column bind-to="value" sortable header="Value" width="180px" view-type="number" locale="en-US" decimals="0" ></ax-column>
+        <ax-column header="Actions" width="86px" view-type="crud-buttons"></ax-column>
+    </ax-table>
+</div>

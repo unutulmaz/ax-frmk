@@ -1,0 +1,47 @@
+﻿<div ng-controller="citiesCodeCtrl">
+    <ax-table config="launcher.dataTable1"
+              order-by="nameInvariant"
+              item-id-field="id"
+              api-controller="cities"
+              edit-row="inline"
+              apply-changes-on-save="false"
+              auto-focus="false"
+              debug="false"
+              customizable-freezed-columns="false"
+              customizable-config="false"
+              customizable-edit-mode="false"
+              columns-autofit-enabled="false"
+              style="left:0px;right:0px;top:0px;bottom:0px;">
+        <ax-toolbar>
+            <label class="header-title" toolbar="left" ng-bind="$ctrl.$parent.country.name?($ctrl.$parent.country.name + ' cities'):''">
+            </label>
+            <ax-button toolbar="right"
+                       show-title="false"
+                       button-type="settings"></ax-button>
+            <div toolbar="right"
+                 ng-show="$ctrl.$parent.launcher.showButtons"
+                 class="ngdialog-close"
+                 style="position:relative;display:inline-flex"
+                 ng-click="$ctrl.$parent.popupClose($event)"></div>
+        </ax-toolbar>
+        <ax-column header="Country"
+                   bind-to="countryId"
+                   sortable="countryInvariant"
+                   show-header="false"
+                   hidden-column
+                   width="300px">
+            <ax-column-filter filter-type="text"></ax-column-filter>
+            <ax-column-view view-type="text" bind-to="country"></ax-column-view>
+        </ax-column>
+        <ax-column header="City"
+                   hideable="false"
+                   bind-to="name"
+                   show-header="false"
+                   sortable="nameInvariant"
+                   width="100%">
+            <ax-column-filter filter-type="text"></ax-column-filter>
+            <ax-column-edit edit-type="text"></ax-column-edit>
+        </ax-column>
+        <ax-column header="Actions" show-header="false" view-type="crud-buttons" width="100px"></ax-column>
+    </ax-table>
+</div>

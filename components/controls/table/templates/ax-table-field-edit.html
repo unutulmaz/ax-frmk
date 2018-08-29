@@ -1,0 +1,14 @@
+<div class="dropdown-header" ng-bind="launcher.title + ' ' + launcher.currentField"></div>
+<div style="padding:10px;width:400px">
+	<textarea style="width: 100%; min-height: 80px; height:auto; max-height:200px;overflow:auto;outline: none; resize: none"
+				 class="form-control" autofocus
+				 ng-readonly="launcher.readOnly"
+				 ng-model="launcher.editingValue"></textarea>
+	<div style="text-align: left;margin-top:10px">
+		<button ng-click="launcher.confirm($event);"
+				  ng-disabled="launcher.readOnly"
+				  class="btn btn-primary" style="width:100px"><i class="fa fa-check"></i> {{launcher.okText || 'Ok'}}
+		</button>
+		<button ng-click="launcher.close($event)" class="btn btn-primary" style="width:100px"><i class="fa fa-ban"></i>{{launcher.cancelText || 'Close'}}</button>
+	</div>
+</div>

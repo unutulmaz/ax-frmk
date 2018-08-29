@@ -1,0 +1,63 @@
+<style>
+	.edit-body {
+		display: flex;
+		flex-direction: column;
+	}
+
+</style>
+<div class="groups-controls">
+	<div class="dropdown-header" ng-bind="launcher.title" style="margin-bottom:10px;"></div>
+	<div class="edit-body" ng-click="$event.stopPropagation()" style="padding:10px">
+		<div class="inline">
+			<label style="white-space: nowrap">
+				Edit mode
+				<button class="btn icon fa fa-question-circle"
+						  tabindex="-1"
+						  uib-popover-html="launcher.getHelpFor('editMode')"
+						  popover-append-to-body="true" popover-placement="top-left" popover-trigger="'mouseenter'"></button>
+			</label>
+			<ax-radio-options class="form-control"
+									style="width:auto;display:flex;margin-left:3px;margin-bottom:3px;"
+									ng-model="launcher.editRow"
+									options="launcher.editRowOptions"></ax-radio-options>
+		</div>
+		<div class="inline" ng-if="launcher.editorMode ">
+			<label>
+				Editor position
+				<!--<button class="btn icon fa fa-question-circle"
+						  tabindex="-1"
+						  style="height:22px;line-height:20px"
+						  uib-popover-html="launcher.getHelpFor('editorMode')"
+						  popover-append-to-body="true" popover-placement="top-left" popover-trigger="'mouseenter'"></button>-->
+			</label>
+			<ax-radio-options class="form-control"
+									style="width:auto;display:flex;margin-left:3px;margin-bottom:3px;"
+									ng-model="launcher.editorMode"
+									ng-disabled="launcher.editRow!=='editor'"
+									options="launcher.editorModeOptions"></ax-radio-options>
+		</div>
+		<ax-checkbox class="form-control" style="width:auto;"
+						 ng-model="launcher.applyChangesOnSave">
+			Apply changes on save
+			<button class="btn icon fa fa-question-circle"
+					  tabindex="-1"
+					  style="height:100%"
+					  uib-popover-html="$parent.launcher.getHelpFor('applyChanges')"
+					  popover-append-to-body="true"
+					  popover-placement="bottom-right"
+					  popover-trigger="'mouseenter'"></button>
+		</ax-checkbox>
+	</div>
+</div>
+<div style="text-align: left;margin-left:10px;margin-bottom:10px;">
+	<button ng-click="launcher.confirm($event)"
+			  class="btn btn-primary" style="width:auto;">
+		<i class="fa fa-check"></i>
+		{{launcher.applyText }}
+	</button>
+	<button ng-click="launcher.close($event)" class="btn btn-primary" style="width:auto">
+		<i class="fa fa-ban"></i>
+		{{launcher.cancelText}}
+	</button>
+</div>
+

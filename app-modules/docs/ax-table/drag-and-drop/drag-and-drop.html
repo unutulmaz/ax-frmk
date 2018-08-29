@@ -1,0 +1,27 @@
+<div ng-controller="dragAndDropCtrl" style="position:relative;width:100%;height:100%">
+	<ax-table datasource="asSortable1.data"
+	               config="datatable1"
+                   order-by="number"
+                   draggable="$ctrl.$parent.asSortable1"
+                   draggable-is-disabled="$ctrl.$parent.asSortable1.isDisabled()"
+	               style="position:relative;width:50%;height:100%">
+		<ax-toolbar >
+            <span style="padding-left:20px">Drag a record from left and drop in right table</span>
+		</ax-toolbar>
+        <ax-column bind-to="number" sortable header="Order ID" width="100px" view-type="number" locale="en-US" decimals="0"></ax-column>
+		<ax-column bind-to="customer" header="Customer Name" width="250px" ></ax-column>
+		<ax-column bind-to="customerCode" header="Customer Code" width="105px" ></ax-column>
+	</ax-table>
+    <ax-table config="datatable2"
+                   draggable="$ctrl.$parent.asSortable2"
+                   draggable-is-disabled="$ctrl.$parent.asSortable2.isDisabled()"
+                   order-by="number"
+                   style="position:absolute;left:50%;height:100%;margin-left:10px">
+        <ax-toolbar >
+            <span style="padding-left:20px">Drag a record from right and drop in left table</span>
+        </ax-toolbar>
+        <ax-column bind-to="number" sortable header="Order ID" width="100px" view-type="number" locale="en-US" decimals="0"></ax-column>
+        <ax-column bind-to="customer" header="Customer Name" width="250px" ></ax-column>
+        <ax-column bind-to="customerCode" header="Customer Code" width="105px" ></ax-column>
+    </ax-table>
+</div>

@@ -1,0 +1,37 @@
+<ax-list datasource="launcher.profiles.items"
+			config="launcher.profiles.config"
+			has-input="true"
+			dont-close-popup="true"
+			selectable-rows="single"
+			selectable-rows-model="launcher.profiles.selected"
+			selectable-rows-model-type="id-field"
+			on-selection-change="launcher.profiles.onChange()"
+			show-search="true"
+			item-id-field="name"
+			item-display-field="name"
+			style="width:100%;;position:absolute;top:0;bottom:220px;left:0">
+	<ax-column bind-to="name" width="100%">
+		<ax-column-filter type="text" placeholder="search by profile name"></ax-column-filter>
+		<ax-column-view type="custom" style="padding:0">
+			<div class="inline" style="width:100% !important;padding:0 5px 0;">
+				<div ng-bind="dataItem.name"
+					  style="width:100%;overflow:hidden;"
+					  title="{{dataItem.name}}"></div>
+				<button class="btn icon ax-bordered form-control fa fa-trash-o"
+						  style="line-height:16px;vertical-align:middle;position:absolute;right:3px"
+						  has-input="true"
+						  ng-if="dataItem.type==='Private'"
+						  ng-click="$ctrl.dataItemRemove(dataItem)"
+						  ng-focus="$ctrl.objectHasFocus($event, $parent.dataItem, 'undefined');"
+						  ng-blur="$ctrl.validateField('undefined', $parent.dataItem)"></button>
+
+			</div>
+		</ax-column-view>
+	</ax-column>
+</ax-list>
+<div style="position: absolute;left:0;right:0;bottom:0">
+	<label>Profile description</label>
+	<div class="description"
+		  style="overflow-y:scroll;height:180px"
+		  bind-html-compile="$parent.launcher.profiles.config.$ctrl.currentItem.description"></div>
+</div>

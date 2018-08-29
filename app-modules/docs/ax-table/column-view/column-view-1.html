@@ -1,0 +1,65 @@
+<style>
+    [row-class~=big-value] td[column-for=Value] > div {
+        background-color: orange !important;
+    }
+
+    [row-class~=intra-ue] td[column-for='Inside UE1'] > div {
+        background-color: green !important;
+    }
+
+    [row-class~=intra-ue] td[column-for='Inside UE1'] > div > i {
+        color: white !important;
+    }
+</style>
+<div ng-controller="columnViewCtrl" style="position:relative;width:100%;height:100%">
+    <ax-table datasource="data"
+              row-css-classes="$ctrl.$parent.getRowCssClasses(dataItem)"
+              style="position:relative;width:100%;height:100%">
+        <ax-toolbar min-width="540px">
+            <label class="header-title" toolbar="left">
+                Column view
+            </label>
+            <ax-button toolbar="right" button-type="settings"></ax-button>
+        </ax-toolbar>
+        <ax-column bind-to="number" sortable header="Order ID" width="100px" filter-menu="number" view-type="text" style="text-align:right;padding-right:10px">
+            <ax-column-header row-index="1">Order ID</ax-column-header>
+            <ax-column-header row-index="2">text</ax-column-header>
+        </ax-column>
+        <ax-column bind-to="date" sortable view-type="date" date-format="dd.MM.yyyy" header="Order date" width="200px" style="text-align:center" filter-menu="date">
+            <ax-column-header row-index="1">Order Date</ax-column-header>
+            <ax-column-header row-index="2">date</ax-column-header>
+        </ax-column>
+        <ax-column bind-to="customer" sortable="customerInvariant" header="Customer Name" width="250px" filter-menu="text">
+            <ax-column-header row-index="1">Customer Name</ax-column-header>
+            <ax-column-header row-index="2">text</ax-column-header>
+
+        </ax-column>
+        <ax-column header="Address1" width="300px">
+            <ax-column-header row-index="1">Address 1</ax-column-header>
+            <ax-column-header row-index="2">custom view</ax-column-header>
+            <ax-column-view view-type="custom" style="background-color: #2182ff;text-align:center;color:white">
+                <span ng-bind="::(dataItem.deliveryCity + ' ' + dataItem.deliveryAddress)"></span>
+            </ax-column-view>
+        </ax-column>
+        <ax-column bind-to="customerFullAddress" sortable header="Address2" width="300px" filter-menu="text">
+            <ax-column-header row-index="1">Address 2</ax-column-header>
+            <ax-column-header row-index="2">custom column</ax-column-header>
+        </ax-column>
+        <ax-column bind-to="insideUE" sortable header="Inside UE1" width="140px" filter-menu="boolean" view-type="boolean-checkbox">
+            <ax-column-header row-index="1">Inside UE 1</ax-column-header>
+            <ax-column-header row-index="2">boolean-checkbox</ax-column-header>
+        </ax-column>
+        <ax-column bind-to="insideUE" sortable header="Inside UE2" width="110px" filter-menu="boolean" view-type="boolean-radio">
+            <ax-column-header row-index="1">Inside UE 2</ax-column-header>
+            <ax-column-header row-index="2">boolean-radio</ax-column-header>
+        </ax-column>
+        <ax-column bind-to="value" sortable header="Value" width="200px" filter-menu="number" view-type="number" locale="en-US" decimals="2">
+            <ax-column-header row-index="1">Value</ax-column-header>
+            <ax-column-header row-index="2">number</ax-column-header>
+        </ax-column>
+        <ax-column bind-to="createdAt" sortable header="Created At" width="255px" view-type="datetime" filter-menu="datetime">
+            <ax-column-header row-index="1">Created At</ax-column-header>
+            <ax-column-header row-index="2">datetime</ax-column-header>
+        </ax-column>
+    </ax-table>
+</div>

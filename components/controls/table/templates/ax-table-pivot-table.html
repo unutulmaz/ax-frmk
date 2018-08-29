@@ -1,0 +1,206 @@
+<style>
+
+	.as-sortable-dragging {
+		overflow: hidden;
+	}
+</style>
+<div style="width:auto;">
+	<div class="dropdown-header" ng-bind="launcher.title"></div>
+	<div class="inline config-body" style="margin-top:10px;position:relative;">
+		<div style="width:250px;margin-left:10px" ng-if="launcher.profiles.items.length>0">
+			<label>Existing definitions</label>
+			<ax-list datasource="launcher.profiles.items"
+						config="launcher.profiles.config"
+						has-input="true"
+						dont-close-popup="true"
+						selectable-rows="single"
+						selectable-rows-model="launcher.profiles.selected"
+						selectable-rows-model-type="id-field"
+						show-search="true"
+						item-id-field="name"
+						item-display-field="name"
+						style="width:100%;height:470px;position:relative;">
+				<ax-column bind-to="name" width="100%">
+					<ax-column-filter type="text" placeholder="search by profile name"></ax-column-filter>
+					<ax-column-view type="custom" style="padding:0">
+						<div class="inline" style="width:100% !important;padding:0 5px;">
+							<div ng-bind="dataItem.name"
+								  style="width:100%;overflow:hidden;"
+								  title="{{dataItem.name}}"
+							></div>
+
+							<button class="btn icon ax-bordered form-control fa fa-trash-o"
+									  style="vertical-align:middle;position:absolute;right:3px"
+									  has-input="true"
+									  ng-if="dataItem.type==='Private'"
+									  ng-click="$ctrl.dataItemRemove(dataItem)"
+									  ng-focus="$ctrl.objectHasFocus($event, $parent.dataItem, 'undefined');"
+									  ng-blur="$ctrl.validateField('undefined',$parent.dataItem)"></button>
+
+						</div>
+					</ax-column-view>
+				</ax-column>
+			</ax-list>
+		</div>
+		<div style="width:660px;margin-left:10px;margin-right: 10px">
+			<label>Pivot table configuration</label>
+			<div class="inline">
+				<ax-list config="launcher.source"
+							datasource="launcher.source.data"
+							draggable="$ctrl.$parent.launcher.source.asSortable"
+							order-by="index"
+							class="group-list"
+							no-header="false"
+							style="margin-bottom:10px;margin-right:10px;position:relative;overflow:auto;border: 1px solid lightgray;height:470px;width:300px">
+					<ax-toolbar>
+						Available columns:
+					</ax-toolbar>
+					<ax-column bind-to="title" width="100%">
+						<ax-column-view type="custom" style="padding-left:0">
+							<div class="inline">
+								<ax-checkbox
+									ng-model="dataItem.isTaken" ng-click="$ctrl.$parent.launcher.selectSource(dataItem)"></ax-checkbox>
+								<div ng-bind="dataItem.title"></div>
+							</div>
+						</ax-column-view>
+						<ax-column-filter type="text"></ax-column-filter>
+					</ax-column>
+				</ax-list>
+				<div style="width:350px">
+					<ax-list config="launcher.rows"
+								datasource="launcher.rows.data"
+								draggable="$ctrl.$parent.launcher.rows.asSortable"
+								order-by="level"
+								class="group-list"
+								width="100%"
+								style="margin-bottom:10px;position:relative;overflow:auto;border: 1px solid lightgray;height:150px;">
+						<ax-toolbar style="padding-left:10px" ax-scroller="false">
+							Rows:
+							<button class="btn icon fa fa-times"
+									  uib-tooltip="Remove all rows items"
+									  style="position:absolute;right:0px;"
+									  ng-click="$ctrl.$parent.launcher.rows.clear()"></button>
+						</ax-toolbar>
+						<ax-column bind-to="title" width="100%">
+							<ax-column-view type="custom">
+								<div ng-bind="dataItem.title"></div>
+								<div style="position:absolute;top:-1px;right:0">
+									<ax-dropdown-popup
+										uib-tooltip="Edit column properties"
+										tabindex="-1"
+										btn-class="btn icon settings"
+										caret-class="fa fa-edit"
+										popup-max-height="100%"
+										popup-relative-left="-325"
+										popup-relative-top="2"
+										open-params="$parent.$parent.dataItem;$ctrl.dataItemGetIndex($parent.$parent.dataItem, 'visibleItems')+1===$ctrl.totalRecords.filtered()"
+										template-url="'components/controls/table/templates/ax-table-pivot-table-rows.html'"
+										ctrl="$parent.$ctrl.$parent.launcher.rows.properties"></ax-dropdown-popup>
+									<ax-button class="btn icon "
+												  style="width:20px"
+												  icon-class="fa fa-times"
+												  ng-click="$parent.$ctrl.$parent.launcher.rows.remove(dataItem,$event)"
+												  uib-tooltip="Remove row"
+												  tabindex="0"></ax-button>
+								</div>
+
+							</ax-column-view>
+						</ax-column>
+					</ax-list>
+					<ax-list config="launcher.values"
+								datasource="launcher.values.data"
+								order-by="index"
+								draggable="$ctrl.$parent.launcher.values.asSortable"
+								class="group-list"
+								width="100%"
+								style="margin-bottom:10px;position:relative;overflow:auto;border: 1px solid lightgray;height:150px;">
+						<ax-toolbar style="padding-left:10px" ax-scroller="false">
+							Values:
+							<button class="btn icon fa fa-times"
+									  uib-tooltip="Remove all values items"
+									  style="position:absolute;right:0;"
+									  ng-click="$ctrl.$parent.launcher.values.clear()"></button>
+						</ax-toolbar>
+						<ax-column bind-to="name" width="100%">
+							<ax-column-view type="custom">
+								<div ng-bind="dataItem.title"></div>
+								<div style="position:absolute;top:-1px;right:0">
+									<ax-dropdown-popup
+										uib-tooltip="Edit column properties"
+										tabindex="-1"
+										btn-class="btn icon settings"
+										caret-class="fa fa-edit"
+										popup-max-height="100%"
+										popup-relative-left="-325"
+										popup-relative-top="2"
+										open-params="$parent.$parent.dataItem;"
+										template-url="'components/controls/table/templates/ax-table-pivot-table-values.html'"
+										ctrl="$parent.$ctrl.$parent.launcher.values.properties"></ax-dropdown-popup>
+									<ax-button class="btn icon "
+												  style="width:20px"
+												  icon-class="fa fa-times"
+												  ng-click="$parent.$ctrl.$parent.launcher.values.remove(dataItem,$event)"
+												  uib-tooltip="Remove value"
+												  tabindex="0"></ax-button>
+								</div>
+
+							</ax-column-view>
+						</ax-column>
+					</ax-list>
+					<ax-list config="launcher.columns"
+								datasource="launcher.columns.data"
+								draggable="$ctrl.$parent.launcher.columns.asSortable"
+								class="group-list"
+								width="100%"
+								style="position:relative;overflow:auto;border: 1px solid lightgray;height:150px;">
+						<ax-toolbar style="padding-left:10px" ax-scroller="false">
+							<label>Columns:</label>
+							<button class="btn icon fa fa-times"
+									  uib-tooltip="Remove all columns items"
+									  style="position:absolute;right:0;"
+									  ng-click="$ctrl.$parent.launcher.columns.clear()"></button>
+						</ax-toolbar>
+						<ax-column bind-to="title" width="100%">
+							<ax-column-view type="custom">
+								<div ng-bind="dataItem.title"></div>
+								<div style="position:absolute;top:-1px;right:0">
+									<ax-dropdown-popup
+										uib-tooltip="Edit column properties"
+										tabindex="-1"
+										btn-class="btn icon settings"
+										caret-class="fa fa-edit"
+										popup-max-height="100%"
+										popup-relative-left="-325"
+										popup-relative-top="2"
+										open-params="$parent.$parent.dataItem;$ctrl.dataItemGetIndex($parent.$parent.dataItem, 'visibleItems')===0"
+										template-url="'components/controls/table/templates/ax-table-pivot-table-columns.html'"
+										ctrl="$parent.$ctrl.$parent.launcher.columns.properties"></ax-dropdown-popup>
+									<ax-button class="btn icon "
+												  icon-class="fa fa-times"
+												  ng-click="$parent.$ctrl.$parent.launcher.columns.remove(dataItem,$event)"
+												  uib-tooltip="Remove column"
+												  tabindex="0"></ax-button>
+								</div>
+							</ax-column-view>
+						</ax-column>
+					</ax-list>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div style="text-align: left;margin-left:10px;margin-right:10px;margin-bottom:10px;">
+		<button ng-click="launcher.applySpinner.do()"
+				  class="btn btn-primary" style="width:105px;">
+			<ax-i-spinner config="launcher.applySpinner"
+							  i-class="fa fa-check"
+							  i-height="16"
+							  style="margin-right:3px"
+							  has-callback="false"
+							  action="launcher.confirm($event)">
+			</ax-i-spinner>
+			{{launcher.applySpinner.working?launcher.applyingText :launcher.applyText }}
+		</button>
+		<button ng-click="launcher.clear($event)" class="btn btn-primary" style="width:105px"><i class="fa fa-times"></i>{{launcher.clearText || 'Clear All'}}</button>
+		<button ng-click="launcher.close($event)" class="btn btn-primary" style="width:105px"><i class="fa fa-ban"></i>{{launcher.cancelText || 'Cancel'}}</button>
+	</div>
+</div>

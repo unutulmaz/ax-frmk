@@ -1,0 +1,31 @@
+<div id="nav-container" style="position: relative; height: 100%;">
+	<div id="nav-wrapper" style="position: absolute;top:0; bottom: 0; overflow-y: scroll; overflow-x: auto; width: 100%">
+		<ax-tree-view datasource="dataStore.mainNavbar" start-expanded="true" children="items">
+			<div ng-if="!node.isRoot">
+				<i class="icon fa icon-has-ul"
+					ng-click="node.showItems =!node.showItems"
+					ng-class="{'fa-caret-right': !node.showItems, 'fa-caret-down': node.showItems}"
+					ng-show="::node.items.length"></i>
+				<a ng-if="::node.route"
+					style="display:inline-flex"
+					ng-click="$parent.parentScope.popupClose()"
+					ui-sref-active="active"
+					ui-sref="{{::node.route}}">
+					<div ng-bind="::node.title"></div>
+				</a>
+				<div ng-if="::!node.route"
+					  style="display:inline-flex"
+					  ng-bind="::node.title"></div>
+			</div>
+			<ul ng-if="node.showItems && node.items.length>0">
+				<li ng-repeat="child in node.items track by $index">
+					<ax-tree-view-node-template node="child" start-expanded="true"></ax-tree-view-node-template>
+				</li>
+			</ul>
+		</ax-tree-view>
+	</div>
+	<!--<div id="copyright" style="position: absolute; bottom: 0; left: 0; width: 100%; text-align: center; background-color: #a9a6a6;height: 25px;line-height: 25px;color: white;">-->
+	<!--<span style="font-size:12px;margin-right:20px">&copy; 2016 - Ascentix Data</span>-->
+	<!--<div style="float:right; right: 0; height: 100%; width: 18px;background-color: #f1f1f1"></div>-->
+	<!--</div>-->
+</div>

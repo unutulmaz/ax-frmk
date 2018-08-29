@@ -1,0 +1,792 @@
+<div style="height:600px;position:relative;max-height:100%"
+	  class="group-edit-properties"
+	  ng-class="{'advanced':launcher.advanced}"
+	  ng-click="$event.stopPropagation()">
+	<style>
+		.group-properties-edit ax-table.standard-theme tr > th {
+			background-color: #d1f0fa;
+		}
+
+		.group-properties-edit [type=number] > div {
+			padding-right: 0;
+		}
+
+		.group-properties-edit .info-text1 {
+			font-style: italic
+		}
+
+		.group-properties-edit .btn.fa-bars {
+			cursor: move;
+		}
+
+		.group-properties-edit label {
+			white-space: nowrap;
+			margin-right: 3px;
+		}
+
+		.as-sortable-drag {
+			display: table-row-group;
+			opacity: initial !important;
+			background-color: white;
+		}
+
+		.as-sortable-drag .empty-column {
+			display: none !important;
+		}
+	</style>
+	<div class="dropdown-header" style="padding:0 10px">
+		<span ng-bind="launcher.title + ': ' + launcher.group.label"></span>
+		<button style="position:absolute;right:0;"
+				  class="btn btn-primary"
+				  tabindex="-1"
+				  uib-tooltip="Show/hide advanced properties"
+				  ng-click="launcher.advanced=!launcher.advanced;launcher.setPosition(popup)">
+			<span ng-bind="(launcher.advanced?'':'Advanced ...')"></span>
+			<i style="line-height:inherit;height:initial;"
+				ng-class="{'fa fa-long-arrow-left': launcher.advanced}"></i>
+		</button>
+	</div>
+	<ax-form class="group-properties-edit" config="launcher.form" datasource="launcher.group"
+				style1="max-width:100%;position:absolute;top:40px;bottom:50px;overflow-y:scroll;left:10px;right:10px;width:initial;height:initial;"
+				style="max-width:100%;padding:10px;position:relative;width:initial;height:initial;max-height:initial">
+		<ax-form-section>
+			<ax-form-section-header collapsible collapsed="true">
+				<div>Group</div>
+				<!--<div style="width:650px">Group</div>-->
+			</ax-form-section-header>
+			<ax-form-table-column>
+				<ax-form-field colspan="2">
+					<ax-form-input type="custom" style="width:100%">
+						<div class="inline" ng-if="!$parent.dataStore.isMobileDevice">
+							<ax-form-input bind-to="collapsible" type="checkbox" style="margin-right:5px;width:auto"><label>Collapsible</label></ax-form-input>
+							<ax-form-input bind-to="collapsed"
+												type="checkbox"
+												ng-disabled="!$ctrl.datasource.collapsible"><label>Initial collapsed</label></ax-form-input>
+							<label style="margin-left:10px;margin-right:5px;"
+									 ng-if="$ctrl.$parent.launcher.advanced ">Expression:</label>
+							<ax-form-input bind-to="expression"
+												type="text"
+												ng-if="$ctrl.$parent.launcher.advanced"
+												eraser-class="false"
+												width="auto"></ax-form-input>
+						</div>
+						<div ng-if="$parent.dataStore.isMobileDevice">
+							<ax-form-input bind-to="collapsible"
+												type="checkbox"
+												style="width:100%;margin-bottom:3px"><label>Collapsible</label></ax-form-input>
+
+						</div>
+						<div ng-if="$parent.dataStore.isMobileDevice">
+							<ax-form-input
+								style="margin-bottom:3px"
+								bind-to="collapsed"
+								type="checkbox"
+								ng-disabled="!$ctrl.datasource.collapsible"><label>Initial collapsed</label></ax-form-input>
+						</div>
+						<div class="inline" ng-if="$ctrl.$parent.launcher.advanced && $parent.dataStore.isMobileDevice">
+							<label style="margin-right: 5px;margin-bottom:3px">Expression:</label>
+							<ax-form-input bind-to="expression"
+												type="text"
+												eraser-class="false"
+												width="100%"></ax-form-input>
+						</div>
+					</ax-form-input>
+				</ax-form-field>
+
+			</ax-form-table-column>
+		</ax-form-section>
+		<ax-form-section>
+			<ax-form-section-header collapsible collapsed="true">
+				<div>Header</div>
+			</ax-form-section-header>
+			<ax-form-table-column>
+				<ax-form-field ng-if="!$parent.dataStore.isMobileDevice">
+					<label>Show </label>
+					<ax-form-input type="custom" class="inline">
+						<div class="inline"></div>
+						<ax-form-input bind-to="header.show" type="checkbox"
+											style="margin-right:5px;width:auto"><label>Header</label></ax-form-input>
+						<ax-form-input bind-to="header.showLabel"
+											type="checkbox"
+											style="margin-right:5px;width:auto"
+											ng-disabled="!$ctrl.datasource.header.show"><label>Label</label></ax-form-input>
+						<ax-form-input bind-to="header.showValue"
+											type="checkbox"
+											style="margin-right:5px;width:auto"
+											ng-disabled="!$ctrl.datasource.header.show || $ctrl.datasource.header.customDisplay.length>0"><label>Value</label></ax-form-input>
+						<ax-form-input bind-to="header.showCounter"
+											type="checkbox"
+											style="margin-right:5px;width:auto"
+											ng-disabled="!$ctrl.datasource.header.show"><label>Counter</label></ax-form-input>
+						<ax-form-input bind-to="header.showFilter"
+											style="width:auto"
+											type="checkbox"
+											ng-disabled="!$ctrl.datasource.header.show"><label>Filter</label></ax-form-input>
+					</ax-form-input>
+				</ax-form-field>
+				<ax-form-field ng-if="$parent.dataStore.isMobileDevice" colspan="2">
+					<ax-form-input type="custom">
+						<ax-form-input bind-to="header.show" type="checkbox"
+											style="width:auto;margin-bottom:3px"><label>Show Header</label></ax-form-input>
+						<ax-form-input bind-to="header.showLabel"
+											type="checkbox"
+											style="width:auto;margin-bottom:3px"
+											ng-disabled="!$ctrl.datasource.header.show"><label>Show Label</label></ax-form-input>
+						<ax-form-input bind-to="header.showValue"
+											type="checkbox"
+											style="width:auto;margin-bottom:3px"
+											ng-disabled="!$ctrl.datasource.header.show || $ctrl.datasource.header.customDisplay.length>0"><label>Show Value</label></ax-form-input>
+						<ax-form-input bind-to="header.showCounter"
+											type="checkbox"
+											style="width:auto;margin-bottom:3px"
+											ng-disabled="!$ctrl.datasource.header.show"><label>Show Counter</label></ax-form-input>
+						<ax-form-input bind-to="header.showFilter"
+											style="width:auto"
+											type="checkbox"
+											ng-disabled="!$ctrl.datasource.header.show"><label>Show Filter</label></ax-form-input>
+					</ax-form-input>
+				</ax-form-field>
+				<ax-form-field>
+					<label>Label</label>
+					<ax-form-input bind-to="header.label"
+										type="text"
+										width="100%"
+										eraser-class="false"
+										ng-disabled="!$ctrl.datasource.header.show || $ctrl.datasource.header.customDisplay.length>0"></ax-form-input>
+				</ax-form-field>
+				<ax-form-field ng-if="$parent.dataStore.isMobileDevice">
+					<label style="margin-right:5px;">Label indentation</label>
+					<ax-form-input bind-to="header.labelIndent"
+										type="number" width="100px"
+										ng-disabled="!$ctrl.datasource.header.show || $ctrl.datasource.header.displayType !== 'Full row width'"></ax-form-input>
+				</ax-form-field>
+
+				<ax-form-field ng-if="$ctrl.$parent.launcher.advanced && !$parent.dataStore.isMobileDevice">
+					<label>Display type</label>
+					<ax-form-input type="custom" class="inline allWidth">
+						<ax-form-input bind-to="header.displayType"
+											type="radio-options"
+											width="auto"
+											options="['Full row width', 'Show on column:']"
+											ng-disabled="!$ctrl.datasource.header.show || $ctrl.datasource.header.customDisplay.length>0"></ax-form-input>
+						<ax-form-input bind-to="header.displayColumn"
+											type="dropdown-list"
+											width="242px"
+											style="margin-left:2.5px"
+											datasource="$ctrl.$parent.launcher.allColumns"
+											order-by="index"
+											show-search="true"
+											list-height="250px"
+											model-type="id-field"
+											item-id-field="title"
+											item-display-field="title"
+											ng-disabled="!$ctrl.datasource.header.show || $ctrl.datasource.header.customDisplay.length>0 || $ctrl.datasource.header.displayType !== 'Show on column:'"></ax-form-input>
+					</ax-form-input>
+				</ax-form-field>
+				<ax-form-field ng-if="$ctrl.$parent.launcher.advanced && $parent.dataStore.isMobileDevice" colspan="2">
+					<label>Display type</label><br>
+					<ax-form-input type="custom" class="allWidth">
+						<ax-form-input bind-to="header.displayType"
+											type="radio-options"
+											width="100%"
+											style="margin-bottom:3px;height:auto"
+											options="['Full row width', 'Show on column:']"
+											ng-disabled="!$ctrl.datasource.header.show || $ctrl.datasource.header.customDisplay.length>0"></ax-form-input>
+						<ax-form-input bind-to="header.displayColumn"
+											type="dropdown-list"
+											width="100%"
+											style=""
+											datasource="$ctrl.$parent.launcher.allColumns"
+											order-by="index"
+											show-search="true"
+											list-height="250px"
+											list-width="100%"
+											model-type="id-field"
+											item-id-field="title"
+											item-display-field="title"
+											ng-disabled="!$ctrl.datasource.header.show || $ctrl.datasource.header.customDisplay.length>0 || $ctrl.datasource.header.displayType !== 'Show on column:'"></ax-form-input>
+					</ax-form-input>
+				</ax-form-field>
+				<ax-form-field ng-if="!$parent.dataStore.isMobileDevice">
+					<label>Background</label>
+					<ax-form-input type="custom"
+										class="inline">
+						<ax-dropdown-list dropdown-model="$ctrl.datasource.header.backgroundColor"
+												ng-disabled="!$ctrl.datasource.header.show"
+												type="dropdown-list"
+												class="form-control"
+												datasource="$ctrl.$parent.launcher.colors"
+												dropdown-model-type="id-field"
+												list-item-id-field="id"
+												list-width="100%"
+												btn-bind-html="$parent.$ctrl.$parent.launcher.colorHtml"
+												style="width:144px;">
+							<ax-column bind-to="id" width="100%">
+								<ax-column-view type="custom" ng-style="{'background-color': dataItem.id}"></ax-column-view>
+							</ax-column>
+						</ax-dropdown-list>
+						<label style="margin-left:10px;margin-right:5px;">Label indentation</label>
+						<ax-form-input bind-to="header.labelIndent"
+											type="number" width="100px"
+											ng-disabled="!$ctrl.datasource.header.show || $ctrl.datasource.header.displayType !== 'Full row width'"></ax-form-input>
+					</ax-form-input>
+				</ax-form-field>
+				<ax-form-field ng-if="$parent.dataStore.isMobileDevice">
+					<label>Background</label>
+					<ax-form-input type="custom"
+										class="inline">
+						<ax-dropdown-list dropdown-model="$ctrl.datasource.header.backgroundColor"
+												ng-disabled="!$ctrl.datasource.header.show"
+												type="dropdown-list"
+												class="form-control"
+												datasource="$ctrl.$parent.launcher.colors"
+												dropdown-model-type="id-field"
+												list-item-id-field="id"
+												list-width="100%"
+												btn-bind-html="$parent.$ctrl.$parent.launcher.colorHtml"
+												style="width:144px;">
+							<ax-column bind-to="id" width="100%">
+								<ax-column-view type="custom" ng-style="{'background-color': dataItem.id}"></ax-column-view>
+							</ax-column>
+						</ax-dropdown-list>
+					</ax-form-input>
+				</ax-form-field>
+				<ax-form-field ng-if="$ctrl.$parent.launcher.advanced"></ax-form-field>
+			</ax-form-table-column>
+		</ax-form-section>
+		<ax-form-section>
+			<ax-form-section-header collapsible collapsed="true">
+				<div>Footer</div>
+			</ax-form-section-header>
+			<ax-form-table-column>
+				<ax-form-field colspan="2" ng-if="!$ctrl.datasource.footer.show">
+					<div style="margin-right:0 !important;white-space:normal !important;width:100%" class="info-text1"
+						  bind-html-compile="$ctrl.$parent.launcher.message('show-footer')">
+					</div>
+				</ax-form-field>
+				<ax-form-field ng-if="!$parent.dataStore.isMobileDevice">
+					<label>Show </label>
+					<ax-form-input type="custom" class="inline">
+						<ax-form-input bind-to="footer.showLabel"
+											type="checkbox"
+											style="margin-right:5px"
+											ng-disabled="!$ctrl.datasource.footer.show"><label>Label</label></ax-form-input>
+						<ax-form-input bind-to="footer.showValue"
+											type="checkbox"
+											style="margin-right:5px"
+											ng-disabled="!$ctrl.datasource.footer.show || $ctrl.datasource.footer.customDisplay.length>0"><label>Value</label></ax-form-input>
+						<ax-form-input bind-to="footer.showCounter"
+											type="checkbox"
+											style="margin-right:5px"
+											ng-disabled="!$ctrl.datasource.footer.show"><label>Counter</label></ax-form-input>
+					</ax-form-input>
+				</ax-form-field>
+				<ax-form-field ng-if="$parent.dataStore.isMobileDevice" colspan="2">
+					<ax-form-input type="custom">
+						<ax-form-input bind-to="footer.showLabel"
+											type="checkbox"
+											style="margin-bottom:3px"
+											ng-disabled="!$ctrl.datasource.footer.show"><label>Show Label</label></ax-form-input>
+						<ax-form-input bind-to="footer.showValue"
+											type="checkbox"
+											style="margin-bottom:3px"
+											ng-disabled="!$ctrl.datasource.footer.show || $ctrl.datasource.footer.customDisplay.length>0"><label>Show Value</label></ax-form-input>
+						<ax-form-input bind-to="footer.showCounter"
+											type="checkbox"
+											style="margin-bottom:3px"
+											ng-disabled="!$ctrl.datasource.footer.show"><label>Show Counter</label></ax-form-input>
+					</ax-form-input>
+				</ax-form-field>
+				<ax-form-field>
+					<label>Footer label</label>
+					<ax-form-input bind-to="footer.label"
+										type="text" eraser-class="false"
+										width="auto"
+										ng-disabled="!$ctrl.datasource.footer.show || $ctrl.datasource.footer.customDisplay.length>0"></ax-form-input>
+				</ax-form-field>
+				<ax-form-field>
+					<label>Label indentation</label>
+					<ax-form-input type="custom"
+										class="inline">
+						<ax-form-input bind-to="footer.labelIndent"
+											type="number" width="100px"
+											ng-disabled="!$ctrl.datasource.footer.show || $ctrl.datasource.footer.displayType !== 'Full row width'"></ax-form-input>
+
+					</ax-form-input>
+				</ax-form-field>
+
+				<ax-form-field ng-if="$ctrl.$parent.launcher.advanced && !$parent.dataStore.isMobileDevice">
+					<label>Display type</label>
+					<ax-form-input type="custom" class="inline allWidth">
+						<ax-form-input bind-to="footer.displayType"
+											type="radio-options"
+											width="auto"
+											style="height:auto"
+											options="['Full row width', 'Show on column:']"
+											ng-disabled="!$ctrl.datasource.footer.show || $ctrl.datasource.footer.customDisplay.length>0"></ax-form-input>
+						<ax-form-input bind-to="footer.displayColumn"
+											type="dropdown-list"
+											width="242px"
+											style="margin-left:2.5px"
+											datasource="$ctrl.$parent.launcher.allColumns"
+											order-by="index"
+											show-search="true"
+											list-height="250px"
+											model-type="id-field"
+											item-id-field="title"
+											item-display-field="title"
+											ng-disabled="!$ctrl.datasource.footer.show || $ctrl.datasource.footer.customDisplay.length>0 || $ctrl.datasource.footer.displayType !== 'Show on column:'"></ax-form-input>
+					</ax-form-input>
+				</ax-form-field>
+
+				<ax-form-field ng-if="$ctrl.$parent.launcher.advanced && $parent.dataStore.isMobileDevice" colspan="2">
+					<label>Display type</label><br>
+					<ax-form-input type="custom" class="allWidth">
+						<ax-form-input bind-to="footer.displayType"
+											type="radio-options"
+											style="margin-bottom:3px;height:auto"
+											width="100%"
+											options="['Full row width', 'Show on column:']"
+											ng-disabled="!$ctrl.datasource.footer.show || $ctrl.datasource.footer.customDisplay.length>0"></ax-form-input>
+						<ax-form-input bind-to="footer.displayColumn"
+											type="dropdown-list"
+											width="100%"
+											datasource="$ctrl.$parent.launcher.allColumns"
+											order-by="index"
+											show-search="true"
+											list-height="250px"
+											model-type="id-field"
+											item-id-field="title"
+											item-display-field="title"
+											ng-disabled="!$ctrl.datasource.footer.show || $ctrl.datasource.footer.customDisplay.length>0 || $ctrl.datasource.footer.displayType !== 'Show on column:'"></ax-form-input>
+					</ax-form-input>
+				</ax-form-field>
+
+
+			</ax-form-table-column>
+		</ax-form-section>
+		<ax-form-section id="this-level-calculations">
+			<ax-form-section-header collapsible collapsed="false">
+				<div>Calculations for this level</div>
+			</ax-form-section-header>
+			<ax-form-table-column>
+				<ax-form-field colspan="2">
+					<div class="info-text1"
+						  style="margin-right:0 !important;width:100%;white-space:normal !important;"
+						  bind-html-compile="$ctrl.$parent.launcher.message('edit-this-level-calculations')">
+					</div>
+				</ax-form-field>
+				<ax-form-field colspan="2">
+					<ax-form-input bind-to="allLevelsCalculations"
+										type="checkbox"
+										width="auto"
+										style="display:inline-flex;height:auto"
+										on-selection-change="$ctrl.$parent.launcher.changeAllLevelsCalculations()">
+						For this level use All levels calculations
+					</ax-form-input>
+				</ax-form-field>
+				<ax-form-field colspan="2">
+					<div class="inline">
+						<label style="margin-right:5px">Show on</label>
+						<ax-form-input bind-to="showCalculationsOn"
+											type="dropdown-list"
+											on-selection-change="$ctrl.$parent.launcher.changeShowCalculationOn()"
+											datasource="$ctrl.$parent.launcher.showOnItems"
+											width="120px"
+											list-height="150px"
+											list-width="100%"
+											model-type="id-field"
+											item-id-field="id"
+											item-display-field="id"></ax-form-input>
+					</div>
+				</ax-form-field>
+				<ax-form-field colspan="2" ng-if="!$ctrl.datasource.allLevelsCalculations">
+					<ax-form-input type="custom" class="inline">
+						<button class="btn form-control"
+								  has-input="true"
+								  tabindex="0"
+								  style="width:auto;margin-right:10px;padding:0 3px 0 0"
+								  ng-click="$ctrl.$parent.launcher.addCalculation(false)">
+							<i class="fa fa-plus"></i>Add calculation
+						</button>
+						<button class="btn form-control"
+								  has-input="true"
+								  tabindex="0"
+								  style="width:auto;padding:0 3px 0 0"
+								  ng-click="$ctrl.$parent.launcher.clearCalculations(false)">
+							<i class="fa fa-times"></i>Remove all
+						</button>
+					</ax-form-input>
+				</ax-form-field>
+				<ax-form-field colspan="2" ng-if="!$ctrl.datasource.allLevelsCalculations && !$ctrl.$parent.launcher.advanced" is-advanced="false">
+					<ax-form-input config="$ctrl.$parent.launcher.calculationsConfig"
+										draggable="$ctrl.$parent.$ctrl.$parent.launcher.changeCalculationsOrder"
+										type="list"
+										selectable-rows="false"
+										edit-row="inline-cell"
+										can-edit="true"
+										no-header="false"
+										order-by="index"
+										class="children-items"
+										style="height:200px;width:100% !important;top:0px">
+						<ax-column header="Change order" width="46px" header-menu="false" show-header="false">
+							<ax-column-view view-type="custom"
+												 style="padding:0 3px ;text-align:center"
+												 uib-tooltip="Drag & drop to change calculations order for columns with more than one calculations">
+								<button class="btn icon ax-bordered fa fa-bars grid-cell-btn"
+										  tabindex="-1"
+										  style="vertical-align:top;"></button>
+							</ax-column-view>
+						</ax-column>
+						<ax-column header="Column" width="100%" header-menu="false" show-header="true">
+							<ax-column-view type="custom" style="padding:0 3px ">
+								<ax-dropdown-list datasource="$parent.$ctrl.$parent.$ctrl.$parent.launcher.bindableColumns"
+														class="form-control grid-control"
+														has-input="true"
+														style="width:100%"
+														list-order-by="index"
+														list-show-search="true"
+														list-height="250px"
+														on-selection-change="$parent.$ctrl.$parent.$ctrl.$parent.launcher.changeColumn(dataItem)"
+														dropdown-model="$parent.dataItem.column"
+														dropdown-model-type="id-field"
+														list-item-id-field="title"
+														list-item-display-field="title"></ax-dropdown-list>
+							</ax-column-view>
+						</ax-column>
+						<ax-column bind-to="type" header="Type" width="130px" header-menu="false" show-header="true">
+							<ax-column-view type="custom" style="padding:0 3px;">
+								<ax-dropdown-list datasource="$ctrl.$parent.$ctrl.$parent.launcher.aggregationTypes"
+														class="form-control grid-control"
+														has-input="true"
+														list-height="150px"
+														dropdown-model="$parent.dataItem.type"
+														on-selection-change="$ctrl.$parent.$ctrl.$parent.launcher.changeAgg()"
+														dropdown-model-type="id-field"
+														list-item-id-field="id"
+														list-item-display-field="id"></ax-dropdown-list>
+							</ax-column-view>
+						</ax-column>
+						<ax-column header="Delete" width="46px" header-menu="false" show-header="false">
+							<ax-column-view view-type="custom"
+												 style="padding:0 3px ;">
+								<button class="btn icon grid-cell-btn form-control  grid-control fa fa-trash-o"
+										  style="vertical-align:top;"
+										  has-input="true" ng-click="$ctrl.dataItemRemove(dataItem);$event.stopPropagation()"></button>
+							</ax-column-view>
+						</ax-column>
+					</ax-form-input>
+				</ax-form-field>
+				<ax-form-field colspan="2" ng-if="!$ctrl.datasource.allLevelsCalculations && $ctrl.$parent.launcher.advanced">
+					<ax-form-input config="$ctrl.$parent.launcher.calculationsConfigAdvanced"
+										draggable="$ctrl.$parent.$ctrl.$parent.launcher.changeCalculationsOrder"
+										type="list"
+										selectable-rows="false"
+										edit-row="inline-cell"
+										can-edit="true"
+										no-header="false"
+										order-by="index"
+										right-freezed-columns="1"
+										class="children-items"
+										style="height:200px;width:100%;top:0px">
+						<ax-column header="Change order" width="46px" header-menu="false" show-header="false">
+							<ax-column-view view-type="custom"
+												 style="padding: 0 3px;"
+												 uib-tooltip="Drag & drop to change calculations order for columns with more than one calculations">
+								<button class="btn icon ax-bordered fa fa-bars"
+										  tabindex="-1"
+										  style="vertical-align:top;"></button>
+							</ax-column-view>
+						</ax-column>
+						<ax-column header="Column" width="260px" header-menu="false" show-header="true">
+							<ax-column-view type="custom" style="padding:0 3px;">
+								<ax-dropdown-list datasource="$parent.$ctrl.$parent.$ctrl.$parent.launcher.bindableColumns"
+														class="form-control grid-control"
+														has-input="true"
+														list-order-by="index"
+														list-show-search="true"
+														list-height="250px"
+														on-selection-change="$parent.$ctrl.$parent.$ctrl.$parent.launcher.changeColumn(dataItem)"
+														list-row-is-disabled="dataItem.bindTo==='$$uid'"
+														dropdown-model="$parent.dataItem.column"
+														dropdown-model-type="id-field"
+														list-item-id-field="title"
+														list-item-display-field="title"></ax-dropdown-list>
+							</ax-column-view>
+						</ax-column>
+						<ax-column bind-to="expression" header="Expression" width="240px" header-menu="false" show-header="true">
+							<ax-column-view type="text"></ax-column-view>
+							<ax-column-edit type="text" ng-disabled="" eraser-class="false" style="padding:0 3px;"
+												 tooltip="'You can use any javascript expression with dataItem as row object'"></ax-column-edit>
+						</ax-column>
+						<ax-column header="Show on" width="130px" header-menu="false" show-header="true">
+							<ax-column-view type="custom" style="padding:0 3px ;">
+								<ax-dropdown-list datasource="$ctrl.$parent.$ctrl.$parent.launcher.showOnItems"
+														class="form-control grid-control"
+														list-height="100px"
+														dropdown-model="$parent.dataItem.showOn"
+														on-selection-change="$ctrl.$parent.$ctrl.$parent.launcher.changeAgg()"
+														dropdown-model-type="id-field"
+														list-item-id-field="id"
+														list-item-display-field="id"></ax-dropdown-list>
+							</ax-column-view>
+						</ax-column>
+
+						<ax-column bind-to="displayLabel" header="Label" width="160px" header-menu="false" show-header="true">
+							<ax-column-view type="custom" style="padding:0 3px">
+								<div class="inline">
+									<ax-checkbox class="form-control grid-control" has-input="true" style=";margin-right:3px;padding:0;" ng-model="dataItem.showLabel"></ax-checkbox>
+									<ax-text class="form-control grid-control" has-input="true"
+												ng-disabled="!dataItem.showLabel"
+												ng-model="dataItem.labelText" eraser-class="false" style="width:auto"></ax-text>
+									<i class="fa fa-question-circle"
+										uib-popover-html="'Use checkbox for toggle show label and<br> text box for label name if you want something different from Type'"
+										popover-placement="top-right"
+										popover-trigger="'mouseenter'"
+										ng-show="dataItem.$$uid===$ctrl.currentItem.$$uid"></i>
+								</div>
+							</ax-column-view>
+						</ax-column>
+						<ax-column bind-to="type" header="Type" width="130px" header-menu="false" show-header="true">
+							<ax-column-view type="custom" style="padding:0 3px;">
+								<ax-dropdown-list datasource="$ctrl.$parent.$ctrl.$parent.launcher.aggregationTypes"
+														class="form-control grid-control"
+														has-input="true"
+														list-height="150px"
+														dropdown-model="$parent.dataItem.type"
+														dropdown-model-type="id-field"
+														list-item-id-field="id"
+														list-item-display-field="id"></ax-dropdown-list>
+							</ax-column-view>
+						</ax-column>
+						<ax-column header="Delete" width="46px" header-menu="false" show-header="false">
+							<ax-column-view view-type="custom"
+												 style="padding:0 3px ;">
+								<button class="btn icon form-control  grid-control fa fa-trash-o"
+										  style="vertical-align:top;"
+										  has-input="true" ng-click="$ctrl.dataItemRemove(dataItem);$event.stopPropagation()"></button>
+							</ax-column-view>
+						</ax-column>
+					</ax-form-input>
+				</ax-form-field>
+			</ax-form-table-column>
+		</ax-form-section>
+		<ax-form-section id="all-levels-calculations">
+			<ax-form-section-header collapsible collapsed="false">
+				<div>Calculations for All levels</div>
+			</ax-form-section-header>
+			<ax-form-table-column>
+				<ax-form-field colspan="2">
+					<div class="info-text1"
+						  style="width:100%;margin-right:0 !important;white-space:normal !important;"
+						  bind-html-compile="$ctrl.$parent.launcher.message('edit-all-levels-calculations')">
+					</div>
+				</ax-form-field>
+				<ax-form-field colspan="2">
+					<div class="inline">
+						<label style="margin-right:5px">Show on</label>
+						<ax-form-input ng-model="$ctrl.$parent.launcher.allLevels.showOn"
+											type="dropdown-list"
+											datasource="$ctrl.$parent.launcher.showOnItems"
+											on-selection-change="$ctrl.$parent.launcher.changeShowCalculationOn()"
+											width="120px"
+											list-height="150px"
+											list-width="100%"
+											model-type="id-field"
+											item-id-field="id"
+											item-display-field="id"></ax-form-input>
+					</div>
+				</ax-form-field>
+				<ax-form-field colspan="2">
+					<ax-form-input type="custom" class="inline">
+						<button class="btn form-control"
+								  has-input="true"
+								  tabindex="0"
+								  style="width:auto;margin-right:10px;"
+								  ng-click="$ctrl.$parent.launcher.addCalculation(true)">
+							<i class="fa fa-plus"></i>Add calculation
+						</button>
+						<button class="btn form-control"
+								  has-input="true"
+								  tabindex="0"
+								  style="width:auto;"
+								  ng-click="$ctrl.$parent.launcher.clearCalculations(true)">
+							<i class="fa fa-times"></i>Remove all
+						</button>
+					</ax-form-input>
+				</ax-form-field>
+				<ax-form-field colspan="2" ng-if="!$ctrl.$parent.launcher.advanced">
+					<ax-form-input config="$ctrl.$parent.launcher.allLevels.calculationsConfig"
+										draggable="$ctrl.$parent.$ctrl.$parent.launcher.changeCalculationsOrder"
+										type="list"
+										selectable-rows="false"
+										edit-row="inline-cell"
+										can-edit="true"
+										no-header="false"
+										order-by="index"
+										class="children-items"
+										style="height:200px;width:100% !important;top:0px">
+						<ax-column header="Change order" width="46px" header-menu="false" show-header="false">
+							<ax-column-view view-type="custom"
+												 style="padding:0 3px ;"
+												 uib-tooltip="Drag & drop to change calculations order for columns with more than one calculations">
+								<button class="btn icon ax-bordered fa fa-bars grid-cell-btn"
+										  tabindex="-1"
+										  style="vertical-align:top;"></button>
+							</ax-column-view>
+						</ax-column>
+						<ax-column header="Column" width="100%" header-menu="false" show-header="true">
+							<ax-column-view type="custom" style="padding: 0 3px;">
+								<ax-dropdown-list datasource="$parent.$ctrl.$parent.$ctrl.$parent.launcher.bindableColumns"
+														class="form-control  grid-control"
+														has-input="true"
+														list-order-by="index"
+														list-show-search="true"
+														list-height="250px"
+														on-selection-change="$ctrl.$parent.$ctrl.$parent.launcher.changeColumn(dataItem, true)"
+														list-row-is-disabled="dataItem.bindTo==='$$uid'"
+														dropdown-model="$parent.dataItem.column"
+														dropdown-model-type="id-field"
+														list-item-id-field="title"
+														list-item-display-field="title"></ax-dropdown-list>
+							</ax-column-view>
+						</ax-column>
+						<ax-column bind-to="type" header="Type" width="130px" header-menu="false" show-header="true">
+							<ax-column-view type="custom" style="padding:0 3px ;">
+								<ax-dropdown-list datasource="$ctrl.$parent.$ctrl.$parent.launcher.aggregationTypes"
+														class="form-control grid-control"
+														has-input="true"
+														list-height="150px"
+														dropdown-model="$parent.dataItem.type"
+														on-selection-change="$ctrl.$parent.$ctrl.$parent.launcher.changeAgg(true)"
+														dropdown-model-type="id-field"
+														list-item-id-field="id"
+														list-item-display-field="id"></ax-dropdown-list>
+							</ax-column-view>
+						</ax-column>
+						<ax-column header="Delete" width="46px" header-menu="false" show-header="false">
+							<ax-column-view view-type="custom"
+												 style="padding:0 3px;">
+								<button class="btn icon grid-cell-btn form-control fa fa-trash-o"
+										  style="vertical-align:top;"
+										  has-input="true" ng-click="$ctrl.dataItemRemove(dataItem);$event.stopPropagation()"></button>
+							</ax-column-view>
+						</ax-column>
+					</ax-form-input>
+				</ax-form-field>
+				<ax-form-field colspan="2" ng-if="$ctrl.$parent.launcher.advanced">
+					<ax-form-input config="$ctrl.$parent.launcher.allLevels.calculationsConfigAdvanced"
+										type="list"
+										selectable-rows="false"
+										edit-row="inline-cell"
+										can-edit="true"
+										no-header="false"
+										order-by="index"
+										right-freezed-columns="1"
+										draggable="$ctrl.$parent.$ctrl.$parent.launcher.changeCalculationsOrder"
+										class="children-items"
+										style="height:250px;width:100%">
+						<ax-column header="Change order" width="46px" header-menu="false" show-header="false">
+							<ax-column-view view-type="custom"
+												 style="padding:0 3px ;"
+												 uib-tooltip="Drag & drop to change calculations order for columns with more than one calculations">
+								<button class="btn icon ax-bordered fa fa-bars"
+										  tabindex="-1"
+										  style="vertical-align:top;"></button>
+							</ax-column-view>
+						</ax-column>
+
+						<ax-column bind-to="column" header="Column" width="250px" header-menu="false" show-header="true">
+							<ax-column-view type="custom" style="padding:0 3px;">
+								<ax-dropdown-list datasource="$parent.$ctrl.$parent.$ctrl.$parent.launcher.bindableColumns"
+														class="form-control grid-control"
+														has-input="true"
+														on-selection-change="$ctrl.$parent.$ctrl.$parent.launcher.changeColumn(dataItem,true)"
+														list-row-is-disabled="dataItem.bindTo==='$$uid'"
+														dropdown-model="$parent.dataItem.column"
+														list-order-by="index"
+														list-show-search="true"
+														list-height="250px"
+														dropdown-model-type="id-field"
+														list-item-id-field="title"
+														list-item-display-field="title"></ax-dropdown-list>
+							</ax-column-view>
+						</ax-column>
+						<ax-column bind-to="expression" header="Expression" width="260px" header-menu="false" show-header="true">
+							<ax-column-view type="text"></ax-column-view>
+							<ax-column-edit type="text"
+												 eraser-class="false"
+												 tooltip="'You can use any javascript expression with dataItem as row object'"
+												 style="padding:0 3px;"></ax-column-edit>
+						</ax-column>
+						<ax-column header="Show on" width="130px" header-menu="false" show-header="true">
+							<ax-column-view type="custom" style="padding:0 3px ;">
+								<ax-dropdown-list datasource="$ctrl.$parent.$ctrl.$parent.launcher.showOnItems"
+														class="form-control grid-control"
+														list-height="100px"
+														dropdown-model="$parent.dataItem.showOn"
+														on-selection-change="$ctrl.$parent.$ctrl.$parent.launcher.changeAgg()"
+														dropdown-model-type="id-field"
+														list-item-id-field="id"
+														list-item-display-field="id"></ax-dropdown-list>
+							</ax-column-view>
+						</ax-column>
+
+						<ax-column bind-to="displayLabel" header="Label" width="160px" header-menu="false" show-header="true">
+							<ax-column-view type="custom" style="padding:0 3px ">
+								<div class="inline">
+									<ax-checkbox class="form-control grid-control" has-input="true" style="margin-right:3px;padding:0;" ng-model="dataItem.showLabel"></ax-checkbox>
+									<ax-text class="form-control grid-control" has-input="true"
+												ng-disabled="!dataItem.showLabel"
+												ng-model="dataItem.labelText" eraser-class="false" style="width:auto"></ax-text>
+									<i class="fa fa-question-circle"
+										uib-popover-html="'Use checkbox for toggle show label and<br> text box for label name if you want something different from Type'"
+										popover-placement="top-right"
+										popover-trigger="'mouseenter'"
+										ng-show="dataItem.$$uid===$ctrl.currentItem.$$uid"></i>
+								</div>
+							</ax-column-view>
+						</ax-column>
+						<ax-column bind-to="type" header="Type" width="130px" header-menu="false" show-header="true">
+							<ax-column-view type="custom" style="padding:0 3px ;">
+								<ax-dropdown-list datasource="$ctrl.$parent.$ctrl.$parent.launcher.aggregationTypes"
+														class="form-control grid-control"
+														list-height="150px"
+														has-input="true"
+														on-selection-change1="$ctrl.$parent.$ctrl.$parent.launcher.changeAgg(dataItem)"
+														dropdown-model="$parent.dataItem.type"
+														dropdown-model-type="id-field"
+														list-item-id-field="id"
+														list-item-display-field="id"></ax-dropdown-list>
+
+							</ax-column-view>
+						</ax-column>
+						<ax-column header="Delete" width="46px" header-menu="false" show-header="false">
+							<ax-column-view view-type="custom"
+												 style="padding:0 3px;">
+								<button class="btn icon form-control  grid-control fa fa-trash-o"
+										  style="vertical-align:top;"
+										  has-input="true" ng-click="$ctrl.dataItemRemove(dataItem);$event.stopPropagation()"></button>
+							</ax-column-view>
+						</ax-column>
+					</ax-form-input>
+				</ax-form-field>
+			</ax-form-table-column>
+		</ax-form-section>
+
+	</ax-form>
+	<div style="text-align: left;position:relative;margin-bottom:10px;margin-left:20px;">
+		<button ng-click="launcher.confirm($event)"
+				  ng-show="true" class="btn btn-primary"
+				  tabindex="9000"
+				  style="width:auto">
+			<i class="fa fa-check"></i> {{launcher.applyText || 'Apply'}}
+		</button>
+		<button ng-click="launcher.close($event)"
+				  class="btn btn-primary"
+				  tabindex="9001"
+				  style="width:auto">
+			<i class="fa fa-ban"></i>{{launcher.cancelText || 'Cancel'}}
+		</button>
+	</div>
+</div>

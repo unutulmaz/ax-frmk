@@ -1,0 +1,10 @@
+<div style="width:400px;padding:10px;">
+	<div class="form-title" ng-bind="launcher.title"></div>
+	<textarea style="width: 100%; min-height: 80px; border: none; outline: none; resize: none"
+						readonly
+						ng-model="launcher.message"></textarea>
+	<div style="text-align: left">
+		<button ng-click="launcher.confirm($event)" class="btn btn-primary" style="width:100px;margin-right:6px"><i class="fa fa-check"></i> {{launcher.okText || 'Ok'}}</button>
+		<button ng-click="launcher.close($event)" class="btn btn-primary" style="width:100px"> <i class="fa fa-ban"></i>{{launcher.cancelText || 'Cancel'}}</button>
+	</div>
+</div>

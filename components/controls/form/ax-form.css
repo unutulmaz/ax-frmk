@@ -1,0 +1,100 @@
+﻿ax-form {
+	display: block;
+	position: relative;
+	width: 100%;
+	height: 100%;
+	max-height: 100%;
+	background-color: white;
+}
+
+.form-title {
+	width: 100%;
+	display: inline-flex;
+	padding: 0 10px;
+	font-weight: bold;
+	font-size: larger;
+	position: relative;
+	border-bottom: 1px solid lightgray;
+	font-weight: bold;
+	vertical-align: middle;
+}
+
+.form-body {
+	padding: 10px 10px 10px 10px;
+	overflow: auto;
+	clear: both;
+	position: absolute;
+	top: 35px;
+	bottom: 40px;
+	left: 0;
+	right: 0;
+	font-size: 14px;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+	input[type="date"].form-control,
+	input[type="time"].form-control,
+	input[type="datetime-local"].form-control,
+	input[type="month"].form-control {
+		line-height: initial;
+	}
+}
+
+ax-form > table[role=form-column] {
+	width: 1px;
+	table-layout: fixed;
+}
+
+.form-section > td {
+	position: relative;
+}
+
+.form-section > td > i {
+	position: absolute;
+	top: 0;
+	right: 9px;
+}
+
+ax-form-section {
+	border-bottom: 1px solid white;
+	display: block;
+}
+
+ax-form-section-header {
+	background-color: #bdbaba;
+	padding-left: 8px;
+	padding-right: 8px;
+	font-weight: bold;
+	font-size: 120%;
+	width: 100%;
+	display: inline-flex;
+	vertical-align: middle;
+	position: relative;
+}
+
+ax-form-section-header > i {
+	position: absolute;
+	right: 8px;
+	line-height: 24px !important;
+}
+
+.form-section-body {
+	table-layout: fixed;
+	max-width: 100%;
+	width: 100%;
+	margin: 5px 0 2px;
+}
+
+ax-form [error-for] {
+	line-height: 20px;
+	color: red;
+	white-space: normal;
+}
+
+.form-section-body > tbody > tr > td:first-child {
+	padding-left: 10px;
+}
+
+ax-form tbody > tr:not(:last-child) > td {
+	padding-bottom: 3px;
+}

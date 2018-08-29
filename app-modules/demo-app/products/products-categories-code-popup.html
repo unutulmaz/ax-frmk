@@ -1,0 +1,65 @@
+﻿<div ng-controller="productsCategoriesCodeCtrl">
+    <ax-table config="$parent.launcher.dataTable1"
+              order-by="nameInvariant"
+              item-id-field="id"
+              api-controller="products-categories"
+              selectable-rows-model="$parent.launcher.currentSelection"
+              on-selection-change="$ctrl.onSelectionChange()"
+              edit-row="inline"
+              apply-changes-on-save="false"
+              auto-focus="true"
+              customizable-freezed-columns="false"
+              customizable-config="false"
+              customizable-edit-mode="false"
+              columns-autofit-enabled="false"
+              export-disabled="true"
+              selectable-rows="single"
+              selectable-rows-model-type="object"
+              dont-close-popup="true"
+              refresh-item-on-edit="true">
+        <ax-toolbar>
+            <button toolbar="right"
+                    class="btn btn-primary"
+                    style="width:auto;margin-right:3px"
+                    ng-disabled="($ctrl.$parent.launcher.readOnly || !$ctrl.currentItem) ? true: ($ctrl.currentItem === $ctrl.$parent.launcher.initialSelection)"
+                    ng-click="$ctrl.$parent.launcher.confirm($event)">
+                <i class="fa fa-check"></i>Select
+            </button>
+            <ax-button toolbar="right"
+                       show-title="false"
+                       style="margin-right:0"
+                       button-type="settings"></ax-button>
+            <div toolbar="right"
+                 ng-show="$ctrl.$parent.launcher"
+                 class="ngdialog-close"
+                 style="position:relative;display:inline-flex"
+                 ng-click="$ctrl.$parent.popupClose($event)"></div>
+        </ax-toolbar>
+        <ax-column header="Name"
+                   hideable="false"
+                   bind-to="name"
+                   sortable="nameInvariant"
+                   width="200px">
+            <ax-column-filter filter-type="text"></ax-column-filter>
+            <ax-column-view view-type="text"></ax-column-view>
+            <ax-column-edit edit-type="text"></ax-column-edit>
+        </ax-column>
+        <ax-column header="Code"
+                   hideable="false"
+                   bind-to="code"
+                   width="100px">
+            <ax-column-filter filter-type="text"></ax-column-filter>
+            <ax-column-view view-type="text"></ax-column-view>
+            <ax-column-edit edit-type="text"></ax-column-edit>
+        </ax-column>
+        <ax-column header="Description"
+                   hideable="false"
+                   bind-to="description"
+                   width="100%">
+            <ax-column-filter filter-type="text"></ax-column-filter>
+            <ax-column-view view-type="text"></ax-column-view>
+            <ax-column-edit edit-type="text-with-zoom"></ax-column-edit>
+        </ax-column>
+        <ax-column header="Actions" show-header="false" view-type="crud-buttons" width="84px"></ax-column>
+    </ax-table>
+</div>

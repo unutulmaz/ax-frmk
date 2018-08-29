@@ -1,0 +1,53 @@
+<div class="form-title">axDropdownPopup</div>
+<div ng-style="{'top':(dataStore.formTitleHeight()+10)+'px'}"
+	  style="position: absolute;top:45px;bottom:10px;left:10px;right:10px;overflow: auto;padding-right:10px" ng-controller="dropdownDocs">
+	<div class="info-text">
+		<div style="display:inline-flex;">
+			<div style="margin-right:10px;">
+				axDropdownPopup are defined with template like this:
+				<pre style="width:1200px"
+					  ng-bind="code.def"></pre>
+				<pre style="width:1200px"
+					  ng-bind="code.jsDef"></pre>
+				<strong>Attributes:</strong>
+				<br><br><strong>For Toggle button</strong>
+				<ax-attr>tabindex</ax-attr> if is set to -1 will disable access by keyboard navigation. Other value will enable this feature.
+				<ax-attr>btn-class</ax-attr> class list for toggle button.
+				<ax-attr>btn-text</ax-attr> javascript expression which text for.
+				<ax-attr>btn-html</ax-attr> javascript expression which contains html to use as innerHTML for toggle button.
+				<ax-attr>btn-bind-html</ax-attr> javascript expression for set bind-html-compile attribute for toggle button.
+				<ax-attr>show-clear-button</ax-attr> for show a clear button, if control is ax-dropdown-list or ax-dropdown-table.
+				<ax-attr>caret-class</ax-attr> css class for caret. By default is 'caret'. If caret-class = 'fa' , no caret will be created.
+				<ax-attr>caret-style</ax-attr> style attribute for caret element.
+				<br><br><strong>For Popup</strong>
+				<ax-attr>ctrl</ax-attr> reference to an javascript object to control popup. This will be accessed in popup with name 'launcher'.
+				<ax-attr>open-params</ax-attr> references to javascript object list separated by ';'. These objects are accessed in onOpen config method as arguments. First argument is $event by default.
+				<ax-attr>template-url</ax-attr> javascript expression for template url. If not set this attribute, popup template will be set by ax-dropdown-popup innerHTML.
+				<ax-attr>popup-class</ax-attr> css class for popup element created.
+				<ax-attr>popup-width</ax-attr> style width property for popup element created.
+				<ax-attr>popup-height</ax-attr> style height property for popup element created.
+				<ax-attr>popup-max-height</ax-attr> style max-height property for popup element created, otherwise is set to auto.
+				<ax-attr>close-on-blur</ax-attr> for close popup on document click. t's not working if outside elements clicked invoke stopPropagation() for click event.
+				<ax-attr>close-on-mouseleave</ax-attr> for close popup when mouse leave popup (must first be entered).
+				<ax-attr>close-on-destroy=false</ax-attr> to disable close popup on element destroy.
+				<ax-attr>disable-animation</ax-attr> to disable open/close animation effect.
+				<ax-attr>popup-relative-top</ax-attr> css popup element top property relative to toggle button. By default is zero.
+				<ax-attr>popup-relative-left</ax-attr> css popup element left property relative to toggle button. By default is zero.
+				<ax-attr>popup-absolute-top</ax-attr> css popup element top property.
+				<ax-attr>popup-absolute-bottom</ax-attr> css popup element bottom property.
+				<ax-attr>popup-absolute-left</ax-attr> css popup element left property.
+				<ax-attr>popup-absolute-right</ax-attr> css popup element right property.
+				<br><br><strong>Popup controller methods</strong>
+				<ax-attr>onOpen</ax-attr> method is invoked before open popup has as arguments $event and params defined in open-params attribute. For continue open event execution must set <strong>this.openFinish = true</strong>.
+				<ax-attr>onOpenFinish</ax-attr> method is invoked before make visible popup.
+				<ax-attr>onClose</ax-attr> method is invoked on popup close event.
+				<ax-attr>close</ax-attr> method to trigger popup close event.
+
+			</div>
+		</div>
+	</div>
+	<div style="display:inline-flex;width:100%">
+		<ax-code-tabs template-url="/app-modules/docs/ax-dropdown-popup/samples.html"
+						  style="position:relative;height:400px;width:100%;"></ax-code-tabs>
+	</div>
+</div>

@@ -1,0 +1,26 @@
+<div style="padding:10px;font-weight:bold">
+    Please wait to generate pivot table. Can take to a few minutes, depending on pivot configuration and records number.
+    <br/> Press "Wait" if "Page Unresponsive" warning dialog is showed!
+</div>
+<ax-table debug="false"
+          datasource="grid.$$pivotTable.config.data"
+          columns-autofit-enabled="true"
+          columns-autofit="false"
+          customizable-data-grouping="false"
+          customizable-pivot-table="false"
+          customizable-edit-mode="false"
+          freeze-columns-enabled="true"
+          customizable-freezed-columns="true"
+          has-horizontal-virtual-scroll="true"
+          has-dynamic-template="true"
+          pivot-table-mode="true"
+          class="pivot-table"
+          auto-focus="true"
+          style="top:0px;left:0px;right:0px;bottom:0px">
+    <ax-toolbar>
+        <label class="header-title">Pivot table</label>
+        <ax-button button-type="groups-toggle" toolbar="right"></ax-button>
+        <ax-button button-type="settings" toolbar="right"></ax-button>
+        <div class="ngdialog-close" ng-click="$ctrl.config.popupClose()" toolbar="right"></div>
+    </ax-toolbar>
+</ax-table>

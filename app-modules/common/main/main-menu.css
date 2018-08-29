@@ -1,0 +1,41 @@
+#nav-wrapper > ax-tree-view > ax-tree-view-node > ul {
+	padding: 0;
+}
+
+#nav-wrapper .icon-has-ul {
+	width: 12px;
+	border: 0px solid lightgray;
+}
+
+#nav-wrapper > ax-tree-view a {
+	color: #333;
+	width:100%;
+}
+
+#nav-wrapper > ax-tree-view a:hover > div,
+#nav-wrapper > ax-tree-view a.active > div {
+	background-color: #b7defa;
+	border-left: 2px solid #178efe;
+}
+
+#nav-wrapper > ax-tree-view a > div {
+	padding: 0 3px;
+	border-left: 2px solid #ffffff;
+	width:100%;
+}
+#nav-wrapper ax-tree-view-node > div {
+	display:inline-flex;
+	width:100%;
+}
+
+#nav-wrapper > ax-tree-view a.active {
+	background-color: #007acc;
+}
+
+#nav-wrapper > ax-tree-view > ax-tree-view-node > ul > li > ax-tree-view-node > div {
+	width: 100%;
+	padding-left: 5px;
+	background-color: lightgray;
+	border-bottom: 1px solid white;
+}
+

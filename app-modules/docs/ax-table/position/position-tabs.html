@@ -1,0 +1,24 @@
+<div class="form-title">Position and size in page</div>
+<div style="position: absolute;bottom:10px;left:10px;right:10px;overflow: auto;padding-right:10px" ng-style="{'top':(dataStore.formTitleHeight()+10)+'px'}">
+	<div class="info-text">
+		<div style="display:inline-flex;">
+			<div style="margin-right:10px;">
+				axTable element position is given by style position attribute
+				<br/><span style="padding-left:20px">- <strong>style = "position:relative;width:50%;height:100%"</strong>  width and height can be set as percent or as pixels.</span>
+				<br/><span style="padding-left:20px">- <strong>style = "position:absolute;top:40px;left:10px;right:10px;bottom:10px"</strong>. In this case, a common mistake is using in same time width=100%, or height=100%.</span>
+				<br/><span style="padding-left:20px">- <strong>style = "position:absolute;top:0px;left:0px;right:0px;bottom:0px"</strong> is default style for ax-table element</span>
+				<br/> The maximize button change axTable style to "position:absolute;top:0;bottom:0;left:0;right:0;z-index:100;margin:0" and trigger a layout method to refresh axTable
+				dimensions. This will not work in any structure, so, you can create your own method.
+				<br>If you resize programmatically a parent element, which affected axTable dimensions, you must trigger a window resize event for all axTables rearranged in new workspace like this:
+				<br/><strong>$timeout(axUtils.triggerWindowResize)</strong>
+                where axUtils.triggerWindowResize = function(){window.dispatchEvent(new Event('resize'));}
+
+			</div>
+		</div>
+	</div>
+	<div style="display:inline-flex;width:100%">
+		<ax-code-tabs template-url="/app-modules/docs/ax-table/position/position-1.html"
+		              style="position:relative;height:600px;width:100%;"
+		              source-code="code"></ax-code-tabs>
+	</div>
+</div>

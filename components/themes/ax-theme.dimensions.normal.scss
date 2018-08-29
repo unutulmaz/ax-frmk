@@ -1,0 +1,877 @@
+html,
+body,
+footer,
+.btn.fa:not(.form-control),
+.btn:not(.form-control) > .fa,
+.theme-list,
+.form-control,
+table,
+ax-table-content > [role=paginator],
+.dropdown-popup {
+  font-size: 16px;
+}
+
+.dropdown-menu {
+  font-size: 16px !important;
+}
+
+ax-table > ax-table-content > [role=toolbar]:not(.cke_toolbar),
+ax-list > ax-table-content > [role=toolbar],
+ax-table > ax-table-content > [role=toolbar]:not(.cke_toolbar) [role=toolbar-wrapper] > *,
+ax-table > ax-table-content > [role=toolbar]:not(.cke_toolbar) [role=scroller-content] > *,
+.form-title {
+  font-size: 18px;
+}
+
+.scroller-menu-option > *,
+.scroller-menu-option .btn,
+.scroller-menu-option .toolbar-container,
+[button-type=settings] button:not(.dropdown-toggle),
+[button-type=settings] ax-dropdown-popup {
+  font-size: 20px;
+}
+
+.btn.fa:not(.form-control),
+.btn:not(.form-control) > .fa {
+  font-size: 16px;
+}
+
+table.ax-table > thead > tr > th .column-sort {
+  font-size: 12px;
+}
+
+.dropdown-header {
+  padding: 0 10px;
+  line-height: 36px;
+}
+
+.btn.fa:not(.form-control), .btn:not(.form-control) > .fa {
+  padding: 0;
+}
+
+.scroller-menu-option > *,
+.scroller-menu-option .btn,
+.scroller-menu-option .toolbar-container,
+.scroller-menu-option ax-datetime {
+  height: 34px;
+  line-height: 30px;
+}
+
+.scroller-menu-option ax-datetime input {
+  line-height: 32px !important;
+  height: 32px !important;
+}
+
+.scroller-menu-option ax-datetime.form-control:not(.grid-control):not(.editor-control) button {
+  line-height: 30px !important;
+  height: 32px !important;
+  width: 40px !important;
+
+}
+
+.scroller-menu-option > * {
+  margin-bottom: 5px !important;
+}
+
+.scroller-menu-option [button-type=settings] .btn.icon {
+  height: 30px !important;
+  line-height: 28px !important;
+}
+
+.btn.fa:not(.form-control), .btn:not(.form-control) > .fa {
+  width: 22px;
+  padding: 0;
+  //height: 28px;
+  line-height: inherit;
+}
+
+.form-control {
+  height: 26px;
+  padding: 0 8px;
+  line-height: 24px;
+}
+
+//.grid-cell-btn container must has display:inline-flex
+[role=column-view] .btn:not(.dropdown-toggle),
+[role=column-view] .btn.icon:not(.dropdown-toggle),
+[role=column-view] .btn.fa:not(.dropdown-toggle),
+[role=column-view] .btn.fa.form-control:not(.dropdown-toggle),
+[role=column-view] .btn.form-control > .fa,
+[role=column-view] ax-dropdown-popup,
+.btn.icon.grid-cell-btn:not(.dropdown-toggle),
+.config-popup [role=column-view] .btn:not(.dropdown-toggle),
+.config-popup [role=column-view] .btn.icon:not(.dropdown-toggle),
+.config-popup .btn.icon.grid-cell-btn:not(.dropdown-toggle) {
+  height: 26px;
+  line-height: 24px;
+  margin-top: 1px
+}
+
+[role=column-view] > div > ax-checkbox {
+  line-height: 24px;
+  //height: 30px;
+  margin-top: 1px;
+  min-width: 26px
+}
+
+[role=column-input] > ax-dropdown-list > button {
+  //line-height: 28px;
+}
+
+[role=column-input] > ax-dropdown-list > button > div {
+  line-height: 26px;
+}
+
+[role=column-view] .form-control:not(.dropdown-toggle),
+[role=column-input] .form-control:not(.dropdown-toggle):not(ax-dropdown-list) {
+  line-height: 24px;
+}
+
+[role=column-view] .form-control:not(.dropdown-toggle),
+[role=column-input] .form-control:not(.dropdown-toggle),
+[role=column-input] [type=text-with-zoom] {
+  margin: 1px;
+  height: 26px;
+}
+
+ax-checkbox.no-template, ax-checkbox:not(.no-template) > i {
+  padding: 0 6px;
+  width: initial;
+}
+
+ax-dropdown-list.ax-autocomplete-dropdown, .link-popup.ax-autocomplete-dropdown {
+  width: 26px;
+}
+
+[role=column-view] .form-control > * {
+  line-height: 24px;
+}
+
+ax-checkbox.form-control:not(.no-template) {
+  padding-left: 0;
+}
+
+.btn.fa.form-control, .btn.form-control > .fa:not(.btn) {
+  font-size: inherit;
+  width: 24px;
+  padding: 0;
+  //height: 24px;
+  line-height: 24px;
+}
+
+[button-type=settings] button:not(.dropdown-toggle), [button-type=settings] ax-dropdown-popup {
+  //height: 30px;
+  width: 36px;
+  margin-left: 3px;
+}
+
+.scroller-menu-option [button-type=settings] button:not(.dropdown-toggle),
+.scroller-menu-option [button-type=settings] ax-dropdown-popup {
+  //height: 38px !important;
+  width: 40px !important;
+}
+
+[role=toolbar-wrapper] [popup-class=scroller-popup-menu] {
+  width: 40px;
+  //height: 38px !important;
+}
+
+[button-type=settings] .btn.icon {
+  height: 28px !important;
+  line-height: 26px !important;
+}
+
+[button-type=settings] .btn.fa {
+  //height: 30px !important;
+  line-height: 28px !important;
+}
+
+.fa-spinner, button.fa-spinner:focus {
+  //width: 22px !important;
+  //height: 22px !important;
+  //line-height: 22px !important;
+}
+
+.app-header {
+  width: 100%;
+  height: 36px;
+  line-height: 36px;
+}
+
+.app-header .btn.fa,
+.app-header > ax-dropdown-popup,
+.app-header > ax-dropdown-popup > .btn.icon > .caret-holder,
+.scroller-bars-btn {
+  //height: 40px !important;
+  width: 34px !important;
+  line-height: 32px !important;
+}
+
+main {
+  top: 36px;
+}
+
+ax-popup.main-menu {
+  top: 41px !important;
+}
+
+.nav-tabs .nav-item {
+  margin-bottom: -1px;
+}
+
+.theme-list tr, .theme-list tr > td > div {
+  min-height: 30px !important;
+  max-height: 30px !important;
+  line-height: 28px !important;
+}
+
+ul.dropdown-menu {
+  padding: 10px !important;
+}
+
+.btn {
+  padding: 0 5px;
+}
+
+ax-popup {
+  border-radius: 5px;
+}
+
+button,
+.form-control,
+ax-checkbox,
+ax-radio-option,
+ax-form-section-header,
+[button-type],
+input {
+  border-radius: 5px;
+}
+
+
+.ngdialog-close {
+  //height: 32px;
+  line-height: 28px;
+  width: 30px;
+  font-size: 44px;
+  top: 2px;
+  right: 2px;
+  border-radius: 7px;
+}
+
+.caret-holder {
+  line-height: inherit;
+  width: 30px;
+}
+
+.caret-holder > .caret {
+  border-top-width: 13px;
+}
+
+table {
+  line-height: 28px;
+}
+
+th > [filter-for][filter-type=date][show-config=true] > div.between > ax-datetime:last-child,
+th > [filter-for][filter-type=datetime][show-config=true] > div.between > ax-datetime:last-child,
+th > [filter-for][filter-type=number][show-config=true] > div.between > ax-text:last-child,
+th > [filter-for][filter-type=string][show-config=true] > ax-text,
+th > [filter-for][filter-type=text][show-config=true] > ax-text {
+  margin-right: 29px;
+}
+
+.table-toolbar,
+ax-table > ax-table-content > [role=toolbar]:not(.cke_toolbar) {
+  height: 41px !important;
+  line-height: 40px !important;
+}
+
+.form-title {
+  height: 41px !important;
+  line-height: 40px !important;
+}
+
+ax-table > ax-table-content > [role=toolbar]:not(.cke_toolbar) button > i {
+  line-height: 31px;
+}
+
+ax-list > ax-table-content > [role=toolbar] {
+  line-height: 36px !important;
+  //height: 38px;
+}
+
+ax-table > ax-table-content > [role=toolbar]:not(.cke_toolbar) [role=toolbar-wrapper] > *,
+ax-table > ax-table-content > [role=toolbar]:not(.cke_toolbar) [role=scroller-content] > * {
+  line-height: 31px;
+  height: 33px;
+  margin: auto;
+}
+
+[role=paginator]:not(.editor) {
+  line-height: 32px;
+}
+
+[role=paginator]:not(.editor) .fa {
+  line-height: 33px;
+  margin: 1px 0;
+}
+
+[role=paginator]:not(.editor) [role=page-navigator] > span:last-child {
+  margin-right: 1px;
+}
+
+.btn.icon {
+  width: 26px !important;
+  min-width: 26px;
+}
+
+ax-text > div > .btn.icon {
+  //height: 34px;
+  line-height: 32px;
+}
+
+ax-dropdown-list .dropdown-clear {
+  position: absolute;
+  top: 0;
+  right: 26px;
+}
+
+//this is for filter-config options included in filter show in popup
+div.filter-config {
+  min-height: 121px;
+}
+
+ax-radio-option > i {
+  width: 30px;
+}
+
+ax-checkbox > div, ax-radio-option {
+  padding-right: 6px;
+}
+
+ax-list:not(.group-list) > ax-table-content > [role=toolbar] {
+  line-height: 31px !important;
+}
+
+.column-tabs {
+  min-height: 30px;
+}
+
+.column-tabs > .ngdialog-close {
+  width: 30px;
+  //height: 36px;
+  line-height: 28px;
+}
+
+.select-item-icon {
+  width: 36px;
+}
+
+.config-popup {
+  line-height: 36px;
+}
+
+.config-popup.settings {
+  height: 600px
+}
+
+.is-mobile .config-popup.settings {
+  height: 235px !important;
+}
+
+.config-popup .btn.fa:not(.form-control) {
+  width: 40px;
+}
+
+.config-popup .btn.icon.fa-question-circle {
+  line-height: 28px;
+}
+
+.config-popup .freeze-bar {
+  //height: 20px;
+  margin-top: 15px;
+}
+
+.config-popup .freeze-bar > div {
+  top: -20px !important;
+  line-height: 40px;
+}
+
+.config-popup .fa-caret-right,
+.config-popup .fa-caret-down,
+.config-popup .fa-eye,
+.config-popup .fa-eye-slash {
+  width: 28px !important;
+}
+
+.config-popup .order-container, .config-body > * {
+  width: 310px;
+}
+
+ax-see-also > ax-dropdown-popup {
+  line-height: 30px;
+}
+
+.config-body .columns-layout, .config-body .data-ordering, .config-body .data-grouping {
+  top: 37px;
+}
+
+.config-popup .config-body {
+  bottom: 50px;
+  top: 40px;;
+}
+
+.is-mobile .config-body {
+  right: 10px;
+  width: initial !important;
+}
+
+.config-popup .btn.icon:not(.grid-cell-btn ) {
+  line-height: 32px;
+}
+
+ax-tree-view li {
+  line-height: 38px;
+}
+
+[left-freeze=true].as-sortable-item,
+[left-freeze=true] [as-sortable-item-handle],
+[right-freeze=true].as-sortable-item,
+[right-freeze=true] [as-sortable-item-handle] {
+  min-height: 24px;
+}
+
+.group-edit-properties {
+  width: 770px !important;
+}
+
+.is-mobile .group-edit-properties, .is-mobile .advanced.group-edit-properties {
+  width: initial !important;
+}
+
+.groups-toggle {
+  width: 120px;
+  line-height: 30px;
+}
+
+.global-search {
+  border: 1px outset lightgray;
+}
+
+.scroller-menu-option > .global-search {
+  width: 100% !important;
+}
+
+.global-search ax-dropdown-popup {
+  width: 40px;
+  line-height: 30px;
+}
+
+.scroller-menu-option .global-search ax-dropdown-popup {
+  line-height: 38px;
+}
+
+.scroller-bars-btn > .caret-holder {
+  line-height: 33px;
+}
+
+.scroller-menu-option .btn > *:not(.btn-spinner) {
+  line-height: 28px !important;
+
+}
+
+.scroller-popup-menu {
+  padding: 10px;
+  padding-bottom: 26px;
+}
+
+.scroller-popup-menu .ngdialog-close {
+  right: 10px;
+  top: 10px;
+}
+
+.global-search ax-dropdown-popup, .global-search ax-text, .global-search .caret-holder {
+  line-height: 28px;
+}
+
+.advanced.group-edit-properties {
+  width: 860px !important;
+}
+
+.group-edit-properties > .dropdown-header > button {
+  line-height: 34px;
+}
+
+td[role=grid-cell] > div:not([role=column-input]) {
+  padding-left: 8px;
+}
+
+[role=column-input] ax-text > div > input,
+[role=column-view] ax-text > div > input,
+ax-datetime > div > input,
+[role=column-input] [type=text-with-zoom] > input,
+[role=column-input] ax-autocomplete > div > input,
+[role=column-view] ax-autocomplete > div > input,
+[role=column-input] ax-dropdown-list > button:not(.icon),
+[role=column-view] ax-dropdown-list > button:not(.icon),
+[role=column-input] input {
+  padding-left: 6px;
+}
+
+td[role=grid-cell].empty-column > * {
+  padding: 0 !important;
+  max-width: 0 !important;
+  margin: 0 !important;
+}
+
+td[role=grid-cell] > div[type=number],
+td.footer-calculation > div > .calculation-result, td.header-calculation > div > .calculation-result {
+  padding-right: 8px;
+}
+
+td.footer-calculation > div > .calculation-label, td.header-calculation > div > .calculation-label {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+table.ax-table > thead > tr > th > ax-dropdown-popup > button > div {
+  line-height: 25px;
+}
+
+ax-radio-options.form-control.editor-control > ax-radio-option,
+ax-radio-options.form-control.grid-control > ax-radio-option{
+  line-height: 22px;
+}
+
+ax-radio-options.form-control {
+  padding: 0;
+}
+
+table.ax-table > thead > tr > th .column-sort {
+  font-weight: lighter;
+  width: 10px;
+}
+
+table.ax-table > thead > tr > th .sortable-index {
+  font-size: 80%;
+  width: 5px;
+  margin-top: -3px;
+}
+
+table.ax-table > thead > tr[role=filters] > th > div[filter-for] {
+  min-height: 28px;
+  height: 28px;
+  padding: 1px;
+}
+
+table.ax-table > thead > tr > th .form-control {
+  height: 26px;
+  line-height: 24px;
+}
+
+tr[role=filters] ax-dropdown-list.form-control:not(.grid-control):not(.editor-control) > button {
+  line-height: 24px;
+  height: 26px;
+}
+
+tr[role=filters] .dropdown-toggle .btn.icon.fa.dropdown-clear {
+  line-height: 28px;
+  height: 28px;
+}
+
+//tr[role=filters] > th ax-dropdown-popup {
+//  height: 31px !important;
+//}
+
+table.ax-table > thead .btn.icon.fa {
+  height: 26px;
+  line-height: 24px;
+}
+
+[role=toolbar].editor-toolbar {
+  line-height: 33px;
+}
+
+.editor-content [role=toolbar].editor-toolbar [role=paginator] > .fa {
+  line-height: 35px;
+  height: 33px;
+}
+
+[role=paginator] div > span.fa, .editor-content [role=toolbar].editor-toolbar [role=paginator] > .fa {
+  padding: 0 12px;
+}
+
+[role=paginator] div > span:not(:last-child), [role=paginator] > span.fa {
+  margin-right: 1px !important;
+}
+
+.editor-content > [role=toolbar] .btn {
+  margin: auto 2px;
+  height: 32px !important;
+  line-height: 30px;
+}
+
+ax-editor-content .ngdialog-close {
+  top: 4.5px;
+  right: 4.5px;
+}
+
+#test-scroller-arrow {
+  width: 36px;
+}
+
+.editor-position > button.btn.icon {
+  line-height: 34px;
+}
+
+.editor-position {
+  position: absolute;
+  right: 46px;
+}
+
+[type=crud-buttons] > div > * {
+  //width: 40px;
+  height: 30px;
+  line-height: 28px;
+}
+
+.group-filter {
+  width: 36px !important;
+}
+
+.record-selectable-view > span {
+  padding-left: 36px;
+}
+
+.apply-popup > * {
+  width: 190px
+}
+
+ax-table > ax-table-content > [role=toolbar] .ngdialog-close {
+  font-size: 45px !important;
+  margin: auto 0 auto 3px !important;
+  line-height: 29px !important;
+  width: 33px;
+}
+
+ax-popup > .column-tabs {
+  padding-right: 28px;
+}
+
+ax-tree-view-node {
+  line-height: 26px;
+}
+
+ax-tree-view ul {
+  padding-left: 28px;
+}
+
+#nav-wrapper .icon-has-ul {
+  width: 28px;
+  line-height: 28px;
+}
+
+.code-tabs-maximize {
+  width: 30px;
+  line-height: 30px;
+}
+
+.group-toogle-popup li {
+  line-height: 32px;
+}
+
+.group-toogle-popup li i {
+  line-height: 30px;
+}
+
+tr[role=group-header] {
+  line-height: 28px;
+}
+
+input[edit-type=text-with-zoom] {
+  margin-right: 28px;
+}
+
+.table-toggle-maximize.btn {
+  width: initial !important;
+  padding: 0 6px !important;
+}
+
+[filter-type='date'] > div > ax-datetime {
+  width: 150px;
+}
+
+[filter-type='datetime'] > div > ax-datetime {
+  width: 200px;
+}
+
+[filter-type='text'] > div > ax-text {
+  width: 150px;
+}
+
+[filter-type='text-range'] > div > ax-text {
+  width: 250px;
+}
+
+ax-datetime > div > input {
+  min-width: 95px;
+}
+
+.filter-popup-input {
+  width: 225px;
+}
+
+.filter-popup-input ax-datetime[filter-type="date"], .filter-popup-input ax-text {
+  //width: 205px;
+}
+
+.filter-popup-input ax-datetime[filter-type="date"]:not(:last-child), .filter-popup-input ax-text:not(:last-child) {
+  margin-bottom: 3px;
+}
+
+ax-datetime.form-control.editor-control input {
+  height: 26px;
+}
+
+ax-datetime.form-control.editor-control button {
+  line-height: 22px !important;
+  height: 24px;
+}
+
+ax-datetime.form-control:not(.grid-control):not(.editor-control) input {
+  line-height: 28px !important;
+  height: 28px;
+}
+
+ax-datetime.form-control:not(.grid-control):not(.editor-control) button {
+  line-height: 26px !important;
+  height: 28px;
+}
+
+tr[role=filters] ax-datetime.form-control:not(.grid-control):not(.editor-control) input {
+  line-height: 24px !important;
+}
+
+tr[role=filters] ax-datetime.form-control:not(.grid-control):not(.editor-control) button {
+  line-height: 22px !important;
+}
+
+.form-title > a {
+  line-height: 30px;
+  margin-top: 5px;
+  margin-right: 5px;
+  border-radius: 4px;
+}
+
+ax-popup .ngdialog-close {
+  line-height: 30px;
+}
+
+ax-datetime.form-control.grid-control input {
+  line-height: 28px !important;
+}
+
+ax-datetime.form-control.grid-control button {
+  line-height: 26px !important;
+}
+
+[role=column-input] > [type=text-with-zoom] > ax-dropdown-popup {
+  top: 0;
+}
+
+[role=column-input] > [type=text-with-zoom] > input {
+  padding-right: 40px;
+  text-overflow: ellipsis;
+}
+
+button.dropdown-toggle.has-caret.has-clear-btn > div:not(.caret-holder) {
+  margin-right: 60px;
+}
+
+button.dropdown-toggle.has-caret:not(.has-clear-btn) > div:not(.caret-holder) {
+  margin-right: 30px;
+}
+
+button.dropdown-toggle.has-clear-btn:not(.has-caret) > div:not(.caret-holder) {
+  margin-right: 42px;
+}
+
+[role=column-input] > [type=text-with-zoom] > ax-dropdown-popup > button {
+  line-height: 24px;
+}
+
+[role=column-input] i.fa-question-circle,
+[role=column-view] i.fa-question-circle {
+  line-height: inherit;
+  width: 36px;
+  padding: 0 10px;
+}
+
+ax-dropdown-list.form-control:not(.grid-control):not(.editor-control) > button,
+ax-text.form-control:not(.grid-control):not(.editor-control) input {
+  padding: 0 6px;
+}
+
+ax-dropdown-list.form-control:not(.grid-control):not(.editor-control) > button {
+  line-height: 24px;
+  height: 26px;
+}
+
+th ax-dropdown-list.form-control:not(.grid-control):not(.editor-control) > button {
+  line-height: 30px;
+  height: 32px;
+}
+
+.ax-table tr td[role=grid-cell] [error-for],
+.editor-content .fa-exclamation {
+  width: 30px;
+  line-height: 30px;
+}
+
+[role=paginator].editor {
+  margin-left: 2px;
+}
+
+.btn.icon.group-toggle-show {
+  line-height: 24px;
+}
+
+.edit-body > div {
+  line-height: 32px;
+}
+
+.edit-body .fa-question-circle {
+  font-size: 24px;
+}
+
+.dropdown-popup-menu button {
+  line-height: 30px;
+}
+
+[button-type=settings] {
+  padding-top: 1.5px;
+}
+
+.app-header button {
+  line-height: 24px;
+}
+
+ax-tab-view {
+  top: 34px;
+}
+
+.tabs-header > button.tab {
+  height: 26px;
+}
+
+[role=toolbar] .form-control {
+  height: 34px;
+  line-height: 32px;
+}
+[role=toolbar] ax-datetime.form-control:not(.grid-control):not(.editor-control) input{
+  height:32px;
+  line-height: 32px;
+}
+[role=toolbar] ax-datetime.form-control:not(.grid-control):not(.editor-control) button {
+  line-height: 30px !important;
+  height: 32px;
+}

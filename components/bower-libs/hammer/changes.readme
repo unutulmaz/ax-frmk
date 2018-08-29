@@ -1,0 +1,7 @@
+changes made on line: 890
+added:
+
+if (eventType === 1 && store.length > 0) {
+    console.log("event index:", store, "normalized", eventTypeNormalized, "eventType", eventType, "pointerType", pointerType, "remove", removePointer);
+    store.length = 0;
+}

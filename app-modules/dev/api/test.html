@@ -1,0 +1,79 @@
+﻿<style>
+	.node-key-value {
+		display: inline-flex;
+		vertical-align: top;
+	}
+
+	.json-tree-maximize > .ngdialog-content {
+		top: 0 !important;
+		height: 100%;
+		margin: 0 !important;
+		overflow-x: auto !important;
+	}
+</style>
+<div ng-controller="testApiController">
+	<div class="form-title">
+		Api test
+		<div class="ngdialog-close"></div>
+	</div>
+	<ax-form config="form1" datasource="form1.data" style="padding:10px;" >
+		<ax-form-table cols-width="280px;600px">
+			<ax-form-table-column labels-layout="left">
+				<ax-form-field>
+					<label>Controller</label>
+					<ax-form-input bind-to="controller"
+										type="text"
+										width="300px"></ax-form-input>
+				</ax-form-field>
+				<ax-form-field>
+					<label>Action</label>
+					<ax-form-input bind-to="action"
+										type="text"
+										width="300px"></ax-form-input>
+				</ax-form-field>
+				<ax-form-field>
+					<label>Method (get/put/post/delete)</label>
+					<ax-form-input bind-to="method"
+										type="text"
+										width="300px"></ax-form-input>
+				</ax-form-field>
+				<ax-form-field>
+					<label>Api args</label>
+					<ax-form-input bind-to="args"
+										type="textarea"
+										style="width:600px;height:100px"></ax-form-input>
+				</ax-form-field>
+				<ax-form-field colspan="2">
+					<button ng-click="$ctrl.$parent.run(true)" class="btn btn-primary" style="margin-left:283px;width:100px"><i class="fa fa-bolt"></i>Run</button>
+					<button ng-click="$ctrl.config.clear(true)" class="btn btn-primary" style="margin-left:5px;width:100px"><i class="fa fa-close"></i>Clear</button>
+				</ax-form-field>
+				<ax-form-field colspan="2">
+					<div style="position:relative;width:1000px;height:500px;overflow:auto;" id="json-viewer">
+						<label>Server Response:</label>
+						<div bind-html-compile="$ctrl.datasource.html" ng-if="$ctrl.datasource.html"></div>
+						<ax-json-tree-view ng-if="$ctrl.datasource.response"
+												 config="$ctrl.$parent.tree" object="$ctrl.datasource.response" start-expanded="true" root-name="'response'">
+							<div class="node-key-value" ng-click="toggleExpanded()" ng-show="nodeKey !=='response'">
+								<span class="key" ng-bind="nodeKey"></span>
+								<div class="leaf-value" ng-if="!isExpandable" style="display:inline-flex;vertical-align:middle">{{nodeValue===null?'null':(nodeValue===undefined?'undefined':nodeValue)}}</div>
+								<span class="branch-preview" ng-if="isExpandable" ng-show="!isExpanded && preview" bind-html-compile="preview"></span>
+								<span class="fa fa-window-maximize" ng-if="isExpandable && shouldRender" ng-show="isExpanded " ng-click="config.nodeMaximize($event, nodeKey, nodeValue)" style="line-height:22px"></span>
+							</div>
+							<ul class="branch-value" ng-if="isExpandable && shouldRender" ng-show="isExpanded">
+								<li ng-repeat="(subkey,subval) in nodeValue" >
+									<ax-json-tree-view-node-template node-key="subkey"
+																				node-value="subval"
+																				ng-attr-parent="{{$parent.$parent.nodeKey}}"
+																				config="$parent.config"
+																				start-expanded="$$value.defaultExpanded"></ax-json-tree-view-node-template>
+								</li>
+							</ul>
+
+						</ax-json-tree-view>
+					</div>
+				</ax-form-field>
+			</ax-form-table-column>
+		</ax-form-table>
+		<ax-form-errors></ax-form-errors>
+	</ax-form>
+</div>

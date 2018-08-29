@@ -1,0 +1,51 @@
+/* ************************************** */
+/* Mandatory CSS required for ng-sortable */
+/* ************************************** */
+
+.as-sortable-item {
+    -ms-touch-action: none;
+    touch-action: none;
+    /* to disable context menu on iOS devices */
+    -webkit-touch-callout: none;
+}
+
+[data-as-sortable]:not(.draggable-disabled) .as-sortable-item-handle:not([no-drag=true]), 
+[as-sortable]:not(.draggable-disabled) .as-sortable-item-handle:not([no-drag=true]) {
+    cursor: move;
+    cursor: -webkit-grab;
+    cursor: -moz-grab;
+}
+
+.as-sortable-item[disabled] .as-sortable-item-handle {
+	cursor: initial !important;
+}
+/* ReSharper disable once DeclarationIsEmpty */
+.as-sortable-placeholder {
+}
+
+.as-sortable-drag {
+    position: absolute;
+    pointer-events: none;
+    z-index: 9999;
+    margin:0;
+    /*width:auto !important a nu se activa*/
+}
+ul.as-sortable-drag{
+    padding:0;
+}
+ul.as-sortable-drag > li{
+    display:block;
+}
+.as-sortable-hidden {
+    display: none !important;
+}
+.as-sortable-placeholder {
+    
+}
+.as-sortable-un-selectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}

@@ -1,0 +1,20 @@
+﻿ax-text, ax-text.form-control {
+	display: block;
+	padding: 0;
+}
+
+ax-text > div > input {
+	border: none;
+	width: 100%;
+	outline: none;
+}
+
+ax-text.form-control > div > input[type=number] {
+	text-align: right;
+}
+
+ax-text[readonly] > div > .btn.fa.text-clear-btn,
+ax-text[disabled] > div > .btn.fa.text-clear-btn {
+	display: none !important;
+}
+

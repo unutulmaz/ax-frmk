@@ -1,0 +1,302 @@
+.imagecrop-main {
+	position:relative;
+}
+.imagecrop-sidebar {
+	display: inline-block;
+	vertical-align:top;
+	width: 200px;
+}
+
+.imagecrop-viewer {
+	background-color: #efefef;
+	border: 1px solid #bbb;
+	display: inline-block;
+	vertical-align:top;
+	margin-left:5px;
+	overflow: auto;
+}
+
+.imagecrop-main p {
+	margin: 0;
+	white-space: normal;
+}
+
+.imagecrop-main fieldset {
+	border: 1px solid #c5c5c5;
+	margin-bottom: 10px;
+	padding: 5px;
+	background:none;
+}
+
+.imagecrop-main legend {
+	color:#333333;
+	font-size:inherit;
+}
+
+.imagecrop-main form {
+	margin:0; padding:0;
+}
+
+.imagecrop-main select {
+	background-color: white;
+	border: 1px solid #c5c5c5;
+	margin: 2px 0 5px;
+	width: 100%;
+}
+
+div.imagecrop-main label {
+	margin-top:0.5em;
+	display:block;
+}
+
+.imagecrop-viewer img {
+	max-width:none;
+	max-height:none;
+}
+
+.imagecrop-processing {
+	height: 100%;
+	position: relative;
+}
+
+.previsualizaciones {
+	height: 100%;
+}
+
+.imagecrop-processing > div {
+	font-size: 160%;
+	font-weight: bold;
+	margin-top: -0.6em;
+	position: absolute;
+	text-align: center;
+	top: 50%;
+	width: 100%;
+}
+
+.tDatos {
+	width: 100%;
+	background-color: #f9f9f9;
+}
+
+.tDatos th {
+	border: 1px solid #E5E5E5;
+	text-align: left;
+	padding: 2px 0 2px 4px;
+}
+
+.tDatos td {
+	border: 1px solid #E5E5E5;
+	padding: 2px 0 2px 4px;
+}
+
+.acciones .tDatos {
+	margin-bottom: 1em;
+}
+
+.imagecrop-zoom {
+	background-color: white;
+	bottom: 0;
+	margin-bottom: 5px;
+	margin-left: 3px;
+	position: absolute;
+}
+.imagecrop-main .zoombutton {
+	background-image: url("zoom.png");
+	background-repeat: no-repeat;
+	border: 2px solid #f5f5f5;
+	cursor: pointer;
+	display: inline-block;
+	height: 16px;
+	margin-right: 2px;
+	outline: 1px solid #a7a6aa;
+	vertical-align: sub;
+	width: 16px;
+}
+
+.zoomout {
+	background-position: -16px 0;
+}
+.escala {
+	margin-left:0.2em;
+}
+.tamanos .cke_dialog_ui_button {
+	display: block;
+	margin: 5px;
+	text-align: center;
+}
+
+.tamanos.YaElegido a, .YaElegido p {
+	display:none;
+}
+.tamanos a.elegido {
+	background-color: transparent;
+	border: 0;
+	display: block;
+	padding:5px 0;
+	background-image:none;
+	box-shadow:none;
+	border-bottom:1px solid #E5E5E5;
+}
+
+.tamanos a.elegido:active,
+.tamanos a.elegido:hover {
+	box-shadow:none;
+	cursor:default;
+}
+
+.tamanos a.elegido span {
+	font-weight: bold;
+	cursor:default;
+}
+
+.instruccion {
+	padding:5px 0 10px;
+	color:green;
+}
+
+.atras {
+	color: #999999;
+	float: left;
+	font-size: 90%;
+	margin-top: 10px;
+	cursor:pointer;
+	text-decoration:underline;
+}
+.siguiente {
+	float: right;
+}
+
+/* jquery.Jcrop.css v0.9.12 - MIT License */
+/*
+	The outer-most container in a typical Jcrop instance
+	If you are having difficulty with formatting related to styles
+	on a parent element, place any fixes here or in a like selector
+
+	You can also style this element if you want to add a border, etc
+	A better method for styling can be seen below with .jcrop-light
+	(Add a class to the holder and style elements for that extended class)
+*/
+.jcrop-holder {
+	direction: ltr;
+	text-align: left;
+}
+/* Selection Border */
+.jcrop-vline,
+.jcrop-hline {
+	background: #ffffff url("Jcrop.gif");
+	font-size: 0;
+	position: absolute;
+}
+.jcrop-vline {
+	height: 100%;
+	width: 1px !important;
+}
+.jcrop-vline.right {
+	right: 0;
+}
+.jcrop-hline {
+	height: 1px !important;
+	width: 100%;
+}
+.jcrop-hline.bottom {
+	bottom: 0;
+}
+/* Invisible click targets */
+.jcrop-tracker {
+	height: 100%;
+	width: 100%;
+	/* "turn off" link highlight */
+	-webkit-tap-highlight-color: transparent;
+	/* disable callout, image save panel */
+	-webkit-touch-callout: none;
+	/* disable cut copy paste */
+	-webkit-user-select: none;
+}
+/* Selection Handles */
+.jcrop-handle {
+	background-color: #333333;
+	border: 1px #eeeeee solid;
+	width: 7px;
+	height: 7px;
+	font-size: 1px;
+}
+.jcrop-handle.ord-n {
+	left: 50%;
+	margin-left: -4px;
+	margin-top: -4px;
+	top: 0;
+}
+.jcrop-handle.ord-s {
+	bottom: 0;
+	left: 50%;
+	margin-bottom: -4px;
+	margin-left: -4px;
+}
+.jcrop-handle.ord-e {
+	margin-right: -4px;
+	margin-top: -4px;
+	right: 0;
+	top: 50%;
+}
+.jcrop-handle.ord-w {
+	left: 0;
+	margin-left: -4px;
+	margin-top: -4px;
+	top: 50%;
+}
+.jcrop-handle.ord-nw {
+	left: 0;
+	margin-left: -4px;
+	margin-top: -4px;
+	top: 0;
+}
+.jcrop-handle.ord-ne {
+	margin-right: -4px;
+	margin-top: -4px;
+	right: 0;
+	top: 0;
+}
+.jcrop-handle.ord-se {
+	bottom: 0;
+	margin-bottom: -4px;
+	margin-right: -4px;
+	right: 0;
+}
+.jcrop-handle.ord-sw {
+	bottom: 0;
+	left: 0;
+	margin-bottom: -4px;
+	margin-left: -4px;
+}
+/* Dragbars */
+.jcrop-dragbar.ord-n,
+.jcrop-dragbar.ord-s {
+	height: 7px;
+	width: 100%;
+}
+.jcrop-dragbar.ord-e,
+.jcrop-dragbar.ord-w {
+	height: 100%;
+	width: 7px;
+}
+.jcrop-dragbar.ord-n {
+	margin-top: -4px;
+}
+.jcrop-dragbar.ord-s {
+	bottom: 0;
+	margin-bottom: -4px;
+}
+.jcrop-dragbar.ord-e {
+	margin-right: -4px;
+	right: 0;
+}
+.jcrop-dragbar.ord-w {
+	margin-left: -4px;
+}
+
+/* Fix for twitter bootstrap et al. */
+.jcrop-holder img,
+img.jcrop-preview {
+	max-width: none;
+}
+

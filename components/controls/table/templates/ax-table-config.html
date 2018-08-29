@@ -1,0 +1,279 @@
+<style>
+
+
+	.config-popup .hideable {
+		font-weight: normal;
+	}
+
+	.config-popup .cut {
+		/*background-color:#e8e6e6;*/
+		color: #cbc8c8;
+	}
+
+	.as-sortable-drag {
+		overflow: hidden;
+		/*color: initial !important;*/
+		color: black !important;
+		background-color: initial !important;
+	}
+
+	.order-title {
+		background-color: #e8e6e6;
+		padding: 2px 5px;
+		margin-bottom: 3px;
+	}
+
+	[left-freeze=true].as-sortable-item,
+	[left-freeze=true] [as-sortable-item-handle],
+	[right-freeze=true].as-sortable-item,
+	[right-freeze=true] [as-sortable-item-handle] {
+		overflow: hidden;
+	}
+
+	[as-sortable-item-handle][no-drag=true] {
+		cursor: pointer !important;
+	}
+
+	ax-tree-view ax-tree-view-node.expandable:not([is-root])::before {
+		color: transparent;
+		font-size: 0;
+	}
+
+	.column {
+		overflow: hidden;
+		white-space: nowrap;
+	}
+
+	.column[no-drag=true] {
+		color: gray;
+		font-style: italic;
+	}
+
+	.fa[no-drag=true] {
+		cursor: default;
+		color: gray;
+	}
+
+	.as-sortable-dragging {
+		overflow: hidden;
+	}
+
+	.config-body {
+		display: inline-flex;
+	}
+
+	.is-mobile .config-body {
+		display: block;
+	}
+
+	.is-mobile .config-body > div {
+		min-width: 100%;
+		margin-left: 0 !important;
+	}
+
+</style>
+<div style="max-width:100%;position:relative" class="config-popup settings">
+	<div class="dropdown-header" style="position: absolute;top:0;left:0;right:0" autofocus ng-bind="launcher.title"></div>
+	<div style="position:absolute;left:10px;overflow: auto;" class="config-body">
+		<div ng-if="launcher.profiles.items.length>0" style="margin-right:10px;">
+			<div class="inline" style="width:100%">
+				<div ng-if="!$parent.dataStore.isMobileDevice">
+					<label>Profiles list</label>
+					<button class="btn icon fa fa-question-circle"
+							  tabindex="-1"
+							  uib-popover-html="launcher.getHelpFor('Profiles')"
+							  popover-append-to-body="true" popover-placement="bottom-left" popover-trigger="'mouseenter'"></button>
+				</div>
+				<ax-dropdown-popup
+					style="width:100%;"
+					ctrl="launcher.popups.profiles"
+					btn-class="btn btn-primary"
+					btn-text="'Profiles list'"
+					caret-class="fa fa-edit"
+					ng-if="$parent.dataStore.isMobileDevice"
+					template-url="'components/controls/table/templates/ax-table-config-popup-profiles.html'"
+					popup-height="100%"
+					popup-width="100%"
+					tabindex="-1"
+					uib-popover-html="launcher.getHelpFor('Profiles')"
+					popover-append-to-body="true"
+					popover-placement="bottom-left"
+					popover-trigger="'mouseenter'"></ax-dropdown-popup>
+			</div>
+			<div class="columns-layout"
+				  ng-if="!$parent.dataStore.isMobileDevice"
+				  ax-dynamic-template-url="'components/controls/table/templates/ax-table-config-profiles.html'"
+				  style="position: absolute;bottom:0;left:0;right:0;">
+			</div>
+		</div>
+		<div ng-if="true">
+			<div class="inline" style="width:100%">
+				<div ng-if="!$parent.dataStore.isMobileDevice">
+					<label>Columns layout</label>
+					<button class="btn icon fa fa-question-circle"
+							  tabindex="-1"
+							  uib-popover-html="launcher.getHelpFor('Columns Layout')"
+							  popover-append-to-body="true" popover-placement="bottom-left" popover-trigger="'mouseenter'"></button>
+				</div>
+				<ax-dropdown-popup
+					style="width:100%;"
+					ctrl="launcher.popups.columnsLayout"
+					btn-class="btn btn-primary"
+					btn-text="'Columns layout'"
+					caret-class="fa fa-edit"
+					ng-if="$parent.dataStore.isMobileDevice"
+					template-url="'components/controls/table/templates/ax-table-config-popup-layout.html'"
+					popup-height="100%"
+					popup-width="100%"
+					tabindex="-1"
+					uib-popover-html="launcher.getHelpFor('Columns Layout edit')"
+					popover-append-to-body="true"
+					popover-placement="bottom-left"
+					popover-trigger="'mouseenter'"></ax-dropdown-popup>
+			</div>
+			<div class="columns-layout"
+				  ng-if="!$parent.dataStore.isMobileDevice"
+				  ax-dynamic-template-url="'components/controls/table/templates/ax-table-config-layout.html'"
+				  style="position: absolute;bottom:0;left:0;right:0;overflow-x:auto;overflow-y:scroll;border: 1px solid lightgray;">
+			</div>
+		</div>
+		<div ng-if="launcher.dataOrder.unordered.length>0" style="margin-left:10px;">
+			<div class="inline" style="width:100%">
+				<div ng-if="!$parent.dataStore.isMobileDevice">
+					<label>Data ordering</label>
+					<button class="btn icon fa fa-question-circle"
+							  tabindex="-1"
+							  uib-popover-html="launcher.getHelpFor('Ordering')"
+							  popover-append-to-body="true"
+							  popover-placement="bottom-left"
+							  popover-trigger="'mouseenter'"></button>
+				</div>
+				<ax-dropdown-popup
+					style="width:100%"
+					ctrl="launcher.popups.dataOrder"
+					btn-class="btn btn-primary"
+					btn-text="'Data ordering'"
+					caret-class="fa fa-edit"
+					ng-if="$parent.dataStore.isMobileDevice"
+					template-url="'components/controls/table/templates/ax-table-config-popup-ordering.html'"
+					popup-height="100%"
+					popup-width="100%"
+					tabindex="-1"
+					uib-popover-html="launcher.getHelpFor('Columns Layout edit')"
+					popover-append-to-body="true" popover-placement="bottom-left" popover-trigger="'mouseenter'"></ax-dropdown-popup>
+
+			</div>
+			<div class="data-ordering"
+				  ng-if="!$parent.dataStore.isMobileDevice"
+				  ax-dynamic-template-url="'components/controls/table/templates/ax-table-config-ordering.html'"
+				  style="position: absolute;bottom:0;left:0;right:0;">
+			</div>
+		</div>
+		<div ng-if="launcher.dataGrouping.columns.data.length>0" style="margin-left:10px">
+			<div class="inline" style="width:100%">
+				<div ng-if="!$parent.dataStore.isMobileDevice">
+					<label>Data grouping</label>
+					<button class="btn icon fa fa-question-circle"
+							  tabindex="-1"
+							  uib-popover-html="launcher.getHelpFor('Grouping')"
+							  popover-append-to-body="true"
+							  popover-placement="bottom-left"
+							  popover-trigger="'mouseenter'"></button>
+				</div>
+				<ax-dropdown-popup
+					style="width:100%"
+					ctrl="launcher.popups.dataGrouping"
+					btn-class="btn btn-primary"
+					btn-text="'Data grouping'"
+					caret-class="fa fa-edit"
+					ng-if="$parent.dataStore.isMobileDevice"
+					template-url="'components/controls/table/templates/ax-table-config-popup-grouping.html'"
+					popup-height="100%"
+					popup-width="100%"
+					tabindex="-1"
+					uib-popover-html="launcher.getHelpFor('Columns Layout edit')"
+					popover-append-to-body="true" popover-placement="bottom-left" popover-trigger="'mouseenter'"></ax-dropdown-popup>
+
+			</div>
+			<div class="data-grouping"
+				  ng-if="!$parent.dataStore.isMobileDevice"
+				  ax-dynamic-template-url="'components/controls/table/templates/ax-table-config-grouping.html'"
+				  style="position: absolute;bottom:0;left:0;right:0;">
+			</div>
+
+		</div>
+	</div>
+	<div style="text-align: left;padding:10px;position: absolute;left:0;bottom:0;right:0" class="inline bottom-toolbar">
+		<style>
+			.btn-apply i {
+				margin: 0 5px;
+			}
+
+			.btn-apply {
+				width: 157px;
+				margin-right: 10px;
+			}
+
+			.apply-popup > *:not(:last-child) {
+				margin-bottom: 3px;
+			}
+		</style>
+		<button ng-click="launcher.applySpinner.do()"
+				  ng-if="launcher.profiles.items.length===0"
+				  class="btn btn-primary" style="width:120px;margin-right:10px">
+			<ax-i-spinner config="launcher.applySpinner"
+							  i-class="fa fa-check"
+							  i-height="16"
+							  style="margin-right:3px"
+							  has-callback="false"
+							  action="launcher.confirm(launcher)">
+			</ax-i-spinner>
+			{{launcher.applySpinner.working?launcher.applyingText :launcher.applyText }}
+		</button>
+		<button ng-if="launcher.profiles.items.length===0"
+				  ng-click="launcher.close($event)" class="btn btn-primary" style="width:120px">
+			<i class="fa fa-ban"></i>{{launcher.cancelText || 'Cancel'}}
+		</button>
+		<ax-dropdown-popup class="btn-apply"
+								 ng-if="launcher.profiles.items.length>0"
+								 btn-class="btn btn-primary"
+								 popup-direction="up"
+								 btn-html="<i class='fa fa-check'></i>{{$parent.launcher.applySpinner.working?$parent.launcher.applyingText :$parent.launcher.applyText }}"
+								 caret-class="fa">
+			<div style="padding:10px;display:flex;flex-direction: column" class="apply-popup" ng-click="$event.stopPropagation()">
+				<ax-checkbox ng-model="launcher.$parent.launcher.apply.columnsLayout"
+								 class="form-control">
+					Columns layout
+				</ax-checkbox>
+				<ax-checkbox ng-model="launcher.$parent.launcher.apply.order"
+								 class="form-control">
+					Data ordering
+				</ax-checkbox>
+				<ax-checkbox class="form-control"
+								 ng-model="launcher.$parent.launcher.apply.grouping">
+					Data grouping
+				</ax-checkbox>
+				<button ng-click="launcher.applySpinner.do()" class="btn btn-primary" >
+					<ax-i-spinner config="launcher.applySpinner"
+									  i-class="fa fa-check"
+									  i-height="16"
+									  style="margin-right:3px"
+									  has-callback="false"
+									  action="launcher.$parent.launcher.confirm(launcher)">
+					</ax-i-spinner>
+					{{launcher.$parent.launcher.applySpinner.working?launcher.$parent.launcher.applyingText :launcher.$parent.launcher.applySelectedText }}
+				</button>
+			</div>
+		</ax-dropdown-popup>
+		<button ng-if="launcher.profiles.items.length>0" ng-click="launcher.clearAll($event)" class="btn btn-primary" style="width:157px;margin-right:10px">
+			<i class="fa fa-times"></i>{{launcher.clearAllText}}
+		</button>
+		<!--<button ng-if="launcher.profiles.items.length>0" ng-disabled="true" ng-click="launcher.saveProfile($event)" class="btn btn-primary" style="width:157px;margin-right:10px">-->
+			<!--<i class="fa fa-save"></i>{{launcher.saveProfileText}}-->
+		<!--</button>-->
+		<button ng-if="launcher.profiles.items.length>0"
+				  ng-click="launcher.close($event)" class="btn btn-primary" style="width:157px">
+			<i class="fa fa-ban"></i>{{launcher.cancelText || 'Cancel'}}
+		</button>
+	</div>
+</div>

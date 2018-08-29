@@ -1,0 +1,38 @@
+<div ng-controller="recordsPaginationCtrl" style="position:relative;width:100%;height:100%">
+	<hint>
+		Use order-by ax-table attribute to set an initial sorting.
+		User can change this order from each column menu , or global from Records sorting settings popup for set multiple sorting columns
+	</hint>
+	<ax-table datasource="data"
+	               config="datatable1"
+                   paginate="false"
+                   page-size="50"
+                   show-change-pagination="true"
+	               order-by="deliveryCityInvariant, -date"
+	               style="position:relative;width:100%;height:100%">
+		<ax-toolbar>
+
+            <span style="padding-right:10px">Records pagination</span>
+            <div class="toolbar-container" style="display: inline-flex;width:500px;line-height: 30px;margin-left:10px">
+                Selection pagination type:
+                <ax-radio-options
+                        style="margin-top:2px;margin-left:5px"
+                        ng-model='$ctrl.$parent.paginationType'
+                        options="['no pagination','client side', 'virtual scroll']"
+                        ng-change="$ctrl.$parent.changePaginationType()"></ax-radio-options>
+            </div>
+
+            <ax-button button-type="refresh" ng-click="$ctrl.$parent.loadData(100, removeSpinner)">100 records</ax-button>
+            <ax-button button-type="refresh"
+                       ng-disabled="$ctrl.$parent.paginationType==='no pagination'"
+                       ng-click="$ctrl.$parent.loadData(100000, removeSpinner)">100k records</ax-button>
+			<ax-button toolbar="right" button-type="settings"></ax-button>
+		</ax-toolbar>
+		<ax-column bind-to="number" header="Order ID" width="100px" view-type="number" locale="en-US" decimals="0"></ax-column>
+		<ax-column bind-to="customer" sortable="customerInvariant" header="Customer Name" width="250px" ></ax-column>
+		<ax-column bind-to="customerCode" sortable header="Customer Code" width="105px" ></ax-column>
+		<ax-column bind-to="deliveryCountry" sortable="deliveryCountryInvariant" header="Delivery Country" width="250px" ></ax-column>
+		<ax-column bind-to="value" sortable header="Value" width="100px" view-type="number" locale="en-US" decimals="0"></ax-column>
+		<ax-column bind-to="createdBy" sortable header="Created By" width="130px" ></ax-column>
+	</ax-table>
+</div>

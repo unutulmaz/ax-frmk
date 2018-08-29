@@ -1,0 +1,41 @@
+<div class="form-title">axList</div>
+<div ng-style="{'top':(dataStore.formTitleHeight()+10)+'px'}"
+	  style="position: absolute;top:45px;bottom:10px;left:10px;right:10px;overflow: auto;padding-right:10px" ng-controller="datalistDocs">
+	<div class="info-text">
+		<div style="display:inline-flex;">
+			<div style="margin-right:10px;">
+                axList derives from axTable with less features (no UI configuration, no pivot table mode, no javascript template generation).
+                <pre style="width:1200px"
+                     ng-bind="code.def"></pre>
+				<strong>axList specific attributes:</strong>
+                <ax-attr>no-header=false</ax-attr> if you want to show columns headers. By default is <strong>true</strong>.
+                <ax-attr>paginator-show=true</ax-attr> if you want to show paginator on bottom. BY default is <strong>false</strong>.
+                <ax-attr>datasource</ax-attr> data collection (pointed to $ctrl.$parent from view controller scope). <strong>Is required</strong>.
+                <ax-attr>selectable-rows</ax-attr> can by <strong>single</strong> or <strong>multiple</strong>. By default is <strong>single</strong>.
+                <ax-attr>selectable-rows-model</ax-attr> reference to an scope variable where to store selected items. Object is type of array if selectable-rows='multiple'
+                <ax-attr>selectable-rows-model-type</ax-attr> can have one of the values: <strong>object, id-field</strong>. Default it is <strong>id-field</strong>.
+                <ax-attr>select-on-click-row</ax-attr> if you want to select item on click row event.
+                <ax-attr>item-id-field</ax-attr> identity field of datasource. <strong>Is required</strong>.
+                <ax-attr>item-display-field</ax-attr> property name to display text, if it's different from id-field.
+                <ax-attr>item-invariant-field</ax-attr> property name for invariant field, if column has.
+                <ax-attr>on-selection-change</ax-attr> a handler for selection change event.
+                <ax-attr>add-empty-option</ax-attr> if you want to add an empty option on top list options.
+                <ax-attr>show-close-button</ax-attr> if you want to show a popup close button when datalist is opened in a ax-dropdown-popup.
+                <br><strong>Attributes available if not columns template provided for datalist:</strong>
+                <ax-attr>show-search</ax-attr> if you want to have a text filter for datalist.
+                <ax-attr>item-show-check=false</ax-attr> if you want to disable show checkboxes for items. By default are showed.
+                <ax-attr>show-check-all</ax-attr> if you want to show a button for check all options in a multiple selectable datalist.
+                <ax-attr>show-uncheck-all</ax-attr> if you want to show a button for uncheck all options in a multiple selectable datalist.
+                <ax-attr>selectable-rows-checked-class</ax-attr> css class for checked item. By default is fa fa-check-square-o for multiple selection mode and fa fa-check-circle-o for single section mode.
+                <ax-attr>selectable-rows-unchecked-class</ax-attr> css class for unchecked item. By default is fa fa-square-o for multiple selection mode and fa fa-circle-o for single section mode.
+                <br><br><strong>Readonly attributes:</strong>
+                <ax-attr>apply-changes-on-save</ax-attr> true.
+                <ax-attr>customizable-pivot-table</ax-attr> false.
+            </div>
+		</div>
+	</div>
+	<div style="display:inline-flex;width:100%" >
+		<ax-code-tabs template-url="/app-modules/docs/ax-list/samples.html"
+		              style="position:relative;height:400px;width:100%;"></ax-code-tabs>
+	</div>
+</div>

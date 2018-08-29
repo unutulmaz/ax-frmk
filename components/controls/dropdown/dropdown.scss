@@ -1,0 +1,226 @@
+﻿.dropdown-popup-menu ul {
+  padding: 5px;
+  list-style: none;
+  margin-bottom: 0;
+}
+
+.dropdown-popup-menu ul li {
+  padding: 1px 3px;
+  cursor: pointer;
+  margin-bottom: 2px;
+  background-color: #f6f2f2;
+}
+
+.dropdown-popup-menu ul li:hover {
+  background-color: #eaeaea;
+}
+
+ax-dropdown-popup.li-option .dropdown-toggle {
+  border: none;
+  padding: inherit;
+  text-align: left;
+}
+
+ax-dropdown-popup.li-option .dropdown-toggle:hover, ax-dropdown-popup.li-option .dropdown-toggle:focus {
+  border: none !important;
+  color: black !important;
+  background-color: transparent !important;
+  box-shadow: none;
+}
+
+li > ax-dropdown-popup button {
+  border: none;
+  white-space: nowrap;
+  padding: 0;
+  background-color: transparent;
+  text-align: left;
+}
+
+li > ax-dropdown-popup button:focus {
+  border: none !important;
+}
+
+.dropdown-toggle[readonly] > span.caret {
+  display: none;
+}
+
+
+.form-control[ax-dropdown-multiselect] {
+  padding: 0 !important;
+}
+
+[role=grid-cell] .form-control[ax-dropdown-multiselect] .dropdown-toggle {
+  top: 0px !important;
+}
+
+ax-table tr[role=filters] > th .form-control[disabled][ax-dropdown-multiselect] > .dropdown-toggle > span,
+ax-table tr[role=data-row]:not(.hasFocus) .form-control[ax-dropdown-multiselect] > .dropdown-toggle > span {
+  color: transparent;
+}
+
+.form-control .dropdown-multiselect.dropdown-toggle {
+  border: none !important;
+}
+
+.dropdown-menu .divider {
+  margin: 0;
+}
+
+.dropdown-header {
+  width: 100%;
+  font-weight: bold;
+  background-color: #848282;
+  padding: 0 5px 5px 5px;
+  color: white;
+  font-size: inherit;
+  line-height: inherit;
+  font-size: inherit;
+}
+
+.dropdown-search {
+  width: 100%;
+  padding: 5px;
+  color: black;
+  display: block;
+  white-space: nowrap;
+}
+
+.form-control[disabled] .dropdown-multiselect.dropdown-toggle {
+  border-color: transparent;
+}
+
+.dropdown-toggle {
+  text-align: left;
+  border-width: 1px;
+  position: relative;
+}
+
+.dropdown-toggle > span {
+  white-space: nowrap;
+}
+
+.dropdown-multiselect.dropdown-toggle > span.caret {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.fa-spinner, button.fa-spinner:focus {
+  padding: 0 !important;
+  margin: auto 0;
+  background-color: transparent !important;
+  border: none !important;
+}
+
+[role=grid-cell] .dropdown-multiselect.dropdown-toggle > div {
+  padding: 0 !important;
+}
+
+[ax-dropdown-multiselect] button[readonly] > span {
+  display: none;
+}
+
+.dropdown-popup {
+  min-width: 0px;
+  max-width: 100%;
+  max-height: 100%;
+  overflow: auto;
+  padding: 0;
+  text-align: left;
+  list-style: none;
+  background-color: #fff;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, .15);
+  -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+}
+
+.box-shadow {
+  border-right: 1px solid rgba(0, 0, 0, .15);
+  border-bottom: 1px solid rgba(0, 0, 0, .15);
+  -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+}
+
+.dropdown-popup.popup-table {
+  border: none !important;
+}
+
+ax-dropdown-popup > button, ax-dropdown-popup > button {
+  margin: 0;
+  padding: 0 2px;
+}
+
+ax-dropdown-table > button.dropdown-toggle {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+
+ax-dropdown-popup[caret-class='fa fa-trash-o'], ax-dropdown-popup[caret-class='fa fa-trash-o'] {
+  margin-left: 0;
+}
+
+.dropdown-menu > li > a {
+  padding: 1px 5px;
+  cursor: pointer;
+}
+
+.dropdown-menu > li > a .fa {
+  margin-right: 3px;
+}
+
+.dropdown-popup.opening {
+  display: block;
+  max-height: 500px;
+}
+
+.dropdown-toggle > .caret-holder {
+  margin: 0px; //setat pt. text-with-zoom in ax-dattable
+  position: absolute;
+  top: 0;
+  right: 0px;
+  text-align: center;
+}
+
+
+.dropdown-group-title {
+  background-color: #e5e0e0;
+}
+
+ax-dropdown-list.form-control, ax-dropdown-list.form-control:focus {
+  padding: 0;
+  border: none !important;
+  box-shadow: none;
+}
+
+ax-dropdown-list.form-control > button {
+  background-color: transparent;
+  padding: 0;
+}
+
+
+ax-dropdown-list.form-control > button[readonly] {
+  border-color: transparent !important;
+}
+
+ax-dropdown-list.form-control > button:focus,
+ax-dropdown-list.form-control > *:focus {
+  /*border: none !important; intra in conflict cu regula pt. control editabil in ax-table */
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+ax-dropdown-popup.btn-primary:hover > button {
+  color: white;
+}
+
+ax-dropdown-popup {
+  outline: none !important;
+}
+
+ax-dropdown-list .dropdown-clear {
+  position: absolute;
+  right: 12px;
+}

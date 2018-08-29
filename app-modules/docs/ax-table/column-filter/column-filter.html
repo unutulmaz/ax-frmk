@@ -1,0 +1,62 @@
+<div class="form-title">Column filter template
+	<ax-see-also style="right:30px" btn-text="'See Also'">
+		<ax-see-also-option route="ax-table/column-filter-menu">Column filter menu template</ax-see-also-option>
+		<ax-see-also-option route="ax-table/records-filtering">Records filtering</ax-see-also-option>
+	</ax-see-also>
+</div>
+<div ng-style="{'top':(dataStore.formTitleHeight()+10)+'px'}" style="position: absolute;top:45px;bottom:10px;left:10px;right:10px;overflow: auto;padding-right:10px" ng-controller="columnFilterTabsCtrl">
+	<div class="info-text" ng-if="true">
+		<div style="display:inline-flex;">
+			<div style="margin-right:10px;">
+				<strong>Built-in filter template</strong>
+				<pre ng-bind="code.simple"></pre>
+				<strong>Attributes</strong>
+				<ax-attr>bind-to</ax-attr>if not present, ax-column sortable attribute take precedence from bind-to ax-column attribute
+				<ax-attr>show-config</ax-attr>if built-in filter has config button, this will be shown. By default config button is not shown.
+				<ax-attr>filter-type</ax-attr>can have one of the values: <strong>text, number, boolean, date, datetime, dropdown-list, dropdown-list-distinctvalues, custom</strong>
+				<ax-attr>display-name</ax-attr>is used when is an option in ax-column-filter-menu - the name which appear in UI for end-user in Column filter menu</strong>
+				<ax-attr>show-in-popup</ax-attr> true if you want to show filter input controls in a popup. Additional you can set <strong>popup-width</strong> and <strong>popup-height</strong> attributes.
+				<br><br>Filter with filter-type = <strong>dropdown-list-distinctvalues</strong> has in addition the following attributes:
+				<ax-attr>selectable-rows</ax-attr> can be <strong>multiple,single</strong>.
+				<br><br>Filter with filter-type = <strong>dropdown-list</strong> has in addition the following attributes:
+				<ax-attr>ctrl</ax-attr>popup controller object if you want to control behaviour of popup.
+				<ax-attr>datasource</ax-attr>data collection (pointed to $ctrl.$parent from view controller scope). <strong>Is required</strong>.
+				<ax-attr>selectable-rows</ax-attr>single/multiple. <strong>Is required</strong>.
+				<ax-attr>model-type</ax-attr>can have one of the values: <strong>object, id-field</strong>. Default it is <strong>id-field</strong>.
+				<ax-attr>item-id-field</ax-attr>identity field of datasource. <strong>Is required</strong> if model-type=id-field.
+				<ax-attr>item-display-field</ax-attr>property name to display text, if it's different from id-field.
+				<ax-attr>item-invariant-field</ax-attr>property name for invariant field, if column has.
+				<ax-attr>filter-strict="false"</ax-attr>filter will be made for value included in item.property value.
+				<ax-attr>ng-model</ax-attr>if you want to overwrite bind-to attribute.
+				<ax-attr>ng-change</ax-attr>if you want to overwrite default ng-change handler event.
+				<ax-attr>ng-disabled</ax-attr>if you want to disable control.
+				<ax-attr>disable-animation</ax-attr>for disable open/closing animation.
+				<ax-attr>close-on-blur</ax-attr>for closing popup on popup blur. By default is true.
+				<ax-attr>empty-option-text</ax-attr>a javascript expression. By default is empty text.
+				<ax-attr>add-empty-option</ax-attr>if you want to add an empty option on top list options.
+				<ax-attr>show-search</ax-attr>if you want to have a text filter for datalist.
+				<ax-attr>show-clear-button</ax-attr>if you want to show a clear button in filter dropdown when is something selected.
+				<ax-attr>item-show-check=false</ax-attr>if you want to disable show checkboxes for items. By default are showed.
+				<ax-attr>show-check-all</ax-attr>if you want to show a button for check all options in a multiple selectable datalist.
+				<ax-attr>show-uncheck-all</ax-attr>if you want to show a button for uncheck all options in a multiple selectable datalist.
+				<ax-attr>selectable-rows-checked-class</ax-attr>css class for checked item. By default is fa fa-check-square-o.
+				<ax-attr>selectable-rows-unchecked-class</ax-attr>css class for unchecked item. By default is fa fa-square-o.
+				<ax-attr>list-height</ax-attr>datalist css height property. by default is 150px.
+				<ax-attr>list-width</ax-attr>datalist css width property, if you want to have different width as column width. By default datalist has same width with column.
+				<ax-attr>popup-max-width</ax-attr>popup max-width css property.
+				<ax-attr>popup-max-height</ax-attr>popup max-height css property.
+				<br> For more details view page: <a ui-sref="ax-dropdown-list">ax-dropdown-list</a>
+				<br><br><strong>Custom filter template</strong>
+				<ax-show-hide element-id="customTemplate"></ax-show-hide>
+				<div style="width:100%;display:inline-flex" id="customTemplate">
+					<pre ng-bind="code.custom" style="width:580px"></pre>
+					<pre ng-bind="code.customJs" style="width:700px;margin-left:10px"></pre>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div style="display:inline-flex;width:100%">
+		<ax-code-tabs template-url="/app-modules/docs/ax-table/column-filter/column-filter-1.html"
+						  style="position:relative;height:400px;width:100%;"></ax-code-tabs>
+	</div>
+</div>
