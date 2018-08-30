@@ -3,9 +3,9 @@ define("DIR_DATABASE", $_SERVER["DOCUMENT_ROOT"] . "/api/vendor/database/");
 include_once $_SERVER["DOCUMENT_ROOT"] . "/api/vendor/Db.php";
 
 $dbConfig = array(
-	"dbName" => "",
-	"user" => "",
-	"password" => "",
+	"dbName" => "axcompdemo",
+	"user" => "axcompdemo",
+	"password" => "8iNbR7HgaxJGlJnq",
 	"driver" => "Mysqli",
 	"host" => "localhost");
 define("DB_DATABASE", $dbConfig["dbName"]);
@@ -14,10 +14,10 @@ $dbConnection = new Db($dbConfig["driver"], $dbConfig["host"], $dbConfig["user"]
 
 $roles = array("guest");
 $email = array(
-	"Username" => "",
-	"Password" => "",
-	"SetFrom" => ["email" => "", "name" => "Docs app"],
-	"AddReplyTo" => ["email" => "", "name" => ""],
+	"Username" => "ascentix.uat",
+	"Password" => "MyFancyPass58~",
+	"SetFrom" => ["email" => "ascentix.uat@gmail.com", "name" => "Docs app"],
+	"AddReplyTo" => ["email" => "bogdanim36@gmail.com", "name" => "Bogdan Ionescu"],
 	"Host" => "smtp.gmail.com",
 	"Port" => 587,
 	"SMTPSecure" => "tls",
@@ -26,7 +26,7 @@ $email = array(
 
 define("ROUTE_PARAM", "_route_");
 define("API_ROOT", "/api/module");
-define("APP_VERSION", "1.0.0");
+define("APP_VERSION", "1.0.3");
 
 $routes = array(
 	array("uri" => "account/getUserInfo", "file" => "Account.php", "authorized" => false),
@@ -62,13 +62,14 @@ function addMenu($roleId)
 
 	$items[] = $demoApp;
 	$docs = new MenuItem("Documentation");
+	$docs ->showItems = false;
 	$frmkDocs = $docs->appendChild("Framework", "");
 //	$frmkDocs->appendChild("Get started", "");
 //	$frmkDocs->appendChild("Tasks automation", "");
 
 	$controls = $docs->appendChild("Controls", "");
 	$axDt = $controls->appendChild("Data Table", "");
-	$axDt->showItems = true;
+	$axDt->showItems = false;
 	$axDt->appendChild("Element Attributes","ax-table/attributes", "app-modules/docs/ax-table/attributes/attributes.html");
 	$axDt->appendChild("Position and size", "ax-table/position", "app-modules/docs/ax-table/position/position-tabs.html");
 	$axDt->appendChild("Toolbar template", "ax-table/toolbar-template", "app-modules/docs/ax-table/toolbar-template/toolbar-template.html");

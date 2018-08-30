@@ -1,7 +1,8 @@
-var maxMobileWidth = 900;
+﻿var maxMobileWidth = 900;
+var leftPanelWidth = 300;
 var applicationInfo = {
-	"name": "AxFramework",
-	"version": "1.0.3",
+	"name": "New app",
+	"version": "1.0.0",
 	"type": "",
 	"theme": {name: "Bootstrap", url: "components/stylesheets/ax-theme.bootstrap-1.css", type: "bootstrap4"},
 	"themes": [
@@ -40,8 +41,8 @@ var applicationInfo = {
 			baseOn: "bootstrap4",
 		},
 	]
-};
 
+};
 if (typeof window === 'undefined') {
 	module.exports = applicationInfo;
 } else {
@@ -55,17 +56,18 @@ var axNumberFormat = {
 	style: "decimal",
 	locale: axLocale,
 	grouping: "true",
-	decimals: 2
+	decimals: 0
 };
-
+// you can define here the routes and templates, if you don't prefer to load routes from backend, with user menus
 var pagesTemplates = {
-	"not-found": "app-modules/home.html",
 	loadExtraRoutes: function ($stateProvider) {
-		// $stateProvider.stateAsEmptyPage("docs/overview", "/docs/overview/:type","app-modules/demo-app/overview/demo.html");
+		$stateProvider.stateAsMainContent("profile", "profile", "app-modules/reunion/users/profile.html");
+		$stateProvider.stateAsEmptyPage("reset-password", "/resetare-parola", 'app-modules/common/login/reset-password.html');
+		$stateProvider.stateAsEmptyPage("locatie", "/locatie/:id", 'app-modules/etr/locations/public.html'); //inject $stateParams in view controller tyo find id value
 	}
 };
 
-var leftPanelWidth = 300;
+
 var changeAppStyle = function (dataStore) {
 	dataStore.isMobileDevice = angular.element(window.document).width() <= maxMobileWidth;
 	if (dataStore.isMobileDevice) dataStore.leftPaneCollapsed = true;
@@ -131,4 +133,11 @@ var changeTheme = function (theme, $rootScope, $injector) {
 			break;
 		default:
 	}
+};
+
+var appConfigExtended = function appConfigExtended($compileProvider, $locationProvider, $injector) {
+
+};
+var appRunExtend = function appRunExtend($rootScope, $injector) {
+
 };

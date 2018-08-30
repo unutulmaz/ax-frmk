@@ -4,6 +4,7 @@ let mediaStyles = function (maxWidth) {
 	let style = `@media screen and (max-width: {{maxWidth}}px) {
 		ax-popup {
 			min-width: 100% !important;
+			// height:100% !important;
 		}
 		.scroller-popup-menu {
   			width: 100%; 

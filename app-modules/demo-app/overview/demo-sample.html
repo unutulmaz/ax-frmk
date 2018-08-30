@@ -33,7 +33,7 @@
 				style="position:relative;width:100%;height:100%">
 
 
-		<ax-toolbar ax-scroller="true" min-width="1200px">
+		<ax-toolbar ax-scroller="true" min-width="850px">
 			<label toolbar="left" class="header-title">
 				Table with edit-row=editor
 			</label>
@@ -67,7 +67,7 @@
 				<div style="background-color:white;z-index:100;position:relative;margin:10px;max-height:300px;overflow: auto;padding-right:100px"
 					  class="timings-msg" bind-html-compile="launcher.msg"></div>
 			</ax-dropdown-popup>
-			<ax-global-search toolbar="right" search-columns="" style="width:200px;"></ax-global-search>
+			<ax-global-search search-columns="" style="width:200px;"></ax-global-search>
 			<ax-button toolbar="right" button-type="groups-toggle"></ax-button>
 			<ax-button toolbar="right" button-type="settings" show-title="true" style="margin-left:3px;margin-right:3px;" class="btn btn-primary"></ax-button>
 		</ax-toolbar>
@@ -174,7 +174,7 @@
 							 show-fields-errors-as="icons"
 							 group-controls-in-sections="true"
 							 toolbar-ax-scroller="true"
-							 initial-state="visible"></ax-grid-editor>
+							 initial-state="hidden"></ax-grid-editor>
 		<ax-groups>
 			<ax-all-levels-calculations1 show-on="header">
 				<ax-calculation column="Value" name="value-sum" display-label="false" aggregate-type="sum"></ax-calculation>

@@ -4,7 +4,7 @@ class DB {
 	private $level=0;
 
 	public function __construct($driver, $hostname, $username, $password, $database) {
-		$file = DIR_DATABASE .  $driver . '.php';
+		$file = DIR_DATABASE . $driver . '.php';
 
 		if (file_exists($file)) {
 			require_once($file);
@@ -13,7 +13,7 @@ class DB {
 
 			$this->driver = new $class($hostname, $username, $password, $database);
 		} else {
-			exit('Error: Could not load database driver type ' . $driver . '!: ' . $file);
+			exit('Error: Could not load database driver type ' . $driver . '!');
 		}
 	}
 

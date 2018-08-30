@@ -18,47 +18,40 @@
 	  ng-style="{'top':(dataStore.formTitleHeight()+10)+'px'}"
 	  ng-controller="featuresCtrl">
 	<div class="info-text">
-		<div style="height:500px;overflow: auto;padding-right:5px;">
-			I built this framework because the existing frameworks wasn't flexible enough for me, or simple to implement. All controls definitions (except control custom behaviour) are made in html view file.
-			<br>With this framework you can:
-			<ax-attr>creating new project/module quickly</ax-attr> has source files for new module, which allow you to run a new complex project in less then 30min (including database creation, backend configuration).
-			<ax-attr>development task automation</ax-attr> has configurable gulp tasks for: create index.html with all dependencies, compile scss, compile es6 to es5, minifying css, js, add/remove files from index.html, move files to wwwroot (public).
-			<br>Possibility to have different versions for js, html files in development and production. Deploy files by sftp protocol to remote server, in production or development
-			<br>Watchers used in development for add/remove file in index.html (with index.html regeneration), compile scss, verifying js files with jsHint, compile es6 to es5 (if you want), copy files to wwwroot or public folder
-			<ax-attr>REST api</ax-attr> very handy and light libraries for connecting to databases in php <a href="https://github.com/bogdanim36/php-rest-api">View on github</a>
-			<ax-attr>theme, css</ax-attr> flexible way to load or build themes, adapted for mobile devices too.
-			<ax-attr>generic application content</ax-attr> a generic main.html suitable for most application, with a side tree-view control for application menu.
-			<ax-attr>login and users administrations pages</ax-attr> pages easy to customize, for login,and users administration.
-			<ax-attr>ax-table, ax-list</ax-attr> data table, list having same core, with virtual rows and columns scroll, filtering, grouping and sorting, row editing, export.
-			<ax-attr>ax-grid</ax-attr> more complex control having ax-table, editor, pivot table, master-details functions, profiles for pivot table or with different axTable configurations, columns layout, data grouping or sorting.
-			<ax-attr>ax-dropdown-popup</ax-attr> very handy dropdown popup which is smart enough to auto arrange for being visible in browser window, no matter the launcher element is positioned
-			<ax-attr>ax-dropdown-list, ax-dropdown-table</ax-attr> a dropdown list or table.
-			<ax-attr>ax-text</ax-attr> text control.
-			<ax-attr>ax-text-with-zoom</ax-attr> text control with popup editor.
-			<ax-attr>ax-date, ax-datetime</ax-attr> date and datetime control based on uib-date-picker.
-			<ax-attr>ax-checkbox</ax-attr> checkbox control.
-			<ax-attr>ax-radio-options</ax-attr> a radio buttons control.
-			<ax-attr>ax-file</ax-attr> control to upload file based on ng-upload.
-			<ax-attr>ax-autocomplete</ax-attr> autocomplete control, having not only a readonly popup for select item you need, but also a popup contain an ax-table for editing source table (if you want/need)
-			<ax-attr>ax-filter-pane</ax-attr> side panel control with multi selecting lists for setting filters.
-			<ax-attr>ax-scroller</ax-attr> directive for horizontal toolbars, for defining scrollable container for buttons.
-			<ax-attr>ax-tabs</ax-attr> a control for defining tabs control.
-			<ax-attr>ax-tree-view</ax-attr> a tree view control.
-			<ax-attr>ax-json-tree-view</ax-attr> a tree view for json objects
-			<ax-attr>ax-dynamic-template,ax-dynamic-template-url</ax-attr> directive to include a template in any view
-			<ax-attr>ax-url</ax-attr> attribute for defining trusted url.
-			<ax-attr>auth-service</ax-attr> factory for auth.
-			<ax-attr>ax-api</ax-attr> factory for connecting to backend.
-			<ax-attr>ax-data-set</ax-attr> factory to store temporary data.
-			<ax-attr>ax-data-store</ax-attr> factory with few information and methods needed across the application.
-			<ax-attr>template-factory</ax-attr> factory for download html files from server.
-			<br>At this moment the framework can be used with latest browsers Chrome (recommended), Fire Fox, Opera, Edge.
-		</div>
+		I built this framework because the existing frameworks wasn't flexible enough for me, or simple to implement. All controls definitions (except control custom behaviour) are made in html view file.
+		<a href="https://github.com/bogdanim36/ax-frmk">View on github</a>
+		<br>With this framework you can:
+		<ax-attr>creating new project/module quickly</ax-attr> has source files for new module, which allow you to run a new complex project in less then 30min (including database creation, backend configuration).
+		<ax-attr>development task automation</ax-attr> has configurable gulp tasks for: create index.html with all dependencies, compile scss, compile es6 to es5, minifying css, js, add/remove files from index.html, move files to wwwroot (public).
+		<br>Possibility to have different versions for js, html files in development and production. Deploy files by sftp protocol to remote server, in production or development
+		<br>Watchers used in development for add/remove file in index.html (with index.html regeneration), compile scss, verifying js files with jsHint, compile es6 to es5 (if you want), copy files to wwwroot or public folder. <a href="https://github.com/bogdanim36/gulp-web-tasks">View on github</a>
+		<ax-attr>REST api</ax-attr> very handy and light libraries for connecting to databases in php <a href="https://github.com/bogdanim36/php-rest-api">View on github</a>
+		<ax-attr>theme, css</ax-attr> flexible way to load or build themes, adapted for mobile devices too.
+		<ax-attr>generic application content</ax-attr> a generic main.html suitable for most application, with a side tree-view control for application menu.
+		<ax-attr>login and users administrations pages</ax-attr> pages easy to customize, for login,and users administration.
+		<ax-attr>ax-table, ax-list</ax-attr> data table, list having same core, with virtual rows and columns scroll, filtering, grouping and sorting, row editing, export.
+		<ax-attr>ax-grid</ax-attr> more complex control having ax-table, editor, pivot table, master-details functions, profiles for pivot table or with different axTable configurations, columns layout, data grouping or sorting.
+		<ax-attr>ax-dropdown-popup</ax-attr> very handy dropdown popup which is smart enough to auto arrange for being visible in browser window, no matter the launcher element is positioned
+		<ax-attr>ax-dropdown-list, ax-dropdown-table</ax-attr> a dropdown list or table.
+		<ax-attr>ax-text</ax-attr> text control.
+		<ax-attr>ax-text-with-zoom</ax-attr> text control with popup editor.
+		<ax-attr>ax-date, ax-datetime</ax-attr> date and datetime control based on uib-date-picker.
+		<ax-attr>ax-checkbox</ax-attr> checkbox control.
+		<ax-attr>ax-radio-options</ax-attr> a radio buttons control.
+		<ax-attr>ax-file</ax-attr> control to upload file based on ng-upload.
+		<ax-attr>ax-autocomplete</ax-attr> autocomplete control, having not only a readonly popup for select item you need, but also a popup contain an ax-table for editing source table (if you want/need)
+		<ax-attr>ax-filter-pane</ax-attr> side panel control with multi selecting lists for setting filters.
+		<ax-attr>ax-scroller</ax-attr> directive for horizontal toolbars, for defining scrollable container for buttons.
+		<ax-attr>ax-tabs</ax-attr> a control for defining tabs control.
+		<ax-attr>ax-tree-view</ax-attr> a tree view control.
+		<ax-attr>ax-json-tree-view</ax-attr> a tree view for json objects
+		<ax-attr>ax-dynamic-template,ax-dynamic-template-url</ax-attr> directive to include a template in any view
+		<ax-attr>ax-url</ax-attr> attribute for defining trusted url.
+		<ax-attr>auth-service</ax-attr> factory for auth.
+		<ax-attr>ax-api</ax-attr> factory for connecting to backend.
+		<ax-attr>ax-data-set</ax-attr> factory to store temporary data.
+		<ax-attr>ax-data-store</ax-attr> factory with few information and methods needed across the application.
+		<ax-attr>template-factory</ax-attr> factory for download html files from server.
+		<br>At this moment the framework can be used with latest browsers Chrome (recommended), Fire Fox, Opera, Edge.
 	</div>
-	<div ng-repeat="image in images.items" class="image">
-		<label>{{image.url}}</label>
-		<div ax-dynamic-template="image.description"></div>
-		<img ng-src="{{images.path+image.url}}">
-	</div>
-
 </div>
