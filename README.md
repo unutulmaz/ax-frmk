@@ -37,10 +37,10 @@ AngularJS Framework
 			<br>At this moment the framework can be used with latest browsers Chrome (recommended), Fire Fox, Opera, Edge.
 		</div>
 	This repo containt all sources for <a href="http://bogdanim36.asuscomm.com:5018/#!/ax-frmk/features">presentation site<a/>.
-	Stept for creating a new application with ax-frmk:
-	1. clone this repo.
-	2. clone repo https://github.com/bogdanim36/gulp-tasks 
-	3. Delete folder app-modules.
-	4. Copy folder components/excepted/app-modules to root folder
-	5. Delete what plugins you dont need in app-modules/bower-libs. 
-	6. In angular-modules include what angular modules you are using (if you are using some extra plugin, whitch are installed in app-modules/bower-libs
+	<br>Steps for creating a new application with ax-frmk:
+	<br>  1. clone this repo.
+	<br>  2. clone repo https://github.com/bogdanim36/gulp-tasks 
+	<br>  3. Delete folder app-modules.
+	<br>  4. Copy folder components/excepted/app-modules to root folder
+	<br>  5. Delete what plugins you dont need in app-modules/bower-libs. 
+	<br>  6. In angular-modules include what angular modules you are using (if you are using some extra plugin, whitch are installed in app-modules/bower-libs
