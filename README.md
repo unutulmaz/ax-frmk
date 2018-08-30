@@ -6,7 +6,7 @@ AngularJS Framework
 			<br><strong>creating new project/module quickly</strong> has source files for new module, which allow you to run a new complex project in less then 30min (including database creation, backend configuration).
 			<br><strong>development task automation</strong> - has configurable gulp tasks for: create index.html with all dependencies, compile scss, compile es6 to es5, minifying css, js, add/remove files from index.html, move files to wwwroot (public).
 			Possibility to have different versions for js, html files in development and production. Deploy files by sftp protocol to remote server, in production or development.
-			<br>Watchers used in development for add/remove file in index.html (with index.html regeneration), compile scss, verifying js files with jsHint, compile es6 to es5 (if you want), copy files to wwwroot or public folder. <a href="https://github.com/bogdanim36/gulp-web-tasks">View on github</a>
+			<br>Watchers used in development for add/remove file in index.html (with index.html regeneration), compile scss, verifying js files with jsHint, compile es6 to es5 (if you want), copy files to wwwroot or public folder <a href="https://github.com/bogdanim36/gulp-web-tasks">View on github</a>
 			<br><strong>REST api</strong> very handy and light libraries for connecting to databases in php <a href="https://github.com/bogdanim36/php-rest-api">View on github</a>
 			<br><strong>theme, css</strong> flexible way to load or build themes, adapted for mobile devices too.
 			<br><strong>generic application content</strong> a generic main.html suitable for most application, with a side tree-view control for application menu.
@@ -36,3 +36,11 @@ AngularJS Framework
 			<ax-attr class="ng-isolate-scope"><br><strong>template-factory</strong> factory for download html files from server.
 			<br>At this moment the framework can be used with latest browsers Chrome (recommended), Fire Fox, Opera, Edge.
 		</div>
+	This repo containt all sources for <a href="http://bogdanim36.asuscomm.com:5018/#!/ax-frmk/features">presentation site<a/>.
+	Stept for creating a new application with ax-frmk:
+	1. clone this repo.
+	2. clone repo https://github.com/bogdanim36/gulp-tasks 
+	3. Delete folder app-modules.
+	4. Copy folder components/excepted/app-modules to root folder
+	5. Delete what plugins you dont need in app-modules/bower-libs. 
+	6. In angular-modules include what angular modules you are using (if you are using some extra plugin, whitch are installed in app-modules/bower-libs
