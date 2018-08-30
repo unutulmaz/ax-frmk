@@ -5,9 +5,9 @@ define("ROUTE_PARAM", "_route_");
 define("API_ROOT", "/api/module");
 
 $dbConfig = array(
-	"dbName" => "etr",
-	"user" => "etr",
-	"password" => "AdsafSdf=3*?|",
+	"dbName" => "",
+	"user" => "",
+	"password" => "",
 	"driver" => "Mysqli",
 	"host" => "localhost");
 define("DB_DATABASE", $dbConfig["dbName"]);
@@ -15,10 +15,10 @@ $dbConnection = new Db($dbConfig["driver"], $dbConfig["host"], $dbConfig["user"]
 
 $roles = array("admin", "user", "organizator");
 $email = array(
-	"Username" => "ascentix.uat",
-	"Password" => "MyFancyPass58~",
-	"SetFrom" => ["email" => "ascentix.uat@gmail.com", "name" => "ETR app"],
-	"AddReplyTo" => ["email" => "bogdanim.work@gmail.com", "name" => "Bogdan Ionescu"],
+	"Username" => "",
+	"Password" => "",
+	"SetFrom" => ["email" => "", "name" => ""],
+	"AddReplyTo" => ["email" => "", "name" => ""],
 	"Host" => "smtp.gmail.com",
 	"Port" => 587,
 	"SMTPSecure" => "ssl",
