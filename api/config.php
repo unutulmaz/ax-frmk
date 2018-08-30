@@ -3,9 +3,9 @@ define("DIR_DATABASE", $_SERVER["DOCUMENT_ROOT"] . "/api/vendor/database/");
 include_once $_SERVER["DOCUMENT_ROOT"] . "/api/vendor/Db.php";
 
 $dbConfig = array(
-	"dbName" => "axcompdemo",
-	"user" => "axcompdemo",
-	"password" => "8iNbR7HgaxJGlJnq",
+	"dbName" => "",
+	"user" => "",
+	"password" => "",
 	"driver" => "Mysqli",
 	"host" => "localhost");
 define("DB_DATABASE", $dbConfig["dbName"]);
@@ -14,10 +14,10 @@ $dbConnection = new Db($dbConfig["driver"], $dbConfig["host"], $dbConfig["user"]
 
 $roles = array("guest");
 $email = array(
-	"Username" => "ascentix.uat",
-	"Password" => "MyFancyPass58~",
-	"SetFrom" => ["email" => "ascentix.uat@gmail.com", "name" => "Docs app"],
-	"AddReplyTo" => ["email" => "bogdanim36@gmail.com", "name" => "Bogdan Ionescu"],
+	"Username" => "",
+	"Password" => "",
+	"SetFrom" => ["email" => "", "name" => "Docs app"],
+	"AddReplyTo" => ["email" => "", "name" => ""],
 	"Host" => "smtp.gmail.com",
 	"Port" => 587,
 	"SMTPSecure" => "tls",
@@ -26,7 +26,7 @@ $email = array(
 
 define("ROUTE_PARAM", "_route_");
 define("API_ROOT", "/api/module");
-define("APP_VERSION", "1.0.3");
+define("APP_VERSION", "1.0.0");
 
 $routes = array(
 	array("uri" => "account/getUserInfo", "file" => "Account.php", "authorized" => false),
