@@ -5,7 +5,7 @@ include_once $_SERVER["DOCUMENT_ROOT"] . "/api/vendor/Db.php";
 $dbConfig = array(
 	"dbName" => "axcompdemo",
 	"user" => "axcompdemo",
-	"password" => "8iNbR7HgaxJGlJnq",
+	"password" => "",
 	"driver" => "Mysqli",
 	"host" => "localhost");
 define("DB_DATABASE", $dbConfig["dbName"]);
