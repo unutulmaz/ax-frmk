@@ -3,7 +3,7 @@ AngularJS Framework
 <div style="height:500px;overflow: auto;padding-right:5px;">
     I built this framework because the existing frameworks wasn't flexible enough for me, or simple to implement. All controls definitions (except control custom behaviour) are made in html view file.
     <br>With this framework you can:
-    <br><strong>creating new project/module quickly</strong> has source files for new module, which allow you to run a new complex project in less then 30min (including database creation, backend configuration).
+    <br><strong>creating new project/module quickly</strong> has source files for new module, which allow you to run a new complex project in less then 30min (including database creation, backend configuration). <a href="https://github.com/bogdanim36/project">View on github</a>
     <br><strong>development task automation</strong> - has configurable gulp tasks for: create index.html with all dependencies, compile scss, compile es6 to es5, minifying css, js, add/remove files from index.html, move files to wwwroot (public).
     Possibility to have different versions for js, html files in development and production. Deploy files by sftp protocol to remote server, in production or development.
     <br>Watchers used in development for add/remove file in index.html (with index.html regeneration), compile scss, verifying js files with jsHint, compile es6 to es5 (if you want), copy files to wwwroot or public folder <a href="https://github.com/bogdanim36/gulp-web-tasks">View on github</a>
