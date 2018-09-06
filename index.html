@@ -1,17 +1,22 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
+	<!-- build:environment -->
+	<!-- endbuild -->
 	<script>
+		console.log("Environment:", document.getElementById("environment").getAttribute("content"));
 		(function (h, o, t, j, a, r) {
-			h.hj = h.hj || function () {
-				(h.hj.q = h.hj.q || []).push(arguments)
-			};
-			h._hjSettings = {hjid: 993407, hjsv: 6};
-			a = o.getElementsByTagName('head')[0];
-			r = o.createElement('script');
-			r.async = 1;
-			r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
-			a.appendChild(r);
+			if (o.getElementById("environment").getAttribute("content") !== "DEVELOPMENT") {
+				h.hj = h.hj || function () {
+					(h.hj.q = h.hj.q || []).push(arguments)
+				};
+				h._hjSettings = {hjid: 993407, hjsv: 6};
+				a = o.getElementsByTagName('head')[0];
+				r = o.createElement('script');
+				r.async = 1;
+				r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+				a.appendChild(r);
+			}
 		})(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
 
 	</script>
@@ -19,9 +24,11 @@
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-36653550-3"></script>
 	<script>
 		window.dataLayer = window.dataLayer || [];
+
 		function gtag() {
 			dataLayer.push(arguments);
 		}
+
 		gtag('js', new Date());
 		gtag('config', 'UA-36653550-3');
 	</script>
@@ -39,8 +46,7 @@
 	<!-- endbuild -->
 </head>
 <body ng-app="App" id="app" ng-cloak>
-<!-- build:environment -->
-<!-- endbuild -->
+
 <div ui-view="empty-page" ng-show="$resolve.$$state.locals.hasOwnProperty('empty-page@')" ng-controller="mainCtrl"></div>
 <div ui-view="main" ng-cloak ng-show="$resolve.$$state.locals.hasOwnProperty('main@')"></div>
 <!-- build:body-js -->
