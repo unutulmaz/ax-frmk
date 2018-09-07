@@ -81,7 +81,7 @@ class axFormInput extends axInput {
 	}
 
 	createError(inputDef) {
-		//console.log("input:", inputDef);
+		// console.log("input:", inputDef.getAttribute("bind-to"));
 		if (!inputDef.getAttribute("bind-to")) return null;
 		var errorHolder = inputDef.hasAttribute("form-scope-variable") ? inputDef.getAttribute("form-scope-variable") : "$ctrl";
 		var bindTo = inputDef.getAttribute("bind-to");

@@ -1,0 +1,580 @@
+﻿<div ng-controller="invoicesCodeCtrl">
+	<style>
+		ax-table-editor.invoice-editor  ax-form td[column-index='1'][role=label] {
+			padding-left: 20px
+		}
+
+		ax-table-editor ax-form td[column-index='0'] {
+			background-color: antiquewhite;
+		}
+
+		ax-table-editor.invoice-editor  ax-form td[column-index='0'][role=label],
+		ax-table-editor.invoice-editor  ax-form td[column-index='2'][role=label] {
+			background-color: antiquewhite;
+			padding-left: 10px
+		}
+
+		ax-table-editor.invoice-editor  ax-form tr[row-index='0'] > td[column-index='0'],
+		ax-table-editor.invoice-editor  ax-form tr[row-index='0'] > td[column-index='2'] {
+			padding-top: 5px;
+		}
+
+		ax-table-editor.invoice-editor  ax-form td[column-index='2'] {
+			background-color: antiquewhite
+		}
+
+		ax-table-editor.invoice-editor  ax-form-section {
+			border-bottom: none;
+		}
+
+		.invoices {
+			position: absolute;
+			bottom: 10px;
+			left: 10px;
+			right: 10px;
+		}
+
+		.invoice-editor ax-form-section-header {
+			background-color: #73b1ef !important;
+		}
+	</style>
+	<div class="form-title">
+		Invoices
+	</div>
+	<div class="invoices box-shadow" ng-style="{'top':(dataStore.formTitleHeight()+10)+'px'}" style="overflow: auto">
+		<ax-grid config="invoices"
+					api-controller="invoices"
+					load-data-responses="customers=>dataSet.customers;customersAddresses=>dataSet.customersAddresses;products=>dataSet.products"
+					order-by="number"
+					item-id-field="id"
+					debug="false"
+					edit-row="editor"
+					apply-changes-on-save="false"
+					auto-focus="true"
+					customizable-freezed-columns="false"
+					right-freezed-columns="2"
+					customizable-config="true"
+					customizable-edit-mode="true"
+					customizable-pivot-table="false"
+					show-loader="true"
+					auto-load-data="true"
+					style="position:relative;height:325px;width:100%">
+			<ax-toolbar min-width="600px">
+				<label class="header-title" toolbar="left">Invoices</label>
+				<!--<div class="toolbar-container" toolbar="right">-->
+					<!--<label>From:</label>-->
+					<!--<ax-datetime type="date"-->
+									 <!--ng-model="$ctrl.config.dateFrom"-->
+									 <!--input-format="YYYY-MM-DD"-->
+									 <!--style="margin-left:3px;margin-right:5px;width:215px;"-->
+									 <!--class="form-control"></ax-datetime>-->
+					<!--<label>To:</label>-->
+					<!--<ax-datetime type="date"-->
+									 <!--ng-model="$ctrl.config.dateTo"-->
+									 <!--input-format="YYYY-MM-DD"-->
+									 <!--style="margin-left:3px;width:215px;"-->
+									 <!--class="form-control"></ax-datetime>-->
+				<!--</div>-->
+				<ax-button button-type="refresh" toolbar="right" style="margin-right:3px"></ax-button>
+				<ax-button button-type="groups-toggle" toolbar="right" style="margin-right:3px"></ax-button>
+				<ax-button button-type="settings" toolbar="right" style="margin-right:3px"></ax-button>
+				<ax-button button-type="maximize"
+							  toolbar="right"></ax-button>
+
+			</ax-toolbar>
+			<ax-grid-editor width="600px"
+								 position="over"
+								 cols-width="90px, 250px, 95px,200px,90px,250px"
+								 columns-no="3"
+								 class="invoice-editor"
+								 editor-title="'Invoice'"
+								 show-fields-errors-as="text"
+								 group-controls-in-sections="true"
+								 toolbar-ax-scroller="true"
+								 initial-state="hidden"></ax-grid-editor>
+			<ax-export export-type="client" file-name="invoice">
+				<ax-export-item>
+					<ax-export-links></ax-export-links>
+					<ax-export-scripts></ax-export-scripts>
+					<ax-export-style-print>
+						html, body {
+						height: 100%;
+						width: 100%;
+						position: fixed;
+						font: 10px/1.5 Arial, sans-serif !important;
+						margin: 0;
+						}
+						html * {
+						box-sizing:border-box;
+						}
+						ax-editor-content{
+						display:block;
+						width:710px;
+						}
+						.form-title {
+						height: 35px;
+						line-height: 35px;
+						margin-bottom: 10px;
+						font-weight: bold;
+						width: 100%;
+						padding: 0 10px;
+						font-size: 18px;
+						font-weight: bold;
+						position: relative;
+						border-bottom: 1px solid lightgray;
+						box-sizing: border-box;
+						}
+						table {
+						font-size:14px;
+						table-layout:fixed;
+						width:1px;
+						border-spacing:0 !important;
+						}
+						table td:not([colspan]){
+						vertical-align:top;
+						padding:2px 4px;
+						}
+						table td[role=input] {
+						font-weight:bold;
+						}
+						ax-form{
+						position:relative !important;
+						width:100% !important;
+						top:initial !important;
+						bottom:initial !important;
+						left:initial !important;
+						right:initial !important;
+						}
+						ax-form-section-header{
+						font-weight:bold;
+						font-size:16px;
+						padding:2px 10px ;
+						display:block;
+						width:100%;
+						box-sizing: border-box;
+						border-bottom:1px solid lightgray;
+						}
+						ax-form-section>table td[role=label]{
+						padding-left:10px;
+						}
+						ax-form >table td[role=label][column-index='1']{
+						padding-left:50px;
+						}
+						ax-form >table >colgroup col:first-child{width:70px !important;}
+						ax-form >table >colgroup col:nth-child(2){width:185px !important;}
+						ax-form >table >colgroup col:nth-child(3){width:100px !important;}
+						ax-form >table >colgroup col:nth-child(4){width:100px !important;}
+						ax-form >table >colgroup col:nth-child(5){width:70px !important;}
+						ax-form >table >colgroup col:nth-child(6){width:185px !important;}
+						ax-form table.form-section-body >colgroup col:first-child{width:70px !important;}
+						ax-form table.form-section-body >colgroup col:nth-child(2){width:195px !important;}
+
+						ax-form table td[role=input]>div{
+						width:100% !important;
+						box-sizing: border-box;
+						}
+						table.details>colgroup col:nth-child(1){width:30px !important}
+						table.details>colgroup col:nth-child(2){width:100px !important}
+						table.details>colgroup col:nth-child(3){width:270px !important}
+						table.details>colgroup col:nth-child(4){width:50px !important}
+						table.details>colgroup col:nth-child(5){width:70px !important}
+						table.details>colgroup col:nth-child(6){width:70px !important}
+						table.details>colgroup col:nth-child(7){width:120px !important}
+						.group-footer > div{
+						text-align:right;
+						font-weight:bold;
+						padding-right:10px;
+						}
+						table.details tr[row-index='1']>th:last-child {border-right: 1px solid black;}
+						table.details tr> td:last-child {border-right: 1px solid lightgray;}
+						table.details tr.group-footer> td {
+						border-top: 1px solid black;
+						border-bottom: 1px solid black;
+						}
+
+
+					</ax-export-style-print>
+					<ax-export-style-xls>
+						<!--table
+						@page
+							 {mso-number-format:"\#\,\#\#0\.00";
+							 mso-page-orientation:portrait; }
+
+						.style0
+							 {font-style:normal;
+							 font-family:Arial;}
+
+						td
+							 {mso-style-parent:style0;
+							 font-style:normal;
+							 font-family:Arial;}
+
+						-->
+					</ax-export-style-xls>
+					<ax-export-details name="invoices.details" class="details" title="Invoice details" show-title="false"></ax-export-details>
+					<ax-export-header-print datasource="$ctrl.config.exportCfg.item.headerData(dataItem)">
+						<table>
+							<colgroup>
+								<col style="width:30px"/>
+								<col style="width:100px"/>
+								<col style="width:300px"/>
+								<col style="width:50px"/>
+								<col style="width:70px"/>
+								<col style="width:70px"/>
+								<col style="width:90px"/>
+							</colgroup>
+							<tr>
+								<td colspan="7" style="background-image: url('{{datasource.imageUrl}}');background-repeat:no-repeat;height:40px"></td>
+							</tr>
+						</table>
+					</ax-export-header-print>
+					<ax-export-header-xls datasource="$ctrl.config.exportCfg.item.headerData(dataItem)">
+						<table>
+							<tr>
+								<hint style="display:none">Loading time xls file with image is increased. Image are visible only in edit mode</hint>
+								<td colspan="7" style="height:40px"><img src="{{datasource.imageUrl}}"/></td>
+							</tr>
+						</table>
+					</ax-export-header-xls>
+					<ax-export-footer datasource="$ctrl.config.exportCfg.item.footerData(dataItem)">
+						<table style="margin-top:30px;border-top:1px solid lightgrey">
+							<colgroup>
+								<col style="width:30px"/>
+								<col style="width:100px"/>
+								<col style="width:250px"/>
+								<col style="width:60px"/>
+								<col style="width:80px"/>
+								<col style="width:70px"/>
+								<col style="width:120px"/>
+							</colgroup>
+							<tr>
+								<td colspan="3" style="font-weight:bold">Delivery info</td>
+								<td colspan="4" style="font-weight:bold">Customer signature and stamp</td>
+							</tr>
+							<tr>
+								<td colspan="3">Currier name:<label style="font-weight:bold">{{datasource.currierName}}</label></td>
+								<td colspan="4"></td>
+							</tr>
+							<tr>
+								<td colspan="3">Currier CI:<label style="font-weight:bold">{{datasource.currierCI}}</label></td>
+								<td colspan="4"></td>
+							</tr>
+							<tr>
+								<td colspan="3">Car ID:<label style="font-weight:bold">{{datasource.autoID}}</label></td>
+								<td colspan="4"></td>
+							</tr>
+							<tr>
+								<td colspan="3">Delivery date:<label style="font-weight:bold">{{datasource.deliveryDate|date:'dd.MM.yyyy'}}</label></td>
+								<td colspan="4" style="font-weight:bold">Receiver signature</td>
+							</tr>
+						</table>
+					</ax-export-footer>
+				</ax-export-item>
+			</ax-export>
+			<ax-column header="Supplier" width="250px" hidden-column hideable="false" show-in-editor="true">
+				<ax-column-view>{{dataItem.supplierName}}</ax-column-view>
+			</ax-column>
+			<ax-column width="200px" header="Supplier Country" header-title="Country" hidden-column hideable="false" show-in-editor="true">
+				<ax-column-header row-index="1" colspan="3">Seat</ax-column-header>
+				<ax-column-header row-index="2">Country</ax-column-header>
+				<ax-column-view>{{dataItem.supplierCountry}}</ax-column-view>
+			</ax-column>
+			<ax-column width="200px" header="Supplier City" header-title="City" hidden-column hideable="false" show-in-editor="true">
+				<ax-column-header row-index="2">City</ax-column-header>
+				<ax-column-view>{{dataItem.deliveryCity}}</ax-column-view>
+			</ax-column>
+			<ax-column width="350px" header="Supplier Address" header-title="Address" hidden-column hideable="false" show-in-editor="true">
+				<ax-column-header row-index="2">Address</ax-column-header>
+				<ax-column-view>{{dataItem.supplierAddress}}</ax-column-view>
+			</ax-column>
+
+			<ax-column header="Date"
+						  hideable="false"
+						  editor-column-index="2"
+						  bind-to="date"
+						  sortable
+						  width="195px">
+				<hint>You need to set a convert-type attribute only if not using dataDatapter for convert items column</hint>
+				<ax-column-filter filter-type="date"
+										convert-type="date"
+										show-in-popup="true" show-config="true"></ax-column-filter>
+				<ax-column-view view-type="date" date-format="dd.MM.yyyy"></ax-column-view>
+				<ax-column-edit edit-type="date"></ax-column-edit>
+			</ax-column>
+			<ax-column header="Number"
+						  hideable="false"
+						  editor-column-index="2"
+						  sortable
+						  bind-to="number"
+						  decimals="0"
+						  edit-type="number"
+						  style="padding-right:14px"
+						  use-grouping="false"
+						  width="150px">
+				<ax-column-filter filter-type="number" show-in-popup></ax-column-filter>
+			</ax-column>
+			<ax-column header="Customer"
+						  bind-to="customerId"
+						  sortable="customerInvariant"
+						  editor-column-index="3"
+						  width="250px">
+				<ax-column-filter filter-type="text"></ax-column-filter>
+				<ax-column-view view-type="text" bind-to="customer"></ax-column-view>
+				<ax-column-edit edit-type="autocomplete"
+									 datasource="$ctrl.$parent.dataSet.customers"
+									 on-model-changed="$ctrl.$parent.delivery.customerChanged(selected,$parent.$parent.dataItem)"
+									 item-id-field="id"
+									 item-display-field="name"
+									 item-invariant-field="nameInvariant"
+									 link-popup-template-url="'/app-modules/show-case/catalogs/customers-code-popup.html'"
+									 link-popup-caret-class="fa fa-edit"
+									 link-popup-ctrl="$parent.$ctrl.$parent.customersEdit"
+									 link-popup-popup-height="305px"
+									 link-popup-popup-width="800px">
+
+				</ax-column-edit>
+			</ax-column>
+			<ax-column header="Delivery Country"
+						  header-title="Country"
+						  editor-column-index="3"
+						  bind-to="deliveryCountry"
+						  sortable="deliveryCountryInvariant"
+						  width="200px">
+				<ax-column-header row-index="1" colspan="3">Delivery to</ax-column-header>
+				<ax-column-header row-index="2">Country</ax-column-header>
+
+				<ax-column-filter filter-type="text"></ax-column-filter>
+				<ax-column-view view-type="text" bind-to="deliveryCountry"></ax-column-view>
+				<ax-column-edit edit-type="autocomplete"
+									 bind-to="deliveryAddressId"
+									 datasource="$ctrl.$parent.dataSet.customersAddresses"
+									 datasource-filter="$ctrl.$parent.delivery.getAddressesForCustomer(datasource,param)"
+									 datasource-filter-param="$parent.$parent.dataItem.customerId"
+									 on-model-changed="$ctrl.$parent.delivery.getSelectedAddress(selected,$parent.$parent.dataItem)"
+									 order-by="countryInvariant, cityInvariant,name"
+									 item-id-field="id"
+									 item-display-field="country">
+					<ax-dropdown-list list-height="140px" list-width="650px" list-no-header="false">
+						<ax-column header="Name" bind-to="name" width="150px"></ax-column>
+						<ax-column header="Country" bind-to="country" width="150px"></ax-column>
+						<ax-column header="City" bind-to="city" width="150px"></ax-column>
+						<ax-column header="Address" bind-to="address" width="250px"></ax-column>
+					</ax-dropdown-list>
+					<ax-dropdown-popup template-url="'/app-modules/show-case/catalogs/customers-addresses-popup.html'"
+											 caret-class="fa fa-edit"
+											 ctrl="$parent.$ctrl.$parent.delivery.addressesEdit"
+											 open-params="$parent.$parent.$ctrl.$parent.delivery.getDataItemCustomer($parent.$parent.$parent.$parent.dataItem), $parent.$parent.$parent.$parent.dataItem"
+											 popup-height="300px"
+											 popup-width="650px"></ax-dropdown-popup>
+				</ax-column-edit>
+			</ax-column>
+			<ax-column header="Delivery City"
+						  header-title="City"
+						  editor-column-index="3"
+						  bind-to="deliveryCity"
+						  sortable="deliveryCityInvariant"
+						  width="200px">
+				<ax-column-header row-index="2">City</ax-column-header>
+				<ax-column-filter filter-type="text"></ax-column-filter>
+				<ax-column-view view-type="text" double-binding="true"></ax-column-view>
+			</ax-column>
+			<ax-column header="Customer Address"
+						  header-title="Country"
+						  editor-column-index="3"
+						  hideable="false"
+						  bind-to="deliveryAddress"
+						  double-binding="true"
+						  width="250px">
+				<ax-column-header row-index="2">Address</ax-column-header>
+				<ax-column-filter filter-type="text"></ax-column-filter>
+			</ax-column>
+			<ax-column header="Total"
+						  editor-column-index="2"
+						  hideable="false"
+						  bind-to="value"
+						  width="200px">
+				<ax-column-filter filter-type="number" show-in-popup></ax-column-filter>
+				<ax-column-view double-binding="true" view-type="number" decimals="2" style="font-weight:bold"></ax-column-view>
+			</ax-column>
+			<ax-column header="Actions" show-header="false" view-type="crud-buttons" width="60px"></ax-column>
+		</ax-grid>
+		<ax-table config="invoices.details"
+					 parent-config="invoices"
+					 child-name="invoices.details"
+					 api-controller="invoices-details"
+					 order-by="position"
+					 item-id-field="id"
+					 child-index="1"
+					 left-freezed-columns="2"
+					 right-freezed-columns="1"
+					 edit-row="inline-cell"
+					 apply-changes-on-save="true"
+					 auto-focus="true"
+					 customizable-freezed-columns="false"
+					 customizable-config="false"
+					 customizable-edit-mode="false"
+					 export-disabled="true"
+					 auto-load-data="true"
+					 style="left:0px;right:initial;width:100%;top:324px;bottom:0px;min-height:300px">
+			<ax-toolbar min-width="600">
+				<label class="header-title" toolbar="left">Invoice Details</label>
+
+				<ax-button button-type="settings"
+							  show-title="false"
+							  style="margin-right:3px"
+							  toolbar="right"></ax-button>
+				<ax-button button-type="maximize"
+							  toolbar="right"></ax-button>
+			</ax-toolbar>
+			<ax-grid-editor width="710px"
+								 position="right"
+								 cols-width="120px,100%"
+								 show-fields-errors-as="text"
+								 group-controls-in-sections="false"
+								 toolbar-ax-scroller="true"
+								 initial-state="visible"></ax-grid-editor>
+			<ax-groups>
+				<ax-all-levels-calculations show-on="header">
+					<ax-calculation column="Value" expression="dataItem.value" name="value" aggregate-type="sum" display-label="false">
+						<ax-calculation-result class="calculation-result">
+							{{dataItem.calculations.value.toLocaleString("ro-RO",{minimumFractionDigits: 2,maximumFractionDigits: 2, useGrouping:true})}}
+						</ax-calculation-result>
+					</ax-calculation>
+				</ax-all-levels-calculations>
+				<ax-group expression="true" show-calculations-on="footer">
+					<ax-group-footer>
+						<ax-group-display style="text-align:right;display:block;width:100%">
+							<div class="group-value">Invoice total</div>
+						</ax-group-display>
+					</ax-group-footer>
+				</ax-group>
+			</ax-groups>
+			<ax-column header="Icons" show-header="false" view-type="gutter-icons" width="42px"></ax-column>
+			<ax-column header="Position"
+						  hideable="false"
+						  show-header="false"
+						  bind-to="position"
+						  width="80px">
+				<ax-column-view view-type="number" decimals="0" use-grouping="false"></ax-column-view>
+				<ax-column-edit edit-type="number"></ax-column-edit>
+			</ax-column>
+			<ax-column header="Product code"
+						  hideable="false"
+						  sortable
+						  bind-to="productCode"
+						  width="200px">
+				<ax-column-header row-index="1" colspan="4">Product</ax-column-header>
+				<ax-column-header row-index="2">Code</ax-column-header>
+				<ax-column-filter filter-type="text"></ax-column-filter>
+				<ax-column-edit edit-type="autocomplete"
+									 bind-to="productId"
+									 datasource="$ctrl.$parent.dataSet.products"
+									 on-model-changed="$ctrl.$parent.invoices.details.getProduct(selected,$parent.$parent.dataItem)"
+									 item-id-field="id"
+									 item-display-field="code">
+					<ax-dropdown-list order-by="code" popup-width="800px" list-no-header="false">
+						<ax-column header="Code"
+									  bind-to="code"
+									  width="100px">
+						</ax-column>
+						<ax-column header="Name"
+									  bind-to="name"
+									  width="300px">
+						</ax-column>
+						<ax-column header="Unit"
+									  bind-to="unit"
+									  width="80px">
+						</ax-column>
+						<ax-column header="Price"
+									  bind-to="price"
+									  view-type="number"
+									  width="100px">
+						</ax-column>
+						<ax-column header="Category"
+									  bind-to="category"
+									  width="150px">
+						</ax-column>
+						<ax-column header="Description"
+									  bind-to="description"
+									  width="300px">
+						</ax-column>
+					</ax-dropdown-list>
+				</ax-column-edit>
+			</ax-column>
+			<ax-column header="Product name"
+						  bind-to="productName"
+						  width="350px">
+				<ax-column-header row-index="2">Name</ax-column-header>
+				<ax-column-filter filter-type="text"></ax-column-filter>
+				<ax-column-edit edit-type="autocomplete"
+									 bind-to="productId"
+									 datasource="$ctrl.$parent.dataSet.products"
+									 item-id-field="id"
+									 item-display-field="name"
+									 item-invariant-field="nameInvariant">
+					<ax-dropdown-list order-by="code" popup-width="800px" list-no-header="false">
+						<ax-column header="Name"
+									  bind-to="name"
+									  width="300px">
+						</ax-column>
+						<ax-column header="Code"
+									  bind-to="code"
+									  width="100px">
+						</ax-column>
+						<ax-column header="Unit"
+									  bind-to="unit"
+									  width="80px">
+						</ax-column>
+						<ax-column header="Category"
+									  bind-to="category"
+									  width="150px">
+						</ax-column>
+						<ax-column header="Price"
+									  bind-to="price"
+									  view-type="number"
+									  width="100px">
+						</ax-column>
+						<ax-column header="Description"
+									  bind-to="description"
+									  width="300px">
+						</ax-column>
+					</ax-dropdown-list>
+
+
+				</ax-column-edit>
+			</ax-column>
+			<ax-column header="Unit"
+						  bind-to="productUnit"
+						  double-binding="true"
+						  width="150px">
+				<ax-column-header row-index="2">Unit</ax-column-header>
+
+			</ax-column>
+			<ax-column header="Price"
+						  hideable="false"
+						  bind-to="productPrice"
+						  double-binding="true"
+						  view-type="number"
+						  edit-type="number"
+						  width="150px">
+				<ax-column-header row-index="2">Price</ax-column-header>
+
+			</ax-column>
+			<ax-column header="Quantity"
+						  bind-to="quantity"
+						  hideable="false"
+						  view-type="number"
+						  edit-type="number"
+						  width="150px">
+			</ax-column>
+			<ax-column header="Value"
+						  hideable="false"
+						  bind-to="value"
+						  view-type="number"
+						  double-binding="true"
+						  width="150px">
+			</ax-column>
+			<ax-column header="Actions" show-header="false" view-type="crud-buttons" width="84px"></ax-column>
+		</ax-table>
+	</div>
+</div>

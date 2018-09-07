@@ -1,0 +1,118 @@
+<div ng-controller="inlineEditingCtrl" style="position:relative;width:100%;height:100%">
+	<hint>apply-changes-on-save="true" make to records reorder, and filter apply on each saved event, in the most of the cases is not necessary and not recomended</hint>
+	<ax-grid config="datatable1"
+				datasource="data"
+				auto-focus="true"
+				edit-row="inline"
+				customizable-config="false"
+				export-disabled="true"
+				customizable-pivot-table="false"
+				customizable-edit-mode="false"
+				columns-autofit-enabled="false"
+				apply-changes-on-save="true"
+				left-freezed-columns="2"
+				right-freezed-columns="1"
+				style="position:relative;width:100%;height:100%">
+		<ax-toolbar>
+			<div class="toolbar-container" toolbar="left">
+				<label style="white-space: nowrap">edit-row = {{$ctrl.attrs.editRow}} </label>
+			</div>
+			<ax-button toolbar="right" button-type="settings"></ax-button>
+		</ax-toolbar>
+		<hint>column with view-type=gutter-icons is useful when you want to set row error on row validation something different from field error. If not, you don't need this column.</hint>
+		<ax-column header="Icons" width="40px" view-type="gutter-icons">
+			<ax-column-header row-index="1" header></ax-column-header>
+			<ax-column-header row-index="2"></ax-column-header>
+		</ax-column>
+		<ax-column bind-to="deliveryAddress" header="Delivery Address1" width="250px" filter-menu="text" edit-type="text">
+			<ax-column-header row-index="1">Delivery Address 1</ax-column-header>
+			<ax-column-header row-index="2">text</ax-column-header>
+
+		</ax-column>
+		<ax-column bind-to="deliveryAddress" header="Delivery Address 2" width="250px" filter-menu="text" edit-type="input-text">
+			<ax-column-header row-index="1">Delivery Address 2</ax-column-header>
+			<ax-column-header row-index="2">input-text</ax-column-header>
+		</ax-column>
+		<ax-column bind-to="deliveryAddress" header="Delivery Address 3" width="250px" filter-menu="text" edit-type="text-with-zoom">
+			<ax-column-header row-index="1">Delivery Address 3</ax-column-header>
+			<ax-column-header row-index="2">text-with-zoom</ax-column-header>
+		</ax-column>
+
+		<ax-column bind-to="customer" header="Customer Name" width="250px" filter-menu="text">
+			<ax-column-header row-index="1">Customer Name</ax-column-header>
+			<ax-column-header row-index="2">autocomplete</ax-column-header>
+			<ax-column-edit edit-type="autocomplete"
+								 class="test"
+								 bind-to="customerId"
+								 datasource="$ctrl.$parent.dataSet.customers"
+								 on-model-changed="$ctrl.$parent.delivery.customerChanged(selected,$parent.$parent.dataItem)"
+								 item-id-field="id"
+								 item-display-field="name"
+								 item-invariant-field="nameInvariant"
+								 link-popup-template-url="'/app-modules/show-case/catalogs/customers-code-popup.html'"
+								 link-popup-caret-class="fa fa-edit"
+								 link-popup-ctrl="$parent.$ctrl.$parent.customersEdit"
+								 link-popup-popup-height="305px"
+								 link-popup-popup-width="800px">
+
+			</ax-column-edit>
+
+		</ax-column>
+		<hint>Use double-binding attribute for fields which are modified by validation on other field edit</hint>
+		<ax-column bind-to="customerInvariant" header="Customer Name Invariant" width="250px" double-binding="true">
+			<ax-column-header row-index="1">Customer Name Invariant</ax-column-header>
+			<ax-column-header row-index="2">readonly</ax-column-header>
+		</ax-column>
+		<ax-column bind-to="deliveryCity" sortable="deliveryCityInvariant" header="City" width="150px" filter-menu="text">
+			<ax-column-header row-index="1">Delivery City</ax-column-header>
+			<ax-column-header row-index="2">dropdown-list</ax-column-header>
+			<ax-column-edit type="dropdown-list"
+								 bind-to="deliveryCityId"
+								 datasource="$ctrl.$parent.dataSet.cities"
+								 item-id-field="id"
+								 item-display-field="name"
+								 item-invariant-field="nameInvariant"
+								 show-search="true"></ax-column-edit>
+
+		</ax-column>
+		<ax-column bind-to="insideUE" sortable header="Inside UE" width="100px" filter-menu="boolean" view-type="boolean-checkbox">
+			<ax-column-header row-index="1">Inside UE</ax-column-header>
+			<ax-column-header row-index="2" menu-header="false">checkbox</ax-column-header>
+			<ax-column-edit type="checkbox"></ax-column-edit>
+		</ax-column>
+		<ax-column bind-to="type" sortable header="Type" width="190px" filter-menu="text" view-type="text" style="text-align:center;padding-left:0">
+			<ax-column-header row-index="1">Type</ax-column-header>
+			<ax-column-header row-index="2" menu-header="false">radio buttons</ax-column-header>
+			<ax-column-edit type="radio-options" options="['0','1','2']"></ax-column-edit>
+		</ax-column>
+		<ax-column bind-to="number" sortable header="Order ID" width="80px" filter-menu="number" view-type="text" style="text-align:right;padding-right:10px" edit-type="text">
+			<ax-column-header row-index="1">Order ID</ax-column-header>
+			<ax-column-header row-index="2">text</ax-column-header>
+		</ax-column>
+		<ax-column bind-to="value" sortable header="Value1" width="180px" filter-menu="number" view-type="number" locale="en-US" decimals="2">
+			<ax-column-header row-index="1">Value 1</ax-column-header>
+			<ax-column-header row-index="2" menu-header="false">input-number</ax-column-header>
+			<ax-column-edit type="input-number" ng-disabled="dataItem.insideUE" tooltip="$ctrl.config.customTooltipMethod('Value')"></ax-column-edit>
+		</ax-column>
+		<ax-column bind-to="value" sortable header="Value2" width="130px" filter-menu="number" view-type="number" locale="en-US" decimals="2">
+			<ax-column-header row-index="1">Value 2</ax-column-header>
+			<ax-column-header row-index="2">custom</ax-column-header>
+			<ax-column-edit type="custom">
+				<input type="number" class="form-control" has-input="true" style="width:100%"
+						 ng-focus="$ctrl.objectHasFocus($event, dataItem, 'value');"
+						 ng-blur="$ctrl.$validateField('value', dataItem) "
+						 ng-model="dataItem.value">
+			</ax-column-edit>
+		</ax-column>
+		<ax-column bind-to="date" sortable view-type="date" date-format="dd.MM.yyyy" header="Order date" width="200px" style="text-align:center" filter-menu="date" edit-type="date">
+			<ax-column-header row-index="1">Order date</ax-column-header>
+			<ax-column-header row-index="2">date</ax-column-header>
+		</ax-column>
+		<ax-column bind-to="createdAt" sortable header="Created At" width="280px" view-type="datetime" filter-menu="datetime" edit-type="datetime">
+			<ax-column-header row-index="1">Created at</ax-column-header>
+			<ax-column-header row-index="2">datetime</ax-column-header>
+		</ax-column>
+		<hint>Actions column create buttons</hint>
+		<ax-column header="Actions" width="84px" view-type="crud-buttons" show-header="false"></ax-column>
+	</ax-grid>
+</div>

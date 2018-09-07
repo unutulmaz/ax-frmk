@@ -36,4 +36,3 @@ AngularJS Framework
     <ax-attr class="ng-isolate-scope"><br><strong>template-factory</strong> factory for download html files from server.
     <br>At this moment the framework can be used with latest browsers Chrome (recommended), Fire Fox, Opera, Edge.
 </div>
-<br><br><strong>For creating a new application with ax-frmk take a look to https://github.com/bogdanim36/project</strong>

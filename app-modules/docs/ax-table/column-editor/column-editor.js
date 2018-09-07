@@ -7,7 +7,7 @@
 			buitInTemplate1:
 				`<ax-column-editor colspan="2"
 	style="width:100%;height:300px"
-   ax-dynamic-template-url="'/app-modules/demo-app/catalogs/customers-details.html'">
+   ax-dynamic-template-url="'/app-modules/show-case/catalogs/customers-details.html'">
 </ax-column-editor>`,
 			buitInTemplate2:
 				`<ax-column-editor colspan="2" style="width:100%;height:300px">

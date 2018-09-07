@@ -35,8 +35,7 @@
 	angular.module("App").config(["$compileProvider", "$locationProvider", "$injector", function ($compileProvider, $locationProvider, $injector) {
 		$compileProvider.debugInfoEnabled(true); //required for angular.element().scope() - drag&drop, etc;
 		$locationProvider.html5Mode(false).hashPrefix('!');
-		$locationProvider.html5Mode(false).hashPrefix('!');
-		//compatibility with angular 1.6;
+		//compatibility with angular 1.6 - do not upgrade to 1.7, ax-frmk will not work;
 		if ($compileProvider.preAssignBindingsEnabled) $compileProvider.preAssignBindingsEnabled(true);
 		if (typeof appConfigExtend === "function") appConfigExtend($compileProvider, $locationProvider, $injector);
 	}]);

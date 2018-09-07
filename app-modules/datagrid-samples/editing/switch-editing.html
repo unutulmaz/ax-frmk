@@ -1,0 +1,14 @@
+<div class="form-title" style="padding-left:5px">
+	Switching editing mode
+</div>
+<div ng-style="{'top':(dataStore.formTitleHeight()+10)+'px'}"
+	  style="position: absolute;bottom:10px;left:10px;right:10px;overflow: auto;padding-right:10px" ng-controller="datalistDocs">
+
+	<div class="info-text" style="margin-bottom:0;">
+		User can swith between editing: click on <strong>Settings</strong> icon :<button class="icon code-tabs-maximize fa fa-edit"></button>
+	</div>
+	<ax-code-tabs style="position:relative;height:650px;width:100%;margin-top:10px"
+					  template-url="/app-modules/datagrid-samples/editing/switch-editing-1.html"
+					  source-code="code"></ax-code-tabs>
+
+</div>

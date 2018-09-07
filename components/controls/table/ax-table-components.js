@@ -261,7 +261,7 @@
 						delete $controller.content.contentScope.$ctrl;
 						$controller.content.contentScope.$destroy();
 					}
-					// console.log("ax-editor-content compiled");
+					 // console.log("ax-editor-content compiled");
 					element.html(html);
 					let contentScope = scope.$parent.$new();
 					//console.log("content scope", contentScope);

@@ -589,7 +589,7 @@ class axTableEditor {
 			let width = axEdit.getAttribute("width") || (column.width + "px");
 			let input = createElement("ax-form-input", {
 				type: "custom",
-				bindTo: column.bindTo,
+				bindTo: axEdit.getAttribute("bind-to") || column.bindTo,
 				ngDisabled: true,
 				style: "width:" + width + " !important;"
 			});

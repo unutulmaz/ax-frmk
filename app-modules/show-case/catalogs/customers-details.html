@@ -1,0 +1,222 @@
+﻿<div ng-controller="customersDetailsCtrl" style="height: 100%;" ng-style="{'padding':launcher?'10px':''}">
+    <div class="error"
+         style="margin-bottom:10px;color:red"
+         ng-if="customer.id===0">You must save new customer before adding details!
+    </div>
+    <ax-tabs tabs-titles="['Phones','Emails','Accounts', 'Addresses']"
+             style="position:absolute;top:25px;bottom:0;left:0;right:0"
+             initial-select="'Phones'">
+        <ax-tab-view tab-title="Phones">
+            <ax-table config="$parent.phones"
+                      api-controller="customers-phones"
+                      edit-row="inline"
+                      apply-changes-on-save="false"
+                      auto-focus="false"
+                      right-freezed-columns="1"
+                      customizable-freezed-columns="false"
+                      customizable-config="false"
+                      customizable-edit-mode="false"
+                      columns-autofit-enabled="false"
+                      export-disabled="true"
+                      auto-load-data="false"
+                      order-by="name"
+                      item-id-field="id">
+                <ax-toolbar>
+                    <label class="header-title" toolbar="left">
+                        Phones
+                    </label>
+                    <ax-button toolbar="right"
+                               show-title="false"
+                               button-type="settings"></ax-button>
+                </ax-toolbar>
+                <ax-column header="Name"
+                           bind-to="name"
+                           hideable="false"
+									header-menu="false"
+                           width="200px">
+                    <ax-column-filter filter-type="text"></ax-column-filter>
+                    <ax-column-edit edit-type="text"></ax-column-edit>
+                </ax-column>
+                <ax-column header="Phone"
+                           hideable="false"
+									header-menu="false"
+                           bind-to="phone"
+                           width="150px">
+                    <ax-column-edit edit-type="text"></ax-column-edit>
+                </ax-column>
+                <ax-column header="Actions" show-header="false" view-type="crud-buttons" width="84px"></ax-column>
+            </ax-table>
+        </ax-tab-view>
+        <ax-tab-view tab-title="Emails">
+            <ax-table config="$parent.emails"
+                      api-controller="customers-emails"
+                      edit-row="inline"
+                      apply-changes-on-save="false"
+                      auto-focus="false"
+                      right-freezed-columns="1"
+                      customizable-freezed-columns="false"
+                      customizable-config="false"
+                      customizable-edit-mode="false"
+                      columns-autofit-enabled="false"
+                      export-disabled="true"
+                      auto-load-data="false"
+                      order-by="name"
+                      item-id-field="id">
+                <ax-toolbar>
+                    <label class="header-title" toolbar="left">
+                        Emails
+                    </label>
+                    <ax-button toolbar="right"
+                               show-title="false"
+                               button-type="settings"></ax-button>
+                </ax-toolbar>
+                <ax-column header="Name"
+                           bind-to="name"
+                           hideable="false"
+									header-menu="false"
+                           width="200px">
+                    <ax-column-filter filter-type="text"></ax-column-filter>
+                    <ax-column-edit edit-type="text"></ax-column-edit>
+                </ax-column>
+                <ax-column header="Email"
+                           hideable="false"
+									header-menu="false"
+                           bind-to="email"
+                           width="280px">
+                    <ax-column-edit edit-type="text"></ax-column-edit>
+                </ax-column>
+                <ax-column header="Actions" show-header="false" view-type="crud-buttons" width="84px"></ax-column>
+            </ax-table>
+
+        </ax-tab-view>
+        <ax-tab-view tab-title="Accounts">
+            <ax-table config="$parent.accounts"
+                      api-controller="customers-accounts"
+                      edit-row="inline"
+                      apply-changes-on-save="false"
+                      auto-focus="false"
+                      right-freezed-columns="1"
+                      customizable-freezed-columns="false"
+                      customizable-config="false"
+                      customizable-edit-mode="false"
+                      columns-autofit-enabled="false"
+                      export-disabled="true"
+                      auto-load-data="false"
+                      order-by="bank, name"
+                      item-id-field="id">
+                <ax-toolbar>
+                    <label class="header-title" toolbar="left">
+                        Bank Accounts
+                    </label>
+                    <ax-button toolbar="right"
+                               show-title="false"
+                               button-type="settings"></ax-button>
+                </ax-toolbar>
+                <ax-column header="Name"
+                           bind-to="name"
+									header-menu="false"
+                           hideable="false"
+                           width="200px">
+                    <ax-column-filter filter-type="text"></ax-column-filter>
+                    <ax-column-edit edit-type="text"></ax-column-edit>
+                </ax-column>
+                <ax-column header="Bank"
+                           hideable="false"
+									header-menu="false"
+                           bind-to="bank"
+                           width="150px">
+                    <ax-column-edit edit-type="text"></ax-column-edit>
+                </ax-column>
+                <ax-column header="Account"
+                           hideable="false"
+									header-menu="false"
+                           bind-to="account"
+                           width="250px">
+                    <ax-column-edit edit-type="text"></ax-column-edit>
+                </ax-column>
+                <ax-column header="Actions" show-header="false" view-type="crud-buttons" width="84px"></ax-column>
+            </ax-table>
+        </ax-tab-view>
+        <ax-tab-view tab-title="Addresses">
+            <ax-table config="$parent.addresses"
+                      api-controller="customers-addresses"
+                      order-by="countryInvariant, cityInvariant, name"
+                      edit-row="inline"
+                      apply-changes-on-save="false"
+                      auto-focus="false"
+                      right-freezed-columns="1"
+                      customizable-freezed-columns="false"
+                      customizable-config="false"
+                      customizable-edit-mode="false"
+                      columns-autofit-enabled="false"
+                      export-disabled="true"
+                      auto-load-data="false"
+                      item-id-field="id">
+                <ax-toolbar>
+                    <label class="header-title" toolbar="left">
+                        Addresses
+                    </label>
+                    <ax-button toolbar="right"
+                               show-title="false"
+                               button-type="settings"></ax-button>
+                </ax-toolbar>
+                <ax-column header="Name"
+                           bind-to="name"
+                           hideable="false"
+                           width="200px">
+                    <ax-column-filter filter-type="text"></ax-column-filter>
+                    <ax-column-edit edit-type="text"></ax-column-edit>
+                </ax-column>
+                <ax-column header="Country"
+                           bind-to="countryId"
+                           sortable="countryInvariant"
+                           width="200px">
+                    <ax-column-filter filter-type="text"></ax-column-filter>
+                    <ax-column-view view-type="text" bind-to="country"></ax-column-view>
+                    <ax-column-edit edit-type="autocomplete"
+                                    datasource="$ctrl.$parent.$parent.dataSet.countries"
+                                    item-id-field="id"
+                                    item-display-field="name"
+                                    item-invariant-field="nameInvariant"
+                                    link-popup-template-url="'/app-modules/show-case/catalogs/countries-code-popup.html'"
+                                    link-popup-caret-class="fa fa-edit"
+                                    link-popup-ctrl="$parent.$ctrl.$parent.$parent.countriesEdit"
+                                    link-popup-popup-height="305px"
+                                    link-popup-popup-width="350px"></ax-column-edit>
+                </ax-column>
+                <ax-column header="City"
+                           bind-to="cityId"
+                           sortable="cityInvariant"
+                           width="200px">
+                    <ax-column-filter filter-type="text"></ax-column-filter>
+                    <ax-column-view view-type="text" bind-to="city"></ax-column-view>
+                    <ax-column-edit edit-type="autocomplete"
+                                    datasource="$ctrl.$parent.$parent.dataSet.cities"
+                                    datasource-filter="$ctrl.$parent.$parent.getCitiesForCountry(datasource,param)"
+                                    datasource-filter-param="$parent.$parent.dataItem.countryId"
+                                    item-id-field="id"
+                                    item-display-field="name"
+                                    item-invariant-field="nameInvariant"
+                                    link-popup-template-url="'/app-modules/show-case/catalogs/cities-code-popup.html'"
+                                    link-popup-caret-class="fa fa-edit"
+                                    link-popup-ctrl="$parent.$ctrl.$parent.$parent.citiesEdit"
+                                    link-popup-open-params="$parent.$parent.$ctrl.$parent.$parent.getDataItemCountry($parent.$parent.$parent.dataItem)"
+                                    link-popup-popup-height="200px"
+                                    link-popup-popup-width="350px"></ax-column-edit>
+                </ax-column>
+                <ax-column header="Address"
+                           bind-to="address"
+                           width="300px">
+                    <ax-column-filter filter-type="text"></ax-column-filter>
+                    <ax-column-view view-type="text"></ax-column-view>
+                    <ax-column-edit edit-type="text-with-zoom"></ax-column-edit>
+                </ax-column>
+                <ax-column header="Actions" show-header="false" view-type="crud-buttons" width="84px"></ax-column>
+            </ax-table>
+        </ax-tab-view>
+    </ax-tabs>
+    <div ng-show="$parent.launcher"
+         class="ngdialog-close"
+         style="top:10px;right:10px;"
+         ng-click="$parent.popupClose($event)"></div>
+</div>

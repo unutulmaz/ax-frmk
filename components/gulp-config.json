@@ -37,7 +37,6 @@
       "components/stylesheets/base.css",
       "components/themes/ax-theme.appearance.bootstrap-1.css",
       "components/themes/ax-theme.dimensions.large.css",
-      "components/themes/ax-theme.lightblue.css",
       "components/dependencies/ng-dialog/ng-dialog.css",
       "components/stylesheets/toastr.css"
     ]

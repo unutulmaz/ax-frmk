@@ -78,6 +78,7 @@ button:focus {
   outline: 0 !important;
   box-shadow: none;
 }
+
 ax-autocomplete > div > ax-dropdown-popup.link-popup {
   color: black !important;
 }
@@ -189,7 +190,8 @@ ax-table-content > [role=paginator] {
   border-top: 1px solid #dedcdc;
 }
 
-table.ax-table.element-table > thead > tr > th {
+table.ax-table.element-table > thead > tr > th
+ {
   background-color: #51a7c3;
 }
 
@@ -278,10 +280,11 @@ ax-text.form-control.hasFocus > div > .btn.fa.text-clear-btn {
 }
 
 ax-list.ax-autocomplete-dropdown > ax-table-content > div {
-	background-color: #d4ebfa;
+  background-color: #d4ebfa;
 }
-ax-autocomplete.hasFocus  {
-	background-color: white;
+
+ax-autocomplete.hasFocus {
+  background-color: white;
 }
 
 .ax-table tr.error td,

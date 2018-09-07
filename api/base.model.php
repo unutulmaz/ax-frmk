@@ -31,13 +31,6 @@ class BaseModel extends BaseController
 		if (isset($this->postData) && isset($this->postData->item)) $this->item = new $this->modelItem($this->postData->item);
 	}
 
-	public function getServerRoot()
-	{
-		return (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != "off" ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/';
-//      if (isset($_SERVER["HTTP_REFERER"])) return $_SERVER["HTTP_REFERER"];
-//      if (isset($_SERVER["HTTP_ORIGIN"])) return $_SERVER["HTTP_ORIGIN"];
-	}
-
 	public function action($action)
 	{
 		$action .= "Action";
@@ -98,7 +91,6 @@ class BaseModel extends BaseController
 			$order = " ORDER BY ";
 			$cnt = 0;
 			foreach ($data as $key => $value) {
-
 				$order .= ($cnt > 0 ? "," : "") . $key . " " . $value . " ";
 				$cnt++;
 			}
@@ -278,11 +270,13 @@ class BaseModel extends BaseController
 	}
 
 
-	public function sqlBuildGetAllItems($where = null, $order = null)
+	public function sqlBuildGetAllItems($where = null, $order = null, $limit=null)
 	{
 		$cmd = 'SELECT a.* FROM `' . $this->tableName . '` a ';
 		if (isset($where)) $cmd .= $this->sqlBuildWhere($where);
 		if (isset($order)) $cmd .= $this->sqlBuildOrder($order);
+		if (isset($limit)) $cmd .= " limit " . $limit;
+
 		return $cmd;
 	}
 
@@ -368,10 +362,10 @@ class BaseModel extends BaseController
 
 	}
 
-	public function getListAction($where = null, $order = null)
+	public function getListAction($where = null, $order = null, $limit = null)
 	{
 		try {
-			$queryResult = $this->db->query($this->sqlBuildGetAllItems($where, $order));
+			$queryResult = $this->db->query($this->sqlBuildGetAllItems($where, $order, $limit));
 			$response = array();
 			$response["data"] = $queryResult->rows;
 			$response["status"] = true;

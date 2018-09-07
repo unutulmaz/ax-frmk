@@ -3652,8 +3652,8 @@ class axTableController {
 			if ($controller.attrs.pivotTableMode !== "true" && $controller.$$grid && $controller.$$grid.$$editor) {
 				if ($controller.attrs.editRow !== "editor") {
 					if ($controller.$$grid.$$editor.opened) $controller.$$grid.$$editor.close();
-					$controller.$$grid.$$editor.content.compile($controller.element.editorHtml, $controller.$$grid.$$editor);
 				}
+				$controller.$$grid.$$editor.content.compile($controller.element.editorHtml, $controller.$$grid.$$editor);
 			}
 
 

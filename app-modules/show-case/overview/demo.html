@@ -1,0 +1,17 @@
+<div class="form-title" style="padding-left:5px">
+	Configuration profiles
+</div>
+<div ng-style="{'top':(dataStore.formTitleHeight()+10)+'px'}"
+	  style="position: absolute;bottom:10px;left:10px;right:10px;overflow: auto;padding-right:10px" ng-controller="datalistDocs">
+
+	<div class="info-text" style="margin-bottom:0;">
+		DevTools console will crash when loading 100k records, so keep it closed.
+		<br/><strong>Unigue features (which no other Javascript has)</strong>
+		<br/> - <strong>Configuration Profiles</strong> Select a profile from profiles list in <strong>Grid Settings </strong>
+		<button class="fa fa-cogs"></button>
+		and then press apply.
+		<br/> - <strong>Advanced setup for grouping properties</strong> Select a profile with grouping. Then click on edit icon for a group in Grouping by columns list, to see what you can setup as end-user.
+		<br/> - <strong>Filter by grouping value</strong> Select a profile with grouping. Then click on filter icon on any group header to open UI for filter by grouping values.
+	</div>
+	<div style="height:500px;width:100%;margin-top:10px" ax-dynamic-template-url="'/app-modules/show-case/overview/demo-sample.html'"></div>
+</div>

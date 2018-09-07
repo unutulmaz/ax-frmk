@@ -15,8 +15,7 @@
 			},
 			isDevelopment: function () {
 				if (angular.isDefined(this._isDevelpoment)) return this._isDevelpoment;
-				var type = angular.element("#APP_ENV_CONSTANT").text();
-				console.log("Environment:", type);
+				var type = document.getElementById("environment").getAttribute("content");
 				this._isDevelpoment = type === 'DEVELOPMENT';
 				return this._isDevelpoment;
 			},

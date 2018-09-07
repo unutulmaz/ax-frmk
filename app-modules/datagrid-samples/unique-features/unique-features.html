@@ -1,0 +1,30 @@
+<div class="form-title" style="padding-left:5px">
+	Unigue features (which no other Javascript DataGrid has)
+</div>
+<div ng-style="{'top':(dataStore.formTitleHeight()+10)+'px'}"
+	  style="position: absolute;bottom:10px;left:10px;right:10px;overflow: auto;padding-right:10px" ng-controller="datalistDocs">
+
+	<div class="info-text" style="margin-bottom:0;">
+		<strong>1. Configuration Profiles</strong> Select a profile from profiles list in grid <strong>Settings</strong>
+																 icon:
+		<button class="icon code-tabs-maximize fa fa-cogs"></button>
+																 and then press apply.
+		<br>A profile can contains which columns are hidden, left and rigth columns freezing states, data ordering, data grouping definitions, and toolbar buttons
+		<br>Profiles can be defined by developer and are readonly. This can be extende to end-user, to be able to save his own profiles and stored in backend database.
+		<br>Click maximize icon
+		<button class="icon code-tabs-maximize fa fa-window-maximize"></button>
+																 from rigt upper corner for extend DataGrid to all workspace;
+	</div>
+	<ax-code-tabs style="position:relative;height:400px;width:100%;margin-top:10px"
+					  template-url="/app-modules/datagrid-samples/unique-features/unique-features-1.html"
+					  source-code="code"></ax-code-tabs>
+	<div class="info-text" style="margin-top:10px;">
+		<strong>2. Fixed group header on horizontal scroll</strong>
+		<br><strong>3. Advanced setup for grouping properties</strong>: click on edit icon <button class="icon code-tabs-maximize fa fa-edit"></button> for a group in Grouping by columns list (Data Grouping section), to see what you can setup as end-user.
+		<br/><strong>4. Filter by grouping value</strong>: click on filter icon <button class="icon code-tabs-maximize fa fa-filter"></button>on any group header to open UI for filter by grouping values.
+	</div>
+	<ax-code-tabs style="position:relative;height:400px;width:100%;margin-top:10px"
+					  template-url="/app-modules/datagrid-samples/unique-features/unique-features-2.html"
+					  source-code="code"></ax-code-tabs>
+
+</div>

@@ -1,0 +1,103 @@
+<div ng-controller="byDateField" style="position:relative;width:100%;height:100%">
+	<ax-grid config="datatable1"
+				datasource="data"
+				auto-focus="true"
+				customizable-config="true"
+				export-disabled="true"
+				customizable-pivot-table="false"
+				customizable-edit-mode="false"
+				columns-autofit-enabled="false"
+				apply-changes-on-save="true"
+				left-freezed-columns="1"
+				right-freezed-columns="1"
+				style="position:relative;width:100%;height:100%">
+		<ax-toolbar>
+			<div class="toolbar-container" toolbar="left">
+				<label style="white-space: nowrap">Grouping by date type field</label>
+			</div>
+			<ax-button toolbar="right" button-type="groups-toggle"></ax-button>
+			<ax-button toolbar="right" button-type="settings"></ax-button>
+		</ax-toolbar>
+		<ax-groups>
+			<ax-all-levels-calculations show-on="header">
+				<ax-calculation column="Value" name="value-sum" display-label="false" aggregate-type="sum"></ax-calculation>
+			</ax-all-levels-calculations>
+			<ax-group expression="true" show-calculations-on="both" all-levels-calculations="true">
+				<ax-group-header label="All records" show-value="false" show-counter="false" show-filter="false" label-indent="10"></ax-group-header>
+				<ax-group-footer label-indent="350"
+									  show-value="false"
+									  show-counter="false"
+									  label="General totals:"></ax-group-footer>
+			</ax-group>
+			<ax-group collapsible="true"
+						 collapsed="false"
+						 all-levels-calculations="false"
+						 expression="dataItem.date"
+						 order-by="date"
+						 show-calculation-on="footer"
+						 label="Order Date">
+				<ax-group-header label="Orders for date:" label-indent="0">
+					<ax-group-display label-indent="10"
+											show-toggle-collapsed="true"
+											show-filter="true"
+											show-value="true">Orders on date:<label style="margin-left:3px">{{::dataItem.value|date:'dd.MM.yyyy'}}</label></ax-group-display>
+				</ax-group-header>
+				<ax-group-footer>
+					<ax-group-display label-indent="200"
+											show-value="false"
+											show-counter="false">Total for date:<label style="margin-left:3px">{{::dataItem.value|date:'dd.MM.yyyy'}}</label></ax-group-display>
+				</ax-group-footer>
+				<ax-calculation column="Value" show-on="footer" display-label="false" name="value-sum1" aggregate-type="sum"></ax-calculation>
+			</ax-group>
+		</ax-groups>
+		<ax-column header="Order ID" bind-to="number" sortable width="140px" filter-menu="number" view-type="text" decimals="0" style="text-align:right;padding-right:20px;">
+			<ax-column-header row-index="1" colspan="2" style="background-color: deepskyblue">Order</ax-column-header>
+			<ax-column-header row-index="2">Id</ax-column-header>
+		</ax-column>
+		<ax-column header="Order Date" bind-to="date" sortable view-type="date" date-format="dd.MM.yyyy" width="190px" filter-menu="date" initial-filter-option="Filter by input value">
+			<ax-column-header row-index="2">Date</ax-column-header>
+		</ax-column>
+		<ax-column header="Customer Name" bind-to="customer" sortable="customerInvariant" width="300px" filter-menu="text" >
+			<ax-column-header row-index="1" colspan="5" style="background-color: darkturquoise">Customer</ax-column-header>
+			<ax-column-header row-index="2">Name</ax-column-header>
+
+		</ax-column>
+		<ax-column header="Customer Code" bind-to="customerCode" sortable width="130px" filter-menu="text" >
+			<ax-column-header row-index="2">Code</ax-column-header>
+
+		</ax-column>
+		<ax-column header="Delivery Country"
+					  bind-to="deliveryCountry"
+					  sortable="deliveryCountryInvariant" width="250px" filter-menu="text" >
+			<ax-column-header row-index="2">Country</ax-column-header>
+		</ax-column>
+		<ax-column header="Delivery City"
+					  bind-to="deliveryCity"
+					  sortable="deliveryCityInvariant"
+					  width="150px"
+					  filter-menu="text"
+					  initial-filter-option="Filter by input value">
+			<ax-column-header row-index="2">
+				City
+			</ax-column-header>
+		</ax-column>
+		<ax-column header="Delivery Address" bind-to="deliveryAddress" sortable width="250px" filter-menu="text" >
+			<ax-column-header row-index="2">Street</ax-column-header>
+
+		</ax-column>
+		<ax-column header="Created By" bind-to="createdBy" sortable width="200px" filter-menu="text" >
+			<ax-column-header row-index="1" colspan="2" style="background-color: lightgreen;">Created</ax-column-header>
+			<ax-column-header row-index="2">By</ax-column-header>
+		</ax-column>
+		<ax-column header="Created At" bind-to="createdAt" sortable width="280px" view-type="datetime" filter-menu="datetime" initial-filter-option="Filter by input value" >
+			<ax-column-header row-index="2">At</ax-column-header>
+		</ax-column>
+		<ax-column header="Inside UE" bind-to="insideUE" sortable width="120px" filter-menu="boolean" view-type="boolean-checkbox" >
+			<ax-column-header row-index="1" colspan="2" style="background-color: #90eeed;">Value</ax-column-header>
+			<ax-column-header row-index="2">Inside UE</ax-column-header>
+		</ax-column>
+		<ax-column header="Value" bind-to="value" sortable width="200px" filter-menu="number" view-type="number" locale="en-US" decimals="0" initial-filter-option="Filter by input value" >
+			<ax-column-header row-index="2">Value</ax-column-header>
+		</ax-column>
+	</ax-grid>
+</div>

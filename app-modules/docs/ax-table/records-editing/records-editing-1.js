@@ -70,7 +70,7 @@
 					// method to add a global error message which user can read from gutter column (first column)
 					this.$ctrl.addGlobalError("This is custom global error message as<strong> html<strong>!", "", dataItem);
 					return false;
-				} else return true;
+				} else this.$ctrl.addGlobalError("This is custom global error message as html!This grid doesn't save data!<br>", "", dataItem);
 			},
 			//method invoked on blur input control in column
 			validateField(fieldName, dataItem) {
@@ -80,8 +80,8 @@
 					case "number":
 					case "date":
 					case "createdAt":
-					case "deliveryCity":
-					case "customer":
+					case "deliveryCityId":
+					case "customerId":
 						if (value === undefined || value === null || value === "") {
 							//method to add error to column
 							this.$ctrl.addFieldError(fieldName, "Field is required", dataItem);

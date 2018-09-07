@@ -27,6 +27,7 @@
         </ax-dropdown-popup>
         <button type="button" ng-click="locationReload()"
                 style="color: white;width: 30px"
+					 ng-if="dataStore._isDevelpoment"
                 class="btn icon fa fa-refresh"
                 uib-tooltip="Click to reload page"></button>
         <ax-dropdown-list datasource="theme.list"
@@ -37,9 +38,9 @@
                           btn-style="color:white;background-color:#1e90ff"
                           popup-class="theme-list"
 								  list-width="100%"
-								  list-height="100px"
+								  list-height="140px"
                           list-item-id-field="name"
-                          style="width:280px;margin:auto 5px"></ax-dropdown-list>
+                          style="width:220px;margin:auto 5px"></ax-dropdown-list>
     </div>
 </header>
 <main>

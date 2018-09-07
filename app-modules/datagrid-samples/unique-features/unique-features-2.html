@@ -1,0 +1,118 @@
+<style>
+	.calculation-result.value-min, .calculation-result.value-max {
+		min-width: 45px !important;
+	}
+
+	.calculation-result.value-sum {
+		min-width: 70px !important;
+		width: 100%;
+	}
+
+	tr[level='0'] .calculation-result.value-sum {
+		width: 100% !important;
+	}
+</style>
+<div ng-controller="configProfiles2Ctrl" style="width:100%;height:100%">
+	<ax-grid config="datatable1"
+				datasource="datatable1.data"
+				debug="false"
+				auto-focus="false"
+				right-freezed-columns="1"
+				customizable-edit-mode="false"
+				customizable-pivot-table="false"
+				export-disabled="true"
+				distinct-values-datasource="distinctValues"
+				style="position:relative;width:100%;height:100%">
+
+
+		<ax-toolbar ax-scroller="true" min-width="850px">
+			<label toolbar="left" class="header-title">
+				Grouping with full row group header
+			</label>
+			<ax-button toolbar="right" button-type="groups-toggle"></ax-button>
+			<ax-button toolbar="right" button-type="settings" show-title="true" style="margin-left:3px;margin-right:3px;" class="btn btn-primary"></ax-button>
+		</ax-toolbar>
+		<ax-groups>
+			<ax-all-levels-calculations show-on="header">
+				<ax-calculation column="Value" show-on="footer" name="value-sum" display-label="false" aggregate-type="sum"></ax-calculation>
+			</ax-all-levels-calculations>
+			<ax-group expression="true" show-calculations-on="footer" header-label="All records">
+				<ax-group-footer label-indent="500"
+									  show-value="false"
+									  show-counter="false"
+									  label="General totals:"></ax-group-footer>
+			</ax-group>
+			<ax-group collapsible="true"
+						 collapsed="false"
+						 all-levels-calculations="true"
+						 expression="dataItem.deliveryCountry"
+						 order-by="deliveryCountryInvariant"
+						 label="Delivery Country">
+				<ax-group-header label="Country:" label-indent="0"></ax-group-header>
+				<ax-group-footer label="Total for country:" label-indent="350"></ax-group-footer>
+			</ax-group>
+			<ax-group collapsible="true"
+						 collapsed="true"
+						 all-levels-calculations="true"
+						 expression="dataItem.deliveryCity"
+						 order-by="deliveryCityInvariant"
+						 label="Delivery City">
+				<ax-group-header label="City:" label-indent="20"></ax-group-header>
+				<ax-group-footer label="Total for city:" label-indent="400"></ax-group-footer>
+			</ax-group>
+		</ax-groups>
+
+		<ax-column header="Order ID" bind-to="number" sortable width="140px" filter-menu="number" view-type="text" decimals="0" style="text-align:right;padding-right:20px;">
+			<ax-column-header row-index="1" colspan="2" style="background-color: deepskyblue">Order</ax-column-header>
+			<ax-column-header row-index="2">Id</ax-column-header>
+		</ax-column>
+		<ax-column header="Order Date" bind-to="date" sortable view-type="date" date-format="dd.MM.yyyy" width="190px" filter-menu="date" edit-type="date"
+					  show-in-editor="true"
+					  initial-filter-option="Filter by input value">
+			<ax-column-header row-index="2">Date</ax-column-header>
+		</ax-column>
+		<ax-column header="Customer Name" bind-to="customer" sortable="customerInvariant" width="300px" filter-menu="text" edit-type="text" show-in-editor="true">
+			<ax-column-header row-index="1" colspan="5" style="background-color: darkturquoise">Customer</ax-column-header>
+			<ax-column-header row-index="2">Name</ax-column-header>
+
+		</ax-column>
+		<ax-column header="Customer Code" bind-to="customerCode" sortable width="130px" filter-menu="text" edit-type="text" show-in-editor="false">
+			<ax-column-header row-index="2">Code</ax-column-header>
+
+		</ax-column>
+		<ax-column header="Delivery Country"
+					  bind-to="deliveryCountry"
+					  sortable="deliveryCountryInvariant" width="250px" filter-menu="text" show-in-editor="true">
+			<ax-column-header row-index="2">Country</ax-column-header>
+		</ax-column>
+		<ax-column header="Delivery City"
+					  bind-to="deliveryCity"
+					  sortable="deliveryCityInvariant"
+					  width="150px"
+					  filter-menu="text"
+					  show-in-editor="true"
+					  initial-filter-option="Filter by input value">
+			<ax-column-header row-index="2">
+				City
+			</ax-column-header>
+		</ax-column>
+		<ax-column header="Delivery Address" bind-to="deliveryAddress" sortable width="250px" filter-menu="text" edit-type="text" show-in-editor="true">
+			<ax-column-header row-index="2">Street</ax-column-header>
+
+		</ax-column>
+		<ax-column header="Created By" bind-to="createdBy" sortable width="200px" filter-menu="text" edit-type="text" show-in-editor="true">
+			<ax-column-header row-index="1" colspan="2" style="background-color: lightgreen;">Created</ax-column-header>
+			<ax-column-header row-index="2">By</ax-column-header>
+		</ax-column>
+		<ax-column header="Created At" bind-to="createdAt" sortable width="280px" view-type="datetime" filter-menu="datetime" edit-type="datetime" initial-filter-option="Filter by input value" show-in-editor="true">
+			<ax-column-header row-index="2">At</ax-column-header>
+		</ax-column>
+		<ax-column header="Inside UE" bind-to="insideUE" sortable width="120px" filter-menu="boolean" view-type="boolean-checkbox" edit-type="checkbox" show-in-editor="true">
+			<ax-column-header row-index="1" colspan="2" style="background-color: #90eeed;">Value</ax-column-header>
+			<ax-column-header row-index="2">Inside UE</ax-column-header>
+		</ax-column>
+		<ax-column header="Value" bind-to="value" sortable width="200px" filter-menu="number" view-type="number" locale="en-US" decimals="0" initial-filter-option="Filter by input value" show-in-editor="true">
+			<ax-column-header row-index="2">Value</ax-column-header>
+		</ax-column>
+	</ax-grid>
+</div>

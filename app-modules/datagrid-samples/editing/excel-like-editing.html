@@ -1,0 +1,13 @@
+<div class="form-title" style="padding-left:5px">
+	Excel Like Editing
+</div>
+<div ng-style="{'top':(dataStore.formTitleHeight())+'px'}"
+	  style="position: absolute;bottom:10px;left:10px;right:10px;overflow: auto;padding-right:10px" ng-controller="datalistDocs">
+	<div class="info-text" style="margin-top:10px;">
+		Click on Settings icon: <button class="icon code-tabs-maximize fa fa-lock"></button> for start editing. At this moment doesn't exist an undo function. Save operation is stoped by a fake error.
+	</div>
+	<ax-code-tabs style="position:relative;height:650px;width:100%;margin-top:10px"
+					  template-url="/app-modules/datagrid-samples/editing/excel-like-editing-1.html"
+					  source-code="code"></ax-code-tabs>
+
+</div>
