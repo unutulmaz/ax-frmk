@@ -7,7 +7,6 @@
 
 	function LoginController($scope, authService, dataStore, $timeout, location) {
 		var vm = $scope;
-		console.log("params", location.$$search);
 		vm.loginInfo = {id: location.$$search.id};
 
 		vm.savePassword = function () {

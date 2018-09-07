@@ -21,7 +21,7 @@
     "exceptions": [],
     "inputFiles": [
       "app-modules/ax-components-config.js",
-      "app-modules/modules-vars.js",
+      "app-modules/modules-config.js",
       "app-modules/ax-api-config.js",
       "app-modules/media-styles.js",
       "app-modules/dynamic-styles.js",

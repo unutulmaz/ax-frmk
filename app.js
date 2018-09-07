@@ -159,7 +159,7 @@
 			if (typeof dynamicStyles === "function") dynamicStyles(theme);
 		};
 		// console.log("run bloc", dataStore, $storage);
-		dataStore.changeTheme($storage.user ? $storage.user.theme : applicationInfo.theme);
+		dataStore.changeTheme($storage.user && $storage.user.theme ? $storage.user.theme : applicationInfo.theme);
 		$rootScope.angular = angular;
 		$rootScope.$on('$stateNotFound',
 			function (event, unfoundState, fromState, fromParams) {

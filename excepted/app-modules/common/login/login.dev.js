@@ -8,8 +8,8 @@
 	function LoginController($scope, authService, dataStore, $timeout) {
 		var vm = $scope;
 
-
-		vm.loginInfo = {email: "ascentix.uat@gmail.com", "parola": "test"};
+		// you can fill with a default user name and pass, in production this line will not be available (see login.prod.js version)
+		vm.loginInfo = {email: "user-test@gmail.com", "parola": "test"};
 		vm.ctrl = {
 			login: function () {
 				authService.login(vm.loginInfo, function (response) {
