@@ -2,6 +2,7 @@ var maxMobileWidth = 900;
 var applicationInfo = {
 	"name": "AngularJS AxFramework",
 	"version": "1.0.3",
+	"copyright":"",
 	"type": "",
 	"theme": {},
 	"themes": [

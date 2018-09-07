@@ -13,6 +13,9 @@
 			getFullSystemName: function () {
 				return this.applicationInfo.name + " " + this.applicationInfo.type + " v" + this.applicationInfo.version;
 			},
+			copyright: function () {
+				return this.applicationInfo.copyright;
+			},
 			isDevelopment: function () {
 				if (angular.isDefined(this._isDevelpoment)) return this._isDevelpoment;
 				var type = document.getElementById("environment").getAttribute("content");

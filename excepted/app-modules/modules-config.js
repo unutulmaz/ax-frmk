@@ -3,6 +3,7 @@ var leftPanelWidth = 300;
 var applicationInfo = {
 	"name": "New app",
 	"version": "1.0.0",
+	"copyright": "xxx"
 	"type": "",
 	"theme": {name: "Bootstrap", url: "components/stylesheets/ax-theme.bootstrap-1.css", type: "bootstrap4"},
 	"themes": [
