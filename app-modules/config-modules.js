@@ -53,7 +53,7 @@ var applicationInfo = {
 				maxMobileWidth: maxMobileWidth
 			},
 			appearance: {
-				url: "app-modules/themes/ax-theme.appearance.bootstrap-flat.css",
+				url: "components/themes/ax-theme.appearance.bootstrap-flat.css",
 				class: "bootstrap1-theme"
 			},
 			baseOn: "bootstrap4",
@@ -70,7 +70,7 @@ var applicationInfo = {
 				maxMobileWidth: maxMobileWidth
 			},
 			appearance: {
-				url: "app-modules/themes/ax-theme.appearance.bootstrap-flat.css",
+				url: "components/themes/ax-theme.appearance.bootstrap-flat.css",
 				class: "bootstrap1-theme"
 			},
 			baseOn: "bootstrap4",

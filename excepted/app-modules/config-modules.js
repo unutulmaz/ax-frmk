@@ -3,13 +3,13 @@ var leftPanelWidth = 300;
 var applicationInfo = {
 	"name": "New app",
 	"version": "1.0.0",
-	"copyright": "My company inn",
+	"copyright": "My company",
 	"type": "",
-	"theme": {name: "Bootstrap", url: "components/stylesheets/ax-theme.bootstrap-1.css", type: "bootstrap4"},
+	"theme": {},
 	"themes": [
 		{
-			default: true,
-			name: "Bootstrap Normal Theme",
+			default: false,
+			name: "Bootstrap Normal",
 			dimensions: {
 				url: "components/themes/ax-theme.dimensions.normal.css",
 				class: "dimensions-normal",
@@ -26,7 +26,7 @@ var applicationInfo = {
 		},
 		{
 			default: false,
-			name: "Bootstrap Large Theme",
+			name: "Bootstrap Large",
 			dimensions: {
 				url: "components/themes/ax-theme.dimensions.large.css",
 				class: "dimensions-large",
@@ -37,6 +37,40 @@ var applicationInfo = {
 			},
 			appearance: {
 				url: "components/themes/ax-theme.appearance.bootstrap-1.css",
+				class: "bootstrap1-theme"
+			},
+			baseOn: "bootstrap4",
+		},
+		{
+			default: true,
+			name: "Flat Normal",
+			dimensions: {
+				url: "components/themes/ax-theme.dimensions.normal.css",
+				class: "dimensions-normal",
+				rowDataHeight: 28,
+				iconButtonWidth: 32,
+				leftPanelWidth: 320,
+				maxMobileWidth: maxMobileWidth
+			},
+			appearance: {
+				url: "components/themes/ax-theme.appearance.bootstrap-flat.css",
+				class: "bootstrap1-theme"
+			},
+			baseOn: "bootstrap4",
+		},
+		{
+			default: false,
+			name: "Flat large",
+			dimensions: {
+				url: "components/themes/ax-theme.dimensions.large.css",
+				class: "dimensions-large",
+				rowDataHeight: 32,
+				iconButtonWidth: 40,
+				leftPanelWidth: 350,
+				maxMobileWidth: maxMobileWidth
+			},
+			appearance: {
+				url: "components/themes/ax-theme.appearance.bootstrap-flat.css",
 				class: "bootstrap1-theme"
 			},
 			baseOn: "bootstrap4",

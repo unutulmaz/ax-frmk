@@ -1,0 +1,318 @@
+
+.btn, .ngdialog-close, .nav-tabs > li > a, ax-popup,
+button, .form-control, ax-checkbox, ax-radio-option, ax-form-section-header, [button-type], input{
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+}
+
+.btn-primary{
+  background-image: none;
+  box-shadow: none;
+}
+
+button, html input[type="button"], input[type="reset"], input[type="submit"]{
+  border-style: solid;
+}
+
+#left-pane {
+  border: 0 solid black;
+  background-color: #FEFEFE;
+}
+.btn.text {
+  padding: 0 3px;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+  background-color: transparent;
+  outline: none;
+}
+
+.app-header {
+  background-color: #2d80b5;
+  color: white;
+}
+
+.app-header .fa {
+  color: white;
+}
+
+.app-header .fa:hover {
+  color: black !important;
+}
+
+.icon:hover:not(.fa-spinner),
+[role=paginator] div > span.fa:hover,
+ax-dropdown-popup.popup-opened > button.icon:not(.fa-spinner),
+button.form-control:hover,
+.dropdown-toggle.opened,
+.dropdown-toggle:hover,
+.column-cmd:hover,
+ax-radio-option:hover,
+ax-checkbox:hover {
+  border-color: #204d74;
+  background-color: #286090 !important;
+  color: white !important;
+}
+
+[button-type=settings] .fa {
+  color: white;
+}
+
+ax-dropdown-list.form-control > button,
+ax-dropdown-popup.form-control > button,
+.form-control {
+  border-color: #378fea;
+  background-color: white;
+}
+
+ax-dropdown-list.form-control > button[readonly],
+ax-dropdown-popup.form-control > button[readonly],
+.form-control[readonly] {
+  border-color: transparent;
+  box-shadow: none;
+}
+
+tr[role=filters] ax-dropdown-list.form-control > button,
+tr[role=filters] ax-dropdown-popup.form-control > button,
+tr[role=filters] .form-control,
+tr[role=filters] ax-dropdown-popup > button,
+th > div > ax-dropdown-list > button {
+  border-color: #c5c9ce;
+}
+
+.form-control:focus,
+.form-control.hasFocus,
+.form-control:not(.hasFocus) > *:focus,
+.column-cmd.hasFocus,
+ax-autocomplete > div > ax-dropdown-list.ax-autocomplete-dropdown > button:focus,
+ax-autocomplete > div > ax-dropdown-popup.link-popup > button:focus,
+ax-radio-option:focus,
+button:focus {
+  border-color: #0808b0 !important;
+  color: black;
+  outline: 0 !important;
+  box-shadow: none;
+}
+ax-autocomplete > div > ax-dropdown-popup.link-popup {
+  color: black !important;
+}
+
+.ngdialog-close:hover {
+  border-color: #204d74;
+  background-color: #286090 !important;
+}
+
+ax-table > ax-table-content > [role=table-scroller],
+ax-table > ax-table-content > [role=table-left],
+ax-table > ax-table-content > [role=table-right],
+ax-table > ax-table-content > [role=vertical-scroller],
+ax-list > ax-table-content > [role=table-scroller],
+ax-list > ax-table-content > [role=table-left],
+ax-list > ax-table-content > [role=table-right],
+ax-list > ax-table-content > [role=vertical-scroller] {
+  background-color: white;
+}
+
+table:not([role=form-column]) tbody tr:hover:not([label-layout]) > td,
+table:not([role=form-column]) tbody tr.hover > td {
+  background-color: rgb(229, 229, 229);
+}
+
+tbody tr:hover .text-overflow {
+  background-color: rgb(229, 229, 229);
+}
+
+tr.hasFocus:not(.saved):not(.error) td,
+tbody tr.hasFocus:hover:not(.saved):not(.error) td,
+tbody tr.hasFocus:hover td .text-overflow,
+tr.hasFocus td .text-overflow {
+  background-color: #ffb366 !important;
+  border-color: white;
+}
+
+tr.hasFocus td .form-control:not(.hasFocus):not(:focus),
+tr.hasFocus td ax-dropdown-list.form-control > button:not(:focus),
+tbody tr.hasFocus:hover td .form-control:not(.hasFocus) {
+  border-color: #ccc !important;
+}
+
+tr[role=data-row][template-type=edit]:not(.hasFocus) .form-control,
+tr[role=data-row][template-type=edit]:not(.hasFocus) ax-dropdown-list.form-control button {
+  border-color: transparent;
+}
+
+tr[role=data-row][template-type=edit]:not(.hasFocus):not(:hover) [role=column-input] > ax-dropdown-popup > button.icon,
+tr[role=data-row][template-type=edit]:not(.hasFocus):not(:hover) ax-dropdown-list.form-control button > .caret,
+tr[role=data-row][template-type=edit]:not(.hasFocus):not(:hover) ax-dropdown-list.form-control button > .dropdown-clear {
+  color: transparent;
+}
+
+.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
+  color: #9a9999;
+}
+
+.form-control[disabled] .fa, .form-control[readonly] .fa {
+  cursor: inherit;
+}
+
+.children-items ax-list tr[role=titles] > th {
+  background-color: #ecebeb;
+}
+
+.children-items table.ax-table td:not(.empty-column):not(.last-column) > div {
+  border-right: 1px solid lightgray !important;
+}
+
+table.ax-table > thead > tr > th:not(.last-row1) > div.th-bottom-border,
+table.ax-table > thead > tr > th:not(.last-row1) > ax-dropdown-popup,
+table.ax-table:not(.no-border) tr:not([role=filters]) > th:not(.last-column):not([hidden-column]) > div[role=column-resizer],
+table.ax-table:not(.no-border) tr[role=filters] > th:not(.last-column):not([hidden-column]) > div.right-border,
+table.ax-table tr > th[left-freezed-column]:last-child:not(.last-column):not([hidden-column]) > div[role=column-resizer],
+table.ax-table.element-table > thead > tr:first-child {
+  border-color: #458ecc;
+}
+
+table.ax-table.element-list:not(.no-border) tr:not([role=filters]) > th:not(.last-column):not([hidden-column]) > div[role=column-resizer],
+table.ax-table.element-list:not(.no-border) tr[role=filters] > th:not(.last-column):not([hidden-column]) > div.right-border,
+table.ax-table.element-list tr > th[left-freezed-column]:last-child:not(.last-column):not([hidden-column]) > div[role=column-resizer] {
+
+}
+
+table.ax-table.element-list > thead > tr:first-child {
+  border-color: transparent;
+}
+
+table.ax-table.element-list > thead > tr > th:not(.last-row1) > div.th-bottom-border,
+table.ax-table.element-list > thead > tr > th:not(.last-row1) > ax-dropdown-popup,
+table.ax-table.element-list:not(.no-border) tr:not([role=filters]) > th:not(.last-column):not([hidden-column]) > div[role=column-resizer],
+table.ax-table.element-list:not(.no-border) tr[role=filters] > th:not(.last-column):not([hidden-column]) > div.right-border,
+table.ax-table.element-list tr > th[left-freezed-column]:last-child:not(.last-column):not([hidden-column]) > div[role=column-resizer] {
+  border-color: #b9c3c8;
+}
+
+.ax-table:not(.no-border) td[column-for]:not(.last-column):not([left-freezed-column=body]):not([right-freezed-column=body]):not([hidden-column]):not([role=input]) > div {
+  border-color: lightgrey;
+}
+
+ax-table:not(.no-border),
+ax-list:not(.no-border),
+ax-table-editor:not(.no-border) {
+  border: 1px solid #b9c3c8;
+}
+
+ax-table-content > [role=paginator] {
+  border-top: 1px solid #dedcdc;
+}
+
+table.ax-table.element-table > thead > tr > th {
+  background-color: #51a7c3;
+}
+
+[role=fake-scrollbar],
+ax-table-content,
+[role=toolbar] [role=scroller-container],
+[role=toolbar] [role=toolbar-left],
+[role=toolbar] [role=toolbar-right] {
+  background-color: #f1f1f1;
+  outline: none;
+}
+
+table.ax-table.element-list > thead > tr > th {
+  background-color: #f1f1f1;
+}
+
+.editor-content [role=toolbar].editor-toolbar {
+  border-top: 1px solid #d3d3d3;
+  padding: 1px;
+}
+
+.form-title {
+  border-bottom: 1px solid #d3d3d3;
+}
+
+[role=paginator] div > span.fa, .editor-content [role=toolbar].editor-toolbar [role=paginator] > .fa {
+  background-color: lightgrey;
+}
+
+.group-records-count {
+  padding: 0 5px;
+}
+
+.nav.tabs-header > li > a {
+  padding: 3px 10px;
+}
+
+.nav > li > a.active {
+  background-color: #ffb366;
+  color: black
+}
+
+.info-text {
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #ededed;
+  border-radius: 7px;
+}
+
+[role=column-view][no-drag=true] {
+  background-color: lightgrey;
+  font-style: italic;
+}
+
+ax-dropdown-list.ax-autocomplete-dropdown > button, .link-popup.ax-autocomplete-dropdown > button {
+  background-color: transparent;
+}
+
+ax-table tr[role=group-header] {
+  background-color: #efeded;
+}
+
+ax-text > div > .btn,
+ax-text > div > input {
+  background-color: transparent;
+}
+
+ax-text.hasFocus,
+[role=column-input] > input:focus,
+[type=text-with-zoom] > input:focus,
+.form-control.hasFocus > button.dropdown-toggle {
+  background-color: white;
+}
+
+ax-text[readonly],
+ax-text[disabled] {
+  background-color: initial;
+}
+
+ax-text.form-control.hasFocus > div > .btn.fa.text-clear-btn {
+  color: black
+}
+
+.form-control > button.dropdown-toggle {
+  border-style: solid;
+}
+
+ax-list.ax-autocomplete-dropdown > ax-table-content > div {
+	background-color: #d4ebfa;
+}
+ax-autocomplete.hasFocus  {
+	background-color: white;
+}
+
+.ax-table tr.error td,
+.ax-table tr.hasFocus.error:not(.saved) td,
+.ax-table tr.hasFocus.error:not(.saved) td,
+.ax-table tr.error:hover td,
+.ax-table tr.error .text-overflow {
+  background-color: #f9722c !important;
+}
+
+ax-form [error-for] {
+  color: red;
+  white-space: normal;
+}
+
+[role=errors], .errors {
+  color: red;
+}
