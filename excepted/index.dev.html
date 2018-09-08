@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<meta charset="utf-8"/>
+		<link rel="icon" type="image/png" href="favicon.jpg">
+		<!-- build:environment -->
+		<!-- endbuild -->
+		<!-- build:base-->
+		<!-- endbuild -->
+		<!-- build:css -->
+		<!-- endbuild -->
+		<!-- build:head-js -->
+		<!-- endbuild -->
+	</head>
+	<body ng-app="App" id="app" ng-cloak>
+
+		<div ui-view="empty-page" ng-show="$resolve.$$state.locals.hasOwnProperty('empty-page@')" ng-controller="mainCtrl"></div>
+		<div ui-view="main" ng-cloak ng-show="$resolve.$$state.locals.hasOwnProperty('main@')"></div>
+
+		<!-- build:body-js -->
+		<!-- endbuild -->
+	</body>
+</html>
