@@ -1,5 +1,5 @@
 <?php
-
+define("API_ROOT", "/api/module");
 define("ROUTE_PARAM", "_route_");
 
 $routes = array(

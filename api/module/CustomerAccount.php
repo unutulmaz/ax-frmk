@@ -16,7 +16,7 @@ class CustomerAccount extends BaseModel
    public $tableName = "customers-accounts";
    public $modelItem = "CustomerAccountItem";
 
-   public function sqlBuildGetAllItems($where=null, $order = null)
+   public function sqlBuildGetAllItems($where=null, $order = null, $limit = NULL)
    {
       $cmd = 'SELECT a.*,
                 b.name as customer, b.nameInvariant as customerInvariant 

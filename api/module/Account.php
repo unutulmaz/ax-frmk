@@ -1,5 +1,6 @@
 <?php
 include_once $_SERVER["DOCUMENT_ROOT"] . "/api/base.controller.php";
+include_once $_SERVER["DOCUMENT_ROOT"] . "/api/config.appinfo.php";
 
 class Account extends BaseController
 {

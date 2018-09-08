@@ -20,7 +20,7 @@ class Customer extends BaseModel
    public $tableName = "customers";
    public $modelItem = "CustomerItem";
 
-   public function sqlBuildGetAllItems($where=null, $order=null)
+   public function sqlBuildGetAllItems($where=null, $order=null, $limit = NULL)
    {
       $cmd= 'SELECT a.*, 
                      c.name as city, c.nameInvariant as cityInvariant, 
@@ -32,7 +32,7 @@ class Customer extends BaseModel
       return $cmd;
    }
 
-   public function getListAction($where=null, $order=null)
+   public function getListAction($where=null, $order=null, $limit = NULL)
    {
       $response = parent::getListAction($where, $order);
       if (!$response["status"]) return $response;

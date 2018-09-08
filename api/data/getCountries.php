@@ -1,6 +1,5 @@
 <?php
-include_once $_SERVER["DOCUMENT_ROOT"] . "/api/vendor/Db.php" ;
-include_once $_SERVER["DOCUMENT_ROOT"] . "/api/config.php" ;
+include_once $_SERVER["DOCUMENT_ROOT"] . "/api/config.db.php" ;
 $queryResult = $dbConnection->query("SELECT * from countries");
 
 $response = array();

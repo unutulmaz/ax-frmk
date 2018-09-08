@@ -95,7 +95,7 @@ class Invoice extends BaseModel
 		return $cmd;
 	}
 
-	public function getListAction($where = null, $order = null)
+	public function getListAction($where = null, $order = null, $limit = NULL)
 	{
 		$where = array();
 		if (isset($_REQUEST["from"])) $where[] = array("field" => "date", "operator" => ">=", "value" => $_REQUEST["from"]);

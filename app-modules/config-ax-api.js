@@ -1,10 +1,5 @@
-var axAuthConfig = {
-	allowAnonymous: true,
-	urls: {
-		getUserInfo: "account/getUserInfo"
-	},
-	loadRoutesFromMenu: true,
-};
+const API_TYPE = "php";
+console.warn("ax-api-config API_TYPE:", API_TYPE);
 
 (function () {
 	angular.module("App").factory("axApiConfig", factory);

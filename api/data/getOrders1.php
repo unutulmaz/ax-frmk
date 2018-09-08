@@ -1,6 +1,5 @@
 <?php
-include_once $_SERVER["DOCUMENT_ROOT"] . "\api\\vendor\\Db.php" ;
-include_once $_SERVER["DOCUMENT_ROOT"] . "\api\config.php" ;
+include_once $_SERVER["DOCUMENT_ROOT"] . "\api\config.db.php" ;
 $limit = isset($_REQUEST['limit'])? $_REQUEST['limit']: "100";
 $orderBy = isset($_REQUEST['orderBy'])? $_REQUEST['orderBy']: false;
 $query = 'SELECT 

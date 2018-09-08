@@ -15,7 +15,7 @@ class CustomerEmail extends BaseModel
    public $tableName = "customers-emails";
    public $modelItem = "CustomerEmailItem";
 
-   public function sqlBuildGetAllItems($where=null, $order = null)
+   public function sqlBuildGetAllItems($where=null, $order = null, $limit = NULL)
    {
       $cmd = 'SELECT a.*,
                 b.name as customer, b.nameInvariant as customerInvariant 

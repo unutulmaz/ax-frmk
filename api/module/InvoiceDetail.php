@@ -21,7 +21,7 @@ class InvoiceDetail extends BaseModel
    public $foreignKey = "invoiceId";
    public $validateOnWrite = false;
 
-   public function sqlBuildGetAllItems($where = null, $order = null)
+   public function sqlBuildGetAllItems($where = null, $order = null, $limit = NULL)
    {
       $cmd = 'SELECT a.*, 
                      b.name as productName, 
@@ -36,7 +36,7 @@ class InvoiceDetail extends BaseModel
       return $cmd;
    }
 
-   public function getListAction($where = null, $order = null)
+   public function getListAction($where = null, $order = null, $limit = NULL)
    {
       try {
          if (isset($_REQUEST["invoiceId"]) && !isset($where["invoiceId"])) {

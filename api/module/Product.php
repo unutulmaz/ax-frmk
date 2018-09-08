@@ -19,7 +19,7 @@ class Product extends BaseModel
    public $tableName = "products";
    public $modelItem = "ProductsItem";
 
-   public function sqlBuildGetAllItems($where = null, $order = null)
+   public function sqlBuildGetAllItems($where = null, $order = null, $limit = NULL)
    {
       $cmd = 'SELECT a.*,
                 b.name as category, b.nameInvariant as categoryInvariant 
@@ -29,7 +29,7 @@ class Product extends BaseModel
       return $cmd;
    }
 
-   public function getListAction($where = null, $order = null)
+   public function getListAction($where = null, $order = null, $limit = NULL)
    {
       $response = parent::getListAction($where, $order);
       if (!$response["status"]) return $response;

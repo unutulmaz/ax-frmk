@@ -19,7 +19,7 @@ class CustomerAddress extends BaseModel
    public $tableName = "customers-addresses";
    public $modelItem = "CustomerAddressItem";
 
-   public function sqlBuildGetAllItems($where = null, $order = null)
+   public function sqlBuildGetAllItems($where = null, $order = null, $limit = NULL)
    {
       $cmd = 'SELECT a.*, 
                      b.name as customer, b.nameInvariant as customerInvariant,
@@ -33,7 +33,7 @@ class CustomerAddress extends BaseModel
       return $cmd;
    }
 
-   public function getListAction($where = null, $order=null)
+   public function getListAction($where = null, $order=null, $limit = NULL)
    {
       try {
          $cmd = $this->sqlBuildGetAllItems();

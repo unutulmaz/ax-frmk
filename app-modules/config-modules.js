@@ -1,4 +1,5 @@
 var maxMobileWidth = 900;
+var leftPanelWidth = 300;
 var applicationInfo = {
 	"name": "AngularJS AxFramework",
 	"version": "1.0.3",
@@ -100,7 +101,6 @@ var pagesTemplates = {
 	}
 };
 
-var leftPanelWidth = 300;
 var changeAppStyle = function (dataStore) {
 	dataStore.isMobileDevice = angular.element(window.document).width() <= maxMobileWidth;
 	if (dataStore.isMobileDevice) dataStore.leftPaneCollapsed = true;
