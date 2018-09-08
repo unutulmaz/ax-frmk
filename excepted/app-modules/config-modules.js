@@ -92,7 +92,7 @@ var mainCtrlExtend = function ($scope, $injector) {
 				if (left.length) {
 					left.width(dataStore.isMobileDevice ? 0 : applicationInfo.theme.dimensions.leftPanelWidth);
 					left.slideShow("left", 500, function () {
-						$storage.user.leftPaneCollapsed = dataStore.leftPaneCollapsed;
+						if ($storage.user) $storage.user.leftPaneCollapsed = dataStore.leftPaneCollapsed;
 						dataStore.rightPanelCssLeft = dataStore.isMobileDevice ? 0 : applicationInfo.theme.dimensions.leftPanelWidth;
 						$timeout(function () {
 							axUtils.triggerWindowResize();

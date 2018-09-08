@@ -1,47 +1,53 @@
 <header role="banner">
-    <div class="app-header">
-        <button type="button" onclick="window.location.reload()"
-                style="position: absolute; top: 0; left: 10px; color: white;"
-                class="left btn text fa fa-refresh"
-                uib-tooltip="Click to reload page"></button>
-        <span class="fa left"
-              uib-tooltip="Toggle show left pane"
-              ng-class="{'fa-angle-double-left': !dataStore.leftPaneCollapsed, 'fa-angle-double-right':dataStore.leftPaneCollapsed}"
-              ng-click="leftPaneToggle()" style="margin-left: 40px; line-height:30px;"></span>
-        <ax-dropdown-popup ctrl="mainMenu"
-                           style="width: 22px; position: absolute; left: 55px; padding: 0 "
-                           ng-if="dataStore.leftPaneCollapsed"
-                           btn-class="btn icon"
-                           caret-class="fa fa-bars"
-                           uib-tooltip="Open main menu in a popup"
-                           btn-text=""
-                           close-on-blur="true"
-                           popup-class="main-menu"
-                           popup-width="251px"
-                           popup-absolute-left="0"
-                           popup-absolute-top="30"
-                           popup-absolute-bottom="0"
-                           template-url="'/app-modules/common/main/main-menu.html'">
-        </ax-dropdown-popup>
-        <div class="inline right">
-            <ax-dropdown-popup ctrl="currentUser"
-                               style="width: 20px; padding: 0 "
-                               id="current-user"
-                               btn-class="btn icon"
-                               popup-class="dropdown-popup-menu"
-                               caret-class="fa fa-caret-down"
-                               close-on-blur="true"
-                               popup-width="auto"
-                               popup-absolute-right="0">
-                <ul style="width: 136px;margin-bottom: 0">
-                    <li ng-click="launcher.logout();">Sign out<i class="fa fa-sign-out right" style="padding-top:3px;padding-right:3px"></i></li>
-                </ul>
-            </ax-dropdown-popup>
-        </div>
+	<div class="app-header">
+		<button type="button"
+				  ng-if="!dataStore.isMobileDevice"
+				  class="btn icon fa"
+				  style="width: 30px; color: white;"
+				  uib-tooltip="Toggle show left pane"
+				  ng-class="{'fa-angle-double-left': !dataStore.leftPaneCollapsed, 'fa-angle-double-right':dataStore.leftPaneCollapsed}"
+				  ng-click="leftPaneToggle()"
+		></button>
+		<ax-dropdown-popup ctrl="mainMenu"
+								 style="width: 30px; padding: 0;"
+								 ng-if="dataStore.leftPaneCollapsed"
+								 btn-class="btn icon"
+								 btn-style="text-align:center"
+								 caret-class="fa fa-bars"
+								 uib-tooltip="Open main menu in a popup"
+								 btn-text=""
+								 close-on-blur="true"
+								 popup-class="main-menu"
+								 popup-width="{{dataStore.leftPanelWidth()}}px"
+								 popup-absolute-left="0"
+								 popup-absolute-top="30"
+								 popup-absolute-bottom="0"
+								 template-url="'/app-modules/common/main/main-menu.html'">
+		</ax-dropdown-popup>
+		<button type="button" ng-click="locationReload()"
+				  style="color: white;width: 30px"
+				  ng-if="dataStore._isDevelpoment"
+				  class="btn icon fa fa-refresh"
+				  uib-tooltip="Click to reload page"></button>
+		<div class="inline right">
+			<ax-dropdown-popup ctrl="currentUser"
+									 style="width: 20px; padding: 0 "
+									 id="current-user"
+									 btn-class="btn icon"
+									 popup-class="dropdown-popup-menu"
+									 caret-class="fa fa-caret-down"
+									 close-on-blur="true"
+									 popup-width="auto"
+									 popup-absolute-right="0">
+				<ul style="width: 136px;margin-bottom: 0">
+					<li ng-click="launcher.logout();">Sign out<i class="fa fa-sign-out right" style="padding-top:3px;padding-right:3px"></i></li>
+				</ul>
+			</ax-dropdown-popup>
+		</div>
 
-    </div>
+	</div>
 </header>
 <main>
-    <div id="left-pane" ng-if="!dataStore.leftPaneCollapsed" ax-dynamic-template-url="'/app-modules/common/main/main-menu.html'"></div>
-    <div id="right-pane" ui-view="content" ng-style="{'left': dataStore.leftPaneCollapsed? '0px': '{{::dataStore.leftPanelWidth}}px'}" ng-cloak></div>
+	<div id="left-pane" ng-if="!dataStore.leftPaneCollapsed" ax-dynamic-template-url="'/app-modules/common/main/main-menu.html'"></div>
+	<div id="right-pane" ui-view="content" style="left:0" ng-style="{left:dataStore.rightPanelCssLeft +'px'}" ng-cloak></div>
 </main>

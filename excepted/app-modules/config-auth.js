@@ -1,5 +1,5 @@
 var axAuthConfig = {
-	allowAnonymous: false,
+	allowAnonymous: true,
 	urls: {
 		login: "account/login",
 		logoff: "account/logoff",

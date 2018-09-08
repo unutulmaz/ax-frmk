@@ -16,18 +16,21 @@
 			copyright: function () {
 				return this.applicationInfo.copyright;
 			},
+			leftPanelWidth: function () {
+				return this.user ? this.user.theme.dimensions.leftPanelWidth : applicationInfo.theme.dimensions.leftPanelWidth;
+			},
 			isDevelopment: function () {
 				if (angular.isDefined(this._isDevelpoment)) return this._isDevelpoment;
 				var type = document.getElementById("environment").getAttribute("content");
 				this._isDevelpoment = type === 'DEVELOPMENT';
 				return this._isDevelpoment;
 			},
-			scrollerArrowWidth(){
+			scrollerArrowWidth() {
 				if (!this._scrollerArrowWidth) this._scrollerArrowWidth = axCssStyle.scrollerArrowWidth();
 				return this._scrollerArrowWidth;
 
 			},
-			editorToolbarHeight(){
+			editorToolbarHeight() {
 				if (!this._editorToolbarHeight) this._editorToolbarHeight = axCssStyle.editorToolbarHeight();
 				return this._editorToolbarHeight;
 

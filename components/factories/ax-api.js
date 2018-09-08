@@ -219,4 +219,12 @@
 				return api.action(action, method, apiArgs, loaderSelector);
 			};
 		}]);
+	angular.module("App")
+		.factory('axApiAction',
+		["axApi", function ($api) {
+			return function (controller, action, method, apiArgs, loaderSelector) {
+				var api = new $api({ controller: controller });
+				return api.action(action, method, apiArgs, loaderSelector);
+			};
+		}]);
 }());
