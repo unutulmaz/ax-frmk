@@ -1,4 +1,5 @@
 .idea
 ./git*.*
+git-*.bat
 api/config.secrets.php
 
