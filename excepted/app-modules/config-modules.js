@@ -116,7 +116,7 @@ var mainCtrlExtend = function ($scope, $injector) {
 	dataStore.maxMobileWidth = maxMobileWidth;
 	dataStore.isMobileDevice = false;
 	$scope.leftPaneToggle = function leftPaneToggle(value) {
-		let right = angular.element("#right-pane");
+		let right = angular.element("#right-pane").length ? angular.element("#right-pane") : null;
 		if (value === undefined) value = dataStore.leftPaneCollapsed;
 		if (value) {
 			dataStore.leftPaneCollapsed = false;
@@ -158,7 +158,7 @@ var mainCtrlExtend = function ($scope, $injector) {
 	});
 	mediaStyles(maxMobileWidth);
 	if (!dataStore.leftPaneCollapsed) $timeout(function () {
-		$scope.leftPaneToggle(dataStore.leftPaneCollapsed === false);
+		$scope.leftPaneToggle(dataStore.leftPaneCollapsed !== true);
 	});
 };
 var changeTheme = function (theme, $rootScope, $injector) {
