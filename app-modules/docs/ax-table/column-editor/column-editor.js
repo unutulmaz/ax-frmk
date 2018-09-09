@@ -65,21 +65,6 @@
 			validateField: ` $validateField(fieldName, dataItem) {
     //clear precedent field error
     this.clearFieldError(dataItem, fieldName);
-    // if your backend provide metadata information about columns - is used for columns validation
-    if (this.columns && this.columns[fieldName]) {
-        var attribs = this.columns[fieldName].attribs;
-        var errorMessage;
-        if ("Required" in attribs && (dataItem[fieldName] === null || dataItem[fieldName] === ""))
-            errorMessage = fieldName + " field is required.";
-        if ("MaxLength" in attribs && dataItem[fieldName] && dataItem[fieldName].length > attribs.MaxLength)
-            errorMessage = fieldName + " field must have a maximum length of '" + attribs.MaxLength + "'.";
-        if ("MinLength" in attribs && dataItem[fieldName] && dataItem[fieldName].length < attribs.MinLength)
-            errorMessage = fieldName + " field must have a minimum length of '" + attribs.MinLength + "'.";
-        if (errorMessage) {
-            this.$ctrl.addFieldError(fieldName, errorMessage, dataItem);
-            return true;
-        }
-    }
     var returnValue = true;
     //invoked custom validateField method
     if (angular.isFunction(this.validateField)) returnValue = this.validateField(dataItem, fieldName);

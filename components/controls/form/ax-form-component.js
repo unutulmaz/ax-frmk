@@ -20,8 +20,7 @@
 		"datasource": "Object which hold form data",
 		"api": "axApi component, alternate can be injected from axTable",
 		"api-controller": "Name for api-controller",
-		"item-id-field": "Name of id field in Db",
-		"metadata-id": "If the backend provide metadata for models this is id for storing metadata in client-side. Usual can be api-controller name, if it's used"
+		"item-id-field": "Name of id field in Db"
 	};
 	controlTemplate.$inject = ["$element", "$attrs"];
 	function controlTemplate($element, $attrs) {

@@ -8,11 +8,6 @@ class axFormController {
 		this.table = null;
 		// console.log("form create scope", scope);
 		var parentScope = scope.$ctrl.$parent;
-		if (this.attributes["metadata-id"]) {
-			var columns = dataStore.metadata[this.attributes["metadata-id"]] ? dataStore.metadata[this.attributes["metadata-id"]].columns : {};
-			this.columns = columns;
-		}
-
 		var params = parentScope.$parent.hasOwnProperty("params") ? parentScope.$parent.params : null;
 		if (!params) params = parentScope.hasOwnProperty("params") ? parentScope.params : null;
 

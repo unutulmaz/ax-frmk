@@ -1369,7 +1369,7 @@ class axTableController {
 			if (angular.isFunction(formCallback)) formCallback(newItem);
 		};
 		if (this.$api) {
-			var apiArgs = {metadata: true};
+			var apiArgs = {};
 			if (this.config.createExtendApiArgs) angular.extend(apiArgs, this.createExtendApiArgs());
 			else if (this.config.createApiArgs) angular.extend(apiArgs, this.createApiArgs());
 			$controller.$api.newAction(apiArgs)
@@ -1782,7 +1782,6 @@ class axTableController {
 		$controller.dataLoaded = false;
 		if ($controller.loadDataPrepare) $controller.loadDataPrepare();
 		var apiArgs = $controller.loadDataApiArgs();
-		apiArgs = angular.extend(apiArgs, {metadata: true});
 		if (removeSpinner) apiArgs.removeSpinner = removeSpinner;
 		$controller.removeAllTrsFocus();
 		if ($controller.config.loadData) return $controller.config.loadData($controller, removeSpinner, callback);
@@ -1794,12 +1793,6 @@ class axTableController {
 				$controller.debug.log("loadData response", $controller.attrs.config, $controller);
 				if (!$controller || $controller.$destroying) return;
 				if (response && response.status) {
-					if ($controller.columns.metadata) ;
-					else if (response.columns) $controller.columns.metadata = response.columns;
-					else {
-						if ($controller.$dataStore.metadata[$api.controller])
-							$controller.columns.metadata = $controller.$dataStore.metadata[$api.controller].columns;
-					}
 
 					if ($controller.attrs.paginate === 'server') $controller.generateServerPagination(response.data, $controller);
 
@@ -2473,7 +2466,7 @@ class axTableController {
 	}
 
 	remoteEditAction(dataItem, callBack) {
-		var apiArgs = {metadata: true};
+		var apiArgs = {};
 		var dataItemId = dataItem && !dataItem.isGroupItem ? dataItem[this.$api.config.idField] : 0;
 		if (this.config.editApiArgs) angular.extend(apiArgs, this.config.editApiArgs());
 		else if (this.config.editExtendApiArgs) angular.extend(apiArgs, this.config.editExtendApiArgs());
@@ -3579,13 +3572,15 @@ class axTableController {
 		}
 		console.log(arguments.calee, params);
 	}
-		hammer(gesture, event) {
+
+	hammer(gesture, event) {
 		//event.preventDefault();
 		// console.log("gesture: ", event.additionalEvent);
 		if (gesture === "panup") this.panEventHandler(1, event);
 		else if (gesture === "pandown") this.panEventHandler(-1, event);
 		// this.$notify.log("gesture: " + gesture + " - " + event.distance);
 	}
+
 	post($element, scope, attrs) {
 		var $controller = this;
 

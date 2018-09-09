@@ -7,8 +7,7 @@
 			"api": "",
 			"api-controller": "",
 			"item-id-field":"",
-			"labels-layout": "left",
-			"metadata-id": ""
+			"labels-layout": "left"
 		};
 		this.fields = [];
 		this.uid = axUtils.Guid();

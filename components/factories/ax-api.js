@@ -5,31 +5,8 @@
 	function factory($http, notify, dataStore, axApiConfig,$location) {
 		// console.log("base? " ,$location.$$absUrl, $location);
 		return function (config) {
-			var metaData = function (id) {
-				return {
-					id: id,
-					columnsExist: function (apiArgs) {
-						if (!apiArgs) return {};
-						if ("metadata" in apiArgs) {
-							if (dataStore.metadata[this.id] &&
-								dataStore.metadata[this.id].columns) apiArgs.metadata = false;
-						}
-						return apiArgs;
-					},
-					getColumns: function () {
-						if (!dataStore.metadata[this.id]) return {};
-						return dataStore.metadata[this.id].columns;
-					},
-					saveColumns: function (columns) {
-						if (!dataStore.metadata[this.id]) dataStore.metadata[this.id] = {};
-						dataStore.metadata[this.id].columns = columns;
-					}
-				};
-			};
-
 			var api = {
 				config: {
-					metadataId: "",
 					defaultLoaderSelector: "#right-pane",
 					notAuthorizedCallback: null,
 					serviceFailedCallback: null,
@@ -57,7 +34,6 @@
 				setConfig: function (config) {
 					angular.extend(this.config, config);
 					if (config.getUrl) this.getUrl = config.getUrl;
-					if (config.metadataId || config.controller) this.metaData = new metaData(config.metadataId || config.controller);
 				},
 				getUrl: function (action, id) {
 					var url = (this.config.webroot ? this.config.webroot + "/" : "")// jshint ignore:line
@@ -83,7 +59,6 @@
 				},
 				editAction: function (id, apiArgs, loaderSelector) {
 					if (id === undefined || id === null) throw 'No Id value provided for $dataConnector edit action';
-					apiArgs = this.metaData ? this.metaData.columnsExist(apiArgs) : apiArgs;
 					return this[this.config.actions.edit.method](this.getUrl('edit', id), apiArgs, loaderSelector);
 				},
 				saveAction: function (item, apiArgs, loaderSelector) {
@@ -97,11 +72,9 @@
 					return (this.isNewRecord(id)) ? this.createAction(args, loaderSelector) : this.updateAction(id, args, loaderSelector);
 				},
 				newAction: function (apiArgs, loaderSelector) {
-					apiArgs = this.metaData ? this.metaData.columnsExist(apiArgs) : apiArgs;
 					return this[this.config.actions.new.method](this.getUrl('new'), apiArgs, loaderSelector);
 				},
 				createAction: function (apiArgs, loaderSelector) {
-					apiArgs = this.metaData ? this.metaData.columnsExist(apiArgs) : apiArgs;
 					return this[this.config.actions.create.method](this.getUrl('create'), apiArgs, loaderSelector);
 				},
 				updateAction: function (id, apiArgs, loaderSelector) {
@@ -152,14 +125,12 @@
 					else return false;
 				},
 				get: function (url, params, loaderSelector, removeSpinner) {
-					if (this.metaData) params = this.metaData.columnsExist(params);
 					var loader = !removeSpinner ? this.getLoader(loaderSelector) : null;
 					if (this.config.httpConfig) params = angular.extend(this.config.httpConfig, params);
 					return $http.get(url, { params: params } || {}).then(function (response) {
 						if (angular.isString(response.data)) throw response.data;
 						response.data.loader = loader;
 						if (response.data.status) {
-							if (params.metadata && response.columns) this.metaData.saveColumns(response.columns);
 							return response.data;
 						} else throw response;
 

@@ -8,7 +8,6 @@ console.warn("ax-api-config API_TYPE:", API_TYPE);
 	function factory(authService) {
 		return function () {
 			var config = {
-				metadataId: "",
 				defaultLoaderSelector: "#right-pane",
 				notAuthorizedCallback: function () {
 					authService.goLogin();

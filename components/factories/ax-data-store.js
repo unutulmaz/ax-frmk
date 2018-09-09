@@ -85,7 +85,6 @@
 					}
 				}
 			},
-			metadata: {},
 			defaultLoaderSelector: '#right-pane',
 			loader: function (selector) {
 				var uid = guidGenerator.create();
