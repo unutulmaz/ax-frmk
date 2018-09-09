@@ -16,7 +16,7 @@ class Account extends BaseController
 		try {
 			$roles = array();
 			$roles[] = array("id" => "guest", "name" => "Guest");
-			$response["extra"] = array("menus" => MenuRolesConfig::getMenuList($roles), "roles" => array("guest"));
+			$response["extra"] = array("menus" => MenuRoles::getMenuList($roles), "roles" => array("guest"));
 			$response["status"] = true;
 		} catch (Exception  $error) {
 			$response["errors"] = $error->getMessage();

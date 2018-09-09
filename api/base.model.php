@@ -1,15 +1,6 @@
 <?php
 include_once "base.controller.php";
-
-class ModelItem
-{
-	public function __construct($item)
-	{
-		foreach ($this as $key => $value) {
-			$this->$key = isset($item->$key) ? $item->$key : null;
-		}
-	}
-}
+include_once "base.model-item.php";
 
 class BaseModel extends BaseController
 {
@@ -270,7 +261,7 @@ class BaseModel extends BaseController
 	}
 
 
-	public function sqlBuildGetAllItems($where = null, $order = null, $limit=null)
+	public function sqlBuildGetAllItems($where = null, $order = null, $limit = null)
 	{
 		$cmd = 'SELECT a.* FROM `' . $this->tableName . '` a ';
 		if (isset($where)) $cmd .= $this->sqlBuildWhere($where);
@@ -282,8 +273,9 @@ class BaseModel extends BaseController
 
 	public function sqlBuildGetItem($where = null, $order = null)
 	{
-		return $this->sqlBuildGetAllItems($where,$order);
+		return $this->sqlBuildGetAllItems($where, $order);
 	}
+
 	public function sqlBuildDeleteAll($where = null)
 	{
 		$cmd = 'DELETE FROM `' . $this->tableName . '` ';
@@ -556,29 +548,4 @@ class BaseModel extends BaseController
 		return !$hasErrors;
 	}
 
-}
-
-function array_column1(array $input, $columnKey, $indexKey = null)
-{
-	$array = array();
-	foreach ($input as $value) {
-		if (!isset($value[$columnKey])) {
-			trigger_error("Key \"$columnKey\" does not exist in array");
-			return false;
-		}
-		if (is_null($indexKey)) {
-			$array[] = $value[$columnKey];
-		} else {
-			if (!isset($value[$indexKey])) {
-				trigger_error("Key \"$indexKey\" does not exist in array");
-				return false;
-			}
-			if (!is_scalar($value[$indexKey])) {
-				trigger_error("Key \"$indexKey\" does not contain scalar value");
-				return false;
-			}
-			$array[$value[$indexKey]] = $value[$columnKey];
-		}
-	}
-	return $array;
 }

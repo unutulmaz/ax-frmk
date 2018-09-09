@@ -2,7 +2,6 @@
 include_once "config.routes.php";
 include_once "config.db.php";
 
-
 class Route
 {
 	public $routes = array();

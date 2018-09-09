@@ -26,3 +26,27 @@ function guidv4()
    $data[8] = chr(ord($data[8]) & 0x3f | 0x80); // set bits 6-7 to 10
    return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
 }
+function array_column1(array $input, $columnKey, $indexKey = null)
+{
+	$array = array();
+	foreach ($input as $value) {
+		if (!isset($value[$columnKey])) {
+			trigger_error("Key \"$columnKey\" does not exist in array");
+			return false;
+		}
+		if (is_null($indexKey)) {
+			$array[] = $value[$columnKey];
+		} else {
+			if (!isset($value[$indexKey])) {
+				trigger_error("Key \"$indexKey\" does not exist in array");
+				return false;
+			}
+			if (!is_scalar($value[$indexKey])) {
+				trigger_error("Key \"$indexKey\" does not contain scalar value");
+				return false;
+			}
+			$array[$value[$indexKey]] = $value[$columnKey];
+		}
+	}
+	return $array;
+}
