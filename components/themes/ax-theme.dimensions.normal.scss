@@ -202,7 +202,6 @@ ax-checkbox.form-control:not(.no-template) {
 .app-header > ax-dropdown-popup,
 .app-header > ax-dropdown-popup > .btn.icon > .caret-holder,
 .scroller-bars-btn {
-  //height: 40px !important;
   width: 34px !important;
   line-height: 32px !important;
 }
@@ -854,7 +853,9 @@ th ax-dropdown-list.form-control:not(.grid-control):not(.editor-control) > butto
 .app-header button {
   line-height: 24px;
 }
-
+.app-header >div {
+  line-height: 36px;
+}
 ax-tab-view {
   top: 34px;
 }

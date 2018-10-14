@@ -74,7 +74,7 @@ var axTableConfig = function () {
 			showCommandsTooltips: true,
 			showPaginationTooltips: false,
 			showDataCellsTooltip: false,
-			owDataHeight: applicationInfo.theme.dimensions.rowDataHeight
+			rowDataHeight: applicationInfo.theme.dimensions.rowDataHeight
 		}
 
 	};

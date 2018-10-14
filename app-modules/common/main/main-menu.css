@@ -3,13 +3,17 @@
 }
 
 #nav-wrapper .icon-has-ul {
-	width: 12px;
+	width: 16px;
 	border: 0px solid lightgray;
+}
+
+i.icon-has-ul {
+	line-height: inherit;
 }
 
 #nav-wrapper > ax-tree-view a {
 	color: #333;
-	width:100%;
+	width: 100%;
 }
 
 #nav-wrapper > ax-tree-view a:hover > div,
@@ -21,11 +25,6 @@
 #nav-wrapper > ax-tree-view a > div {
 	padding: 0 3px;
 	border-left: 2px solid #ffffff;
-	width:100%;
-}
-#nav-wrapper ax-tree-view-node > div {
-	display:inline-flex;
-	width:100%;
 }
 
 #nav-wrapper > ax-tree-view a.active {
@@ -35,7 +34,7 @@
 #nav-wrapper > ax-tree-view > ax-tree-view-node > ul > li > ax-tree-view-node > div {
 	width: 100%;
 	padding-left: 5px;
+	line-height: 26px;
 	background-color: lightgray;
 	border-bottom: 1px solid white;
 }
-
