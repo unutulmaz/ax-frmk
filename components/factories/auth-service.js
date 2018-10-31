@@ -71,9 +71,8 @@
 			authenticate: function authenticate(response) {
 				//console.log("authenticating", $storage);
 				$storage.isAuthenticated = true;
-				if (!response.extra.menus) console.error("Nu exista response.extra.menus in getUserInfo");
-				dataStore.roles = response.data.Roles;
-				dataStore.menus = response.extra.menus;
+				if (!response.menus) console.error("Nu exista response.extra.menus in getUserInfo");
+				dataStore.menus = response.menus;
 				dataStore.currentRole = (dataStore.menus.length === 0) ? {RoleId: 0, RoleName: "No role"} : {RoleId: dataStore.menus[0].RoleId, RoleName: dataStore.menus[0].RoleName};
 				restorePreviousValues(response);
 				$storage.user = {
@@ -98,7 +97,7 @@
 				if (axAuthConfig.logoff) axAuthConfig.logoff(dataStore);
 			},
 			isAuthenticated: function isAuthenticated() {
-				if ($storage.isAuthenticated) {
+				if ($storage.isAuthenticated || axAuthConfig.allowAnonymous) {
 					service.user = $storage.user;
 					return true;
 				} else {
@@ -109,7 +108,8 @@
 				dataStore.loadInProgress = true;
 				dataStore.isDevelopment();
 				let params = $storage.user ? $storage.user.info : null;
-				return $http.post(axAuthConfig.urls.getUserInfo, params)
+				let queryString = window.location.search;
+				return $http.post(axAuthConfig.urls.getUserInfo+queryString, params)
 					.then(function (response) {
 						if (response.data !== null && response.data.data && response.data.data.UserName !== null) {
 							service.authenticate(response.data);
@@ -130,6 +130,7 @@
 								$storage.wrongVersion = false;
 							} else if (goToState) $state.go(goToState);
 						} else {
+							console.error("getUserInfo error", response.data.errors ? response.data.errors : response.data);
 							dataStore.loadInProgress = false;
 							service.goLogin();
 						}

@@ -15,6 +15,7 @@ class axFormErrors extends axElement {
 			tabindex: 0,
 			"ng-if": errorModel + ".length>0"
 		});
+		holderDiv.addAttributes(element.attributes);
 		var div = axElement.createDOMElement("div", {"ng-repeat": "error in " + errorModel});
 		var errorDiv = axElement.createDOMElement("label");
 		errorDiv.innerHTML = "{{error.label? (error.label+':&nbsp;'):'' }}";

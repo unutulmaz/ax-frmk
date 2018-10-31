@@ -392,12 +392,12 @@ class axTableButton extends axElement {
 		if (dataTableTemplate.attributes["edit-row"] === "editor") {
 			let editPopup = createElement("button",
 				{
-					class: "btn icon fa fa-eye",
+					class: "btn icon fa fa-edit",
 					tabindex: -1,
 					ngDisabled: "$ctrl.$$grid.$$editor.opened",
 					"ng-click": "$ctrl.$$grid.$$editor.open()"
 				});
-			if (dataTableTemplate.attributes["show-commands-tooltips"]) editPopup.setAttribute("uib-tooltip", "Show current item panel");
+			if (dataTableTemplate.attributes["show-commands-tooltips"]) editPopup.setAttribute("uib-tooltip", "Show editor for add/change/delete records");
 			container.appendChild(editPopup);
 		}
 		return container;

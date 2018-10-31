@@ -8,6 +8,10 @@ class axTableEditor {
 		this.controller = $controller;
 		let $$editor = this;
 		if ($controller.element.editorDef.length === 0) return;
+		let getMessage = function (category, code) {
+			return $controller.$template.getMessage(category, code);
+		};
+
 		let changePosition = function (position) {
 			let editorDef = $controller.element.initial.find(">ax-grid-editor");
 			let editor = $controller.element.linked.parent().find(">ax-table-editor");
@@ -170,6 +174,84 @@ class axTableEditor {
 
 					},
 					readOnly: true,
+					export: {
+						title: getMessage('toolbar', 'dataExport'),
+						applyText: getMessage("toolbar", "btnRun"),
+						applyingText: getMessage("toolbar", "btnRunning"),
+						formatOptions: ['All', 'Aggregations', 'Data'],
+						formatTooltip: `<div style='width:300px'>
+						<strong>All</strong> - slowest and limited for max 10.000 records<br>
+						<strong>Aggregations</strong> - just groups header and footer<br>
+						<strong>Data</strong> - fastest - data rows only
+					</div>`,
+						browserTab: 'Browser tab',
+						outputOptions: ['Pdf', 'Excel'],
+						changeFormat: function () {
+							//if (this.format !== "Data") this.showHiddenColumns = false;
+							//else this.showHiddenColumns = true;
+						},
+						sendAsEmailChanged: function () {
+							if (this.sendAsEmail) {
+								if (this.outputOptions.includes(this.browserTab)) {
+									let index = this.outputOptions.indexOf(this.browserTab);
+									this.outputOptions.splice(index, 1);
+									if (this.output === this.browserTab) this.output = this.outputOptions[0];
+								}
+							} else {
+								if (!this.outputOptions.includes(this.browserTab)) {
+									this.outputOptions.push(this.browserTab);
+								}
+
+							}
+							//if (this.output !== "Excel" && this.formatOptions.indexOf("Data") === 2) {
+							//	this.formatOptions.splice(2, 1);
+							//	this.format = this.format === "Data" ? this.formatOptions[0] : this.format;
+							//} else if (this.output === "Excel" && this.formatOptions.indexOf("Data") === -1) this.formatOptions.push("Data");
+						},
+						confirm: function () {
+							this.close();
+							let type = this.output;
+							switch (this.output) {
+								case this.browserTab:
+									type = "print";
+									break;
+								case "Excel":
+									type = 'xls';
+									break;
+								case "Pdf":
+									type = 'pdf';
+							}
+							let exportCallback;
+							if (this.sendAsEmail) {
+								exportCallback = function (response) {
+									let existSendEmailCustomFn = $controller.config.exportCfg && $controller.config.exportCfg.item && $controller.config.exportCfg.item.sendEmail;
+									let data = existSendEmailCustomFn ? $controller.config.exportCfg.item.sendEmail($controller, type, response) : {};
+									let dialogConfig = {
+										title: "Send email",
+										showClose: true,
+										height: "485px",
+										width: "770px",
+										plain: false,
+										trapFocus: true,
+										response: response,
+										templateUrl: 'app-modules/common/email/email.html',
+										appendTo: "#right-pane",
+										data: data
+									};
+									$controller.openDialog(dialogConfig);
+								}
+							}
+							$controller.exportCurrentItem(editor.form.$ctrl.datasource, type, this.sendAsEmail, exportCallback);
+						},
+						onOpen: function () {
+							this.sendAsEmailChanged();
+							if (!this.output) this.output = this.outputOptions[0];
+							dropdownsStack.closePopupsFor($controller.element.linked);
+							this.openFinish = true;
+
+						}
+
+					},
 					onInitDone: function () {
 						if (!$controller.config) $controller.config = {};
 						if (!$controller.config.editor) $controller.config.editor = {};
@@ -189,7 +271,7 @@ class axTableEditor {
 						this.canPrint = $controller.config.canPrint || function () {
 							return true;
 						};
-						if ($controller.$$grid.$$editor.opened) $controller.element.linked.parent().find(">ax-table-editor").css("display", "block");
+						if ($controller.$$grid.$$editor && $controller.$$grid.$$editor.opened) $controller.element.linked.parent().find(">ax-table-editor").css("display", "block");
 						this.edit = function () {
 							if (!this.canEdit()) return;
 							this.readOnly = false;
@@ -323,8 +405,13 @@ class axTableEditor {
 				}
 
 			};
-		this.controller.$$grid.$$editor = editor;
-		editor.$destroy = function () {
+
+		this
+			.controller
+			.$$grid
+			.$$editor = editor;
+		editor
+			.$destroy = function () {
 			$$editor.controller = null;
 			$$editor.template = null;
 			editor.table.$$grid.$$editor = null;
@@ -337,7 +424,16 @@ class axTableEditor {
 			editor.__proto__ = null; //jshint ignore:line
 			this.__proto__ = null; //jshint ignore:line
 		};
-		if (this.controller.$$grid.getEditorConfig) editor.config = this.controller.$$grid.getEditorConfig();
+
+		if (
+
+			this
+				.controller
+				.$$grid
+				.getEditorConfig
+		)
+			editor
+				.config = this.controller.$$grid.getEditorConfig();
 	}//end constructor
 
 	static createPopupForm(template) {
@@ -346,7 +442,7 @@ class axTableEditor {
 			console.error("For edit-row=editor you need a ax-grid-editor with popup attributes");
 			return;
 		}
-		if (def.attr("template-url")) return template.element.editorHasTemplate = true; //jshint ignore:line 
+		if (def.attr("template-url")) return template.element.editorHasTemplate = true; //jshint ignore:line
 		let editorTemplate = template.element.linked.parent().find(">ax-table-editor");
 		let editorContent = createElement("div", {class: "editor-content"});
 		if (template.$dataStore.isMobileDevice) def.setAttribute("position", "over");
@@ -363,37 +459,14 @@ class axTableEditor {
 		if (def.getAttribute("initial-state") === "visible" && def.getAttribute("position") !== "over") editorTemplate.css("display", "block");
 		let formTitle = createElement("div", {class: "form-title", ngIf: "grid.$$editor.opened"});
 		createElement("div", {ngBind: def.attr("editor-title") || "'Current DataItem'"}, "", formTitle);
-		if (!template.$dataStore.isMobileDevice) {
-			let position = createElement("div", {
-				class: "editor-position",
-				ngIf: "grid.$$editor.form.canChangeEditorPosition()"
-			});
-			createElement("button", {
-				class: "btn icon fa fa-long-arrow-left",
-				uibTooltip: "Change editor position to Left",
-				ngDisabled: "grid.$$editor.position==='left'",
-				ngClick: "grid.$$editor.changePosition('left')"
-			}, "", position);
-			createElement("button", {
-				class: "btn icon fa fa-long-arrow-up",
-				uibTooltip: "Change editor position to Over",
-				ngDisabled: "grid.$$editor.position==='over'",
-				ngClick: "grid.$$editor.changePosition('over')"
-			}, "", position);
-			createElement("button", {
-				class: "btn icon fa fa-long-arrow-right",
-				uibTooltip: "Change editor position to Right",
-				ngDisabled: "grid.$$editor.position==='right'",
-				ngClick: "grid.$$editor.changePosition('right')"
-			}, "", position);
-			formTitle.appendChild(position);
-		}
 		createElement("div", {
 			class: "ngdialog-close",
 			ngShow: "grid.$$editor.form.readOnly",
 			ngClick: "grid.$$editor.close($event)"
 		}, "", formTitle);
 		editorContent.appendChild(formTitle);
+		// if (!template.$dataStore.isMobileDevice) this.createPositionBtns(formTitle);
+
 		let form = createElement("ax-form", {
 			config: "grid.$$editor.form",
 			trapFocus: true,
@@ -418,12 +491,49 @@ class axTableEditor {
 		editorContent.appendChild(form);
 		let toolbar = createElement("div", {
 			role: "toolbar",
-			axScroller1: "",
 			ngIf: "grid.$$editor.opened ",
 			class: "editor-toolbar",
 			style: "position:absolute;bottom:0px;left:0;right:0;background-color:transparent;"
 		});
 		if (def.getAttribute("toolbar-ax-scroller") === "true") toolbar.setAttribute("ax-scroller", "");
+		axTableEditor.createEditorBtns(toolbar, template);
+		axTableEditor.creatNavigatorBtns(toolbar);
+		editorContent.appendChild(toolbar);
+
+		template.editorTemplate = editorTemplate;
+		template.editorContent = $(editorContent);
+		template.editorForm = template.editorContent.find(">ax-form");
+		return editorContent;
+	}
+
+	static createPositionBtns(formTitle) {
+		let position = createElement("div", {
+			class: "editor-position",
+			ngIf: "grid.$$editor.form.canChangeEditorPosition()"
+		});
+		createElement("button", {
+			class: "btn icon fa fa-long-arrow-left",
+			uibTooltip: "Change editor position to Left",
+			ngDisabled: "grid.$$editor.position==='left'",
+			ngClick: "grid.$$editor.changePosition('left')"
+		}, "", position);
+		createElement("button", {
+			class: "btn icon fa fa-long-arrow-up",
+			uibTooltip: "Change editor position to Over",
+			ngDisabled: "grid.$$editor.position==='over'",
+			ngClick: "grid.$$editor.changePosition('over')"
+		}, "", position);
+		createElement("button", {
+			class: "btn icon fa fa-long-arrow-right",
+			uibTooltip: "Change editor position to Right",
+			ngDisabled: "grid.$$editor.position==='right'",
+			ngClick: "grid.$$editor.changePosition('right')"
+		}, "", position);
+		formTitle.appendChild(position);
+	}
+
+
+	static createEditorBtns(toolbar, template) {
 		createElement("span", {
 			ngShow: "grid.$$editor.form.canEdit()",
 			ngDisabled: "!grid.$$editor.form.readOnly || !grid.$$editor.form.dataItem",
@@ -473,6 +583,11 @@ class axTableEditor {
 			toolbar.appendChild(button);
 
 		}
+		axTableEditor.createDeleteBtn(toolbar);
+		axTableEditor.createPrintBtn(toolbar);
+	}
+
+	static createDeleteBtn(toolbar) {
 		let deletePopup = createElement("div", {
 			style: "padding:10px;width:250px"
 		});
@@ -498,32 +613,24 @@ class axTableEditor {
 			popupRelativeLeft: "-115px",
 			style: "margin-right:0;vertical-align:middle"
 		}, deletePopup, toolbar);
+	}
 
-		let printPopup = createElement("div", {style: "padding:0px;"});
-		createElement("span", {
-			ngClick: "launcher.$parent.grid.$$editor.form.print('print');launcher.close()",
-			style: "",
-			uibTooltip: "Export in new browser tab",
-			class: "btn btn-primary btn-edit-popup"
-		}, "<i class='fa fa-html5'></i>", printPopup);
-		createElement("span", {
-			ngClick: "launcher.$parent.grid.$$editor.form.print('xls');launcher.close()",
-			style: "margin-left:3px;",
-			uibTooltip: "Export as excel file",
-			class: "btn btn-primary btn-edit-popup"
-		}, "<i class='fa fa-file-excel-o'></i>", printPopup);
-
+	static createPrintBtn(toolbar) {
 		createElement("ax-dropdown-popup", {
+			ctrl: "grid.$$editor.form.export",
 			ngShow: "grid.$$editor.form.canPrint()",
 			ngDisabled: "!grid.$$editor.form.readOnly || !grid.$$editor.form.dataItem",
 			btnClass: "btn btn-primary",
-			btnHtml: "<i class=\"fa fa-print\" ></i>",
+			btnHtml: "<i class=\"fa fa fa-upload\" ></i>",
 			popupDirection: "Up",
 			caretClass: "fa ",
-			closeOnMouseleave1: true,
+			closeOnMouseleave: true,
+			templateUrl: "'components/controls/table/templates/ax-table-export-item.html'",
 			style: "margin-right:0;vertical-align:middle"
-		}, printPopup, toolbar);
+		}, '', toolbar);
+	}
 
+	static creatNavigatorBtns(toolbar) {
 		let navigator = createElement("div", {
 			class: "inline editor",
 			toolbar: "right",
@@ -558,12 +665,6 @@ class axTableEditor {
 			uibTooltip: "Last record, Shortcut: Ctrl+End"
 		}, "", navigator);
 		toolbar.appendChild(navigator);
-		editorContent.appendChild(toolbar);
-
-		template.editorTemplate = editorTemplate;
-		template.editorContent = $(editorContent);
-		template.editorForm = template.editorContent.find(">ax-form");
-		return editorContent;
 	}
 
 	static createControl(template, column) {
@@ -580,7 +681,7 @@ class axTableEditor {
 			if (axEditor.hasAttribute("editor-column-index")) addToColumn = axEditor.getAttribute("editor-column-index");
 			axEditor.setAttribute("type", "custom");
 			let input = createElement("ax-form-input", axEditor[0].attributes, axEditor.html());
-			input.addStyle("width", (axEditor.getAttribute("width") || axEditor[0].style.width || (column.width + "px")) + " !important");
+			input.addStyle("width", "100% !important");
 			input.removeAttribute("hidden-column");
 			control.appendChild(input);
 		} else if (axEdit.length > 0) {
@@ -591,10 +692,11 @@ class axTableEditor {
 				type: "custom",
 				bindTo: axEdit.getAttribute("bind-to") || column.bindTo,
 				ngDisabled: true,
-				style: "width:" + width + " !important;"
+				style: "width:100% !important;"
 			});
 			let html = column.templates.td.editHTML.split("$parent.$parent.dataItem").join("dataItem").split("$ctrlxx.").join("$ctrl.table.").replaceAll("\\bdataItem\\b", "$ctrl.datasource");
 			let inputEl = angular.element(html);
+			inputEl.width(width);
 			if (inputEl.hasAttribute("ng-model") || inputEl.hasAttribute("bind-to")) inputEl.setAttribute("ng-readonly", "$ctrl.readOnly");
 			else $(inputEl).find("[ng-model], [bind-to]").each(function (i, element) {
 				if (element.hasAttribute("ctrl") && element.getAttribute("ctrl").includes(".$dropdowns.fieldEdit")) return;

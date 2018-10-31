@@ -46,6 +46,7 @@ class axElement {
 		}
 		return newElement;
 	}
+
 	static getChildrenHtml(oldElement) {
 		let html = "";
 		for (let i = 0; i < oldElement.childNodes.length; i++) {
@@ -188,7 +189,7 @@ class axElement {
 					}
 				}
 			else for (let i = 0; i < attributes.length; i++) {
-				if (!attributes[i].nodeName);
+				if (!attributes[i].nodeName) ;
 				element.setAttribute(attributes[i].nodeName, attributes[i].nodeValue);
 			}
 		};
@@ -256,6 +257,7 @@ class axElement {
 	setSourceAttribute(attribute, value) {
 		return this.source.setAttribute(attribute, value);
 	}
+
 	addCssText(cssText) {
 		var cssList = cssText.split(";");
 		for (let i = 0; i < cssList.length; i++) {
@@ -263,6 +265,7 @@ class axElement {
 			this.source.addStyle(cssList[i].split(":")[0], cssList[i].split(":")[1]);
 		}
 	}
+
 	addStyle(attribute, value) {
 		var cssVals = this.source.style.cssText.split(";");
 		var newStyle = "";
@@ -291,7 +294,7 @@ class axElement {
 	 * @param scope
 	 */
 	extractAttributesValues(element, scope, dontRemoveAttributes) {
-		if (element.tagName !== 'AX-TABLE') this.source = element ;
+		if (element.tagName !== 'AX-TABLE') this.source = element;
 		if (scope) this.scope = scope;
 		var clone = angular.copy(element);
 		let attributes1 = this.attributes;
@@ -429,9 +432,11 @@ jQuery.fn.extend({
 			let selfWidth = parseInt(this.css("width")) || totalWidth;
 			if (absolute) {
 				if (origin === "left") {
-					self.css({ "left": -selfWidth + "px", "visibility": "", "display": "block" });
-					if (this[0].style.width !== "100%") {self.css("right", "initial");}
-					this.animate({ left: 0 }, {
+					self.css({"left": -selfWidth + "px", "visibility": "", "display": "block"});
+					if (this[0].style.width !== "100%") {
+						self.css("right", "initial");
+					}
+					this.animate({left: 0}, {
 						duration: durationInMs,
 						progress: function () {
 							let left = parseInt(self.css("left")) + selfWidth;
@@ -442,8 +447,8 @@ jQuery.fn.extend({
 						}
 					});
 				} else if (origin === "right") {
-					self.css({ "left": "initial", "right": -selfWidth, "visibility": "", "display": "block" });
-					this.animate({ right: 0 }, {
+					self.css({"left": "initial", "right": -selfWidth, "visibility": "", "display": "block"});
+					this.animate({right: 0}, {
 						duration: durationInMs,
 						progress: function () {
 							let right = parseInt(self.css("right"));
@@ -455,11 +460,11 @@ jQuery.fn.extend({
 					});
 				}
 			} else {
-				this.css({ "width": 0 });
-				this.animate({ width: selfWidth }, {
+				this.css({"width": 0});
+				this.animate({width: selfWidth}, {
 					duration: durationInMs,
 					start: function () {
-						self.css({ "visibility": "", "display": "block" });
+						self.css({"visibility": "", "display": "block"});
 					},
 					progress: function () {
 						let width = self.width();
@@ -485,7 +490,7 @@ jQuery.fn.extend({
 			if (origin === "right") {
 				let totalWidth = tandemElement.parent().width();
 				tandemElement[0].style.left = 0;
-				this.animate({ left: totalWidth }, {
+				this.animate({left: totalWidth}, {
 					duration: durationInMs + "ms",
 					done: function () {
 						self[0].style.display = "none";
@@ -498,7 +503,7 @@ jQuery.fn.extend({
 				});
 			} else if (origin === "left") {
 				let width = self.width();
-				this.animate({ left: - width }, {
+				this.animate({left: -width}, {
 					duration: durationInMs + "ms",
 					done: function () {
 						self[0].style.display = "none";
@@ -598,7 +603,7 @@ jQuery.fn.extend({
 				}
 			}
 		else for (let i = 0; i < attributes.length; i++) {
-			if (!attributes[i].nodeName);
+			if (!attributes[i].nodeName) ;
 			element.setAttribute(attributes[i].nodeName, attributes[i].nodeValue);
 		}
 	}
@@ -611,46 +616,52 @@ class axDocument {
 		this.exportType = type;
 		this.config = config;
 		this.createHtml();
+		if (this.config.find("ax-export-style").length > 0) this.addStyle(this.config.find("ax-export-style").html());
+		if (this.config.find("ax-export-style-" + this.exportType).length > 0) this.addStyle(this.config.find("ax-export-style-" + this.exportType).html());
+		if (type === 'pdf') return;
 		this.createHead();
 		this.body = createElement("body");
 	}
+
 	createHtml() {
 		let attrs = this.exportType === "xls" ? {
 			"xmlns:o": "urn:schemas-microsoft-com:office:office",
 			"xmlns:x": "urn:schemas-microsoft-com:office:excel",
 			"xmlns": "http://www.w3.org/TR/REC-html40"
-		} : { lang: "end" };
+		} : {lang: "en"};
 		this.html = createElement("html", attrs);
-		if (this.config.find("ax-export-style").length > 0) this.addStyle(this.config.find("ax-export-style").html());
-		if (this.config.find("ax-export-style-" + this.exportType).length > 0) this.addStyle(this.config.find("ax-export-style-" + this.exportType).html());
 	}
+
 	createHead() {
 		this.head = createElement("head");
 		if (this.exportType === "xls")
 			this.head.innerHTML =
-				`	<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+				`	<meta http-equiv=Content-Type content="text/html; charset=UTF-8">
 	<meta name="ProgId" content="Excel.Sheet">
 	<meta name="Generator" content="Microsoft Excel 11">`;
-
 		if (this.config.find("ax-export-links").length > 0) this.addLinks(this.config.find("ax-export-links")[0].children);
 		if (this.config.find("ax-export-scripts").length > 0) this.addScripts(this.config.find("ax-export-scripts")[0].children);
 	}
+
 	addLinks(items) {
 		if (!items) return;
 		items.each(function (item) {
 			createElement("link", item.attributes, "", this.head);
 		}, this);
 	}
+
 	addScripts(items) {
 		if (!items) return;
 		items.each(function (item) {
 			createElement("script", item.attributes, "", this.head);
 		}, this);
 	}
+
 	addStyle(style) {
 		if (!style) return;
-		createElement("style", {}, style.replaceAll("&gt;", ">"), this.html);
+		createElement("style", {type: "text/css"}, style.replaceAll("&gt;", ">"), this.html);
 	}
+
 	getHtml() {
 		let html = this.docType;
 		this.html.appendChild(this.head);

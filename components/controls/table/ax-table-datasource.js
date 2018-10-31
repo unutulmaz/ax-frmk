@@ -106,7 +106,7 @@ class axTableDatasource {
 				//dataSource.table.timeStamp("end", 'calculations update');
 			}
 		};
-		this.guid = this.$dataStore.nextUid;
+		this.guid = this.$dataStore.nextUid.bind(this.$dataStore);
 		if (config) this.setConfig(config);
 	}
 

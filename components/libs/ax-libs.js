@@ -184,6 +184,7 @@ if (typeof navigator !== 'undefined' && navigator) {
 
 		return function (blob, name) {
 			var url = URL.createObjectURL(blob);
+			console.log("url", url);
 
 			// Test for download link support
 			var a = document.createElement("a");

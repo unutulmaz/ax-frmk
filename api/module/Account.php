@@ -15,8 +15,9 @@ class Account extends BaseController
 		$response["data"] = $data;
 		try {
 			$roles = array();
-			$roles[] = array("id" => "guest", "name" => "Guest");
-			$response["extra"] = array("menus" => MenuRoles::getMenuList($roles), "roles" => array("guest"));
+			if (isset($_GET['docs'])) $roles[] = array("id" => "docs", "name" => "docs");
+			else $roles[] = array("id" => "guest", "name" => "Guest");
+			$response["menus"] = MenuRoles::getMenuList($roles);
 			$response["status"] = true;
 		} catch (Exception  $error) {
 			$response["errors"] = $error->getMessage();

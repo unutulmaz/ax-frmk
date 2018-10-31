@@ -205,7 +205,8 @@ var focusableElements = '[has-input]:not([disabled]):not([readonly]):not(ax-drop
 var convertDataTypes = {
 	date: function (itemValue) {
 		var value;
-		if (typeof itemValue === "string") {
+		if (itemValue === null || itemValue === undefined) return undefined;
+		else if (typeof itemValue === "string") {
 			value = this.inputFormat ? moment(itemValue, this.inputFormat, true) : moment(itemValue);
 			if (value && value.isValid && value.isValid()) value = value.toDate();
 			else console.error("date convert error for", itemValue, this.inputFormat, value._f);
@@ -229,8 +230,11 @@ var convertDataTypes = {
 		else return parseInt(itemValue);
 	},
 	float: function (itemValue) {
-		if (itemValue === "" || itemValue === null || itemValue === undefined) return null;
-		else return parseFloat(itemValue);
+		let result;
+		if (itemValue === "" || itemValue === null || itemValue === undefined) result = null;
+		else result = parseFloat(itemValue);
+		// console.log("convert ", itemValue, "to", result);
+		return result;
 	}
 };
 convertDataTypes["date-range"] = convertDataTypes.date;

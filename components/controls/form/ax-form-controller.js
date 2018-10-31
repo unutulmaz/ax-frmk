@@ -6,6 +6,10 @@ class axFormController {
 		 *@type {axTableController}
 		 * */
 		this.table = null;
+		let config = new $axTableConfig();
+		this.texts = config.texts;
+		this.texts.language = config.language;
+
 		// console.log("form create scope", scope);
 		var parentScope = scope.$ctrl.$parent;
 		var params = parentScope.$parent.hasOwnProperty("params") ? parentScope.$parent.params : null;
@@ -16,8 +20,8 @@ class axFormController {
 		if (params) {
 			angular.extend(this, params);
 			if (params.dataItem) {
-				this.datasource = angular.copy(params.dataItem);
-				this.initialValues = angular.copy(params.dataItem);
+				this.datasource = this.config.dataAdapter? this.config.dataAdapter.parseItem(angular.copy(params.dataItem)): angular.copy(params.dataItem);
+				this.initialValues = angular.copy(this.datasource);
 				delete this.dataItem;
 			}
 			if (params.table && params.table.columns.metadata)
@@ -63,13 +67,12 @@ class axFormController {
 	 * @param {boolean} closeDialog true - for closing popup if form is loaded into a popup
 	 */
 	save(closeDialog, successCallback) {
-		if (this.config.save) return this.config.save(closeDialog, successCallback);
 		var dataItem = this.datasource;
 		var uid = dataItem.$$uid;
 		var apiArgs = {};
 		this.clearAllErrors(dataItem);
 
-		if (!this.$validateForm()) return false;
+		if (!this.validateForm()) return false;
 		let savedCallback = function (dataItem) {
 			this.dataTableUpdate(dataItem, dataItem.$$uid ? 0 : 1);
 			if (successCallback) successCallback(response);
@@ -84,25 +87,28 @@ class axFormController {
 		var formController = this;
 		apiArgs.$$permitted_params = this.permitted_params || [];
 		if (this.table) apiArgs.children = this.table.childrenGetDatasources();
+		if (angular.isFunction(this.config.saveApiArgs)) apiArgs = angular.extend(apiArgs, this.config.saveApiArgs(dataItem));
 		if (angular.isFunction(this.config.saveExtendApiArgs)) apiArgs = angular.extend(apiArgs, this.config.saveExtendApiArgs(dataItem));
 		var isNewRecord = this.$api.isNewRecord(dataItem);
-		this.$api.saveAction(dataItem, apiArgs)
-			.then(function (response) {
+		let saveThen = function (response) {
 				if (response && response.status) {
-					formController.datasource = response.data;
-					formController.datasource.$$uid = uid;
-					savedCallback.call(formController, formController.datasource);
+					this.datasource = this.config.dataAdapter? this.config.dataAdapter.parseItem(response.data): response.data;
+					this.datasource.$$uid = uid;
+					savedCallback.call(this, this.datasource);
 				} else if (response && response.errors) {
-					formController.extractErrors(response.errors, formController.datasource);
+					this.extractErrors(response.errors, this.datasource);
 				} else if (response && response.message) {
-					formController.$notify.error(response.message);
+					this.$notify.error(response.message);
 				}
-				if (formController.table) formController.table.hasChanges = true;
+				if (this.table) this.table.hasChanges = true;
 				if (response.loader) response.loader.remove();
-			});
+			};
+		if (this.config.save) return this.config.save(dataItem, apiArgs, saveThen);
+		else return this.$api.saveAction(dataItem, apiArgs)
+			.then(saveThen.bind(this));
 	}
 
-	$validateForm() {
+	validateForm() {
 
 		if (!this.validateEachField(this.datasource)) {
 			let msg = this.getMessage("common", "saveOperationNotFinished");
@@ -119,17 +125,23 @@ class axFormController {
 		return !errorExist;
 	}
 
+	getMessage(category, id) {
+		if (!angular.isDefined(this.texts[category])) console.error("Not defined messages for category: " + category);
+		else if (!angular.isDefined(this.texts[category][id])) console.error("Not defined message for category: " + category + " and id: " + id);
+		else if (!angular.isDefined(this.texts[category][id][this.texts.language])) console.error("Not defined message for category: " + category + " and id: " + id);
+		return this.texts[category][id][this.texts.language];
+	}
 
-	validateEachField(dataItem) {
+	validateEachField(datasource) {
 		var hasError = false;
 		for (var fieldName in this.fieldsWithErrorMsg) {
 			if (fieldName.startsWith("$")) continue;
-			if (!this.$validateField(fieldName, dataItem)) hasError = true;
+			if (!this.validateField(fieldName, datasource)) hasError = true;
 		}
 		return !hasError;
 	}
 
-	$validateField(fieldName, dataItem) {
+	validateField(fieldName, datasource) {
 		if (this.readOnly) return false;
 		this.clearFieldError(fieldName);
 		let error = this.currentFocusObject ? this.currentFocusObject.closest("[role=input-holder]").find("[error-for]") : [];
@@ -138,26 +150,26 @@ class axFormController {
 				error.trigger("mouseleave");
 			});
 		}
-		dataItem = dataItem || this.datasource;
+		datasource = datasource || this.datasource;
 		if (this.columns && this.columns[fieldName]) {
 			var attribs = this.columns[fieldName].attribs || [];
-			if ("Required" in attribs && (dataItem[fieldName] === null || dataItem[fieldName] === "" || (angular.isArray(dataItem[fieldName]) && dataItem[fieldName].length > 0))
+			if ("Required" in attribs && (datasource[fieldName] === null || datasource[fieldName] === "" || (angular.isArray(datasource[fieldName]) && datasource[fieldName].length > 0))
 			) this.addFieldError(fieldName, " The " + fieldName + " field is required.");
-			if ("MaxLength" in attribs && dataItem[fieldName] && dataItem[fieldName].length > attribs.MaxLength)
+			if ("MaxLength" in attribs && datasource[fieldName] && datasource[fieldName].length > attribs.MaxLength)
 				this.addFieldError(fieldName,
 					" The " + fieldName + " field must have a maximum length of '" + attribs.MaxLength + "'.");
-			if ("MinLength" in attribs && dataItem[fieldName] && dataItem[fieldName].length < attribs.MinLength)
+			if ("MinLength" in attribs && datasource[fieldName] && datasource[fieldName].length < attribs.MinLength)
 				this.addFieldError(fieldName,
 					" The " + fieldName + " field must have a minimum length of '" + attribs.MinLength + "'.");
 		}
 		if (!this.config) return true;
 		var returnValue = true;
-		if (angular.isFunction(this.config.validateField)) returnValue = this.config.validateField(fieldName, dataItem);
-		if (this.config.dataAdapter && returnValue) this.config.dataAdapter.parseItem(dataItem);
+		if (angular.isFunction(this.config.validateField)) returnValue = this.config.validateField(fieldName, datasource);
+		if (this.config.dataAdapter && returnValue) this.config.dataAdapter.parseItem(datasource);
 		return returnValue;
 	}
 
-	getErrorFor(dataItem, fieldName) {
+	getErrorFor(datasource, fieldName) {
 		var errors = this.errors;
 		var msg = "";
 		if (!errors) return msg;
@@ -174,9 +186,9 @@ class axFormController {
 		}
 	}
 
-	dataTableUpdate(dataItem, op) {
+	dataTableUpdate(datasource, op) {
 		if (!this.table) return;
-		this.table.datasourceUpdate(dataItem, op);
+		this.table.datasourceUpdate(datasource, op);
 	}
 
 	undo() {
@@ -231,7 +243,7 @@ class axFormController {
 		});
 	}
 
-	objectHasFocus(event, dataItem, fieldName) {
+	objectHasFocus(event, datasource, fieldName) {
 		if (!event) return;
 		let currentTd = angular.element(event.target).closest("td");
 		this.currentField = fieldName;

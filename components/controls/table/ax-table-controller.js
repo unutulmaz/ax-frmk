@@ -3,6 +3,10 @@ class axTableController {
 	 * @param {axTableController} $controller
 	 */
 	constructor($controller) {
+		/**
+		 *
+		 * @type {axApi}
+		 */
 		this.$api = null;
 		this.editFormTemplate = "";
 		this.booleanValues = [{value: true, text: "True"}, {value: false, text: "False"}, {value: null, text: ""}];
@@ -1202,6 +1206,7 @@ class axTableController {
 		var columnIndex, tds;
 		var canEdit = !this.rowIsDisabled({dataItem: dataItem});
 		var ctrlDown = event.ctrlKey || event.metKey;
+		// console.log("objectCelKeyDown", event.keyCode );
 		if (event.shiftKey && (event.keyCode === keyCodes.Tab || event.keyCode === keyCodes.Return) || event.keyCode === keyCodes.LeftArrow1) {
 			event.preventDefault();
 			event.stopPropagation();
@@ -1231,7 +1236,7 @@ class axTableController {
 			if (this.$paginator && !this.inlineEditing) {
 				event.preventDefault();
 				event.stopPropagation();
-				if (this.canEdit && !this.$validateField(this.currentField, this.currentItem)) return false;
+				if (this.canEdit && !this.validateField(this.currentField, this.currentItem)) return false;
 
 				this.$paginator.goToLastPage();
 			}
@@ -1240,7 +1245,7 @@ class axTableController {
 			if (this.$paginator && !this.inlineEditing) {
 				event.preventDefault();
 				event.stopPropagation();
-				if (this.canEdit && !this.$validateField(this.currentField, this.currentItem)) return false;
+				if (this.canEdit && !this.validateField(this.currentField, this.currentItem)) return false;
 				this.$paginator.goToFirstPage();
 			}
 			return true;
@@ -1248,7 +1253,7 @@ class axTableController {
 			if (this.$paginator && !this.inlineEditing) {
 				event.preventDefault();
 				event.stopPropagation();
-				if (this.canEdit && !this.$validateField(this.currentField, this.currentItem)) return false;
+				if (this.canEdit && !this.validateField(this.currentField, this.currentItem)) return false;
 
 				this.$paginator.goToNextPage();
 			}
@@ -1257,11 +1262,11 @@ class axTableController {
 			if (this.$paginator && !this.inlineEditing) {
 				event.preventDefault();
 				event.stopPropagation();
-				if (this.canEdit && !this.$validateField(this.currentField, this.currentItem)) return false;
+				if (this.canEdit && !this.validateField(this.currentField, this.currentItem)) return false;
 				this.$paginator.goToPreviousPage();
 			}
 			return true;
-		} else if (this.attrs.selectableRows && (event.keyCode === keyCodes.Return || event.keyCode === keyCodes.Spacebar)) {
+		} else if (this.attrs.selectableRows && !this.canEdit && !this.inlineEditing && (event.keyCode === keyCodes.Return || event.keyCode === keyCodes.Spacebar)) {
 			if (!dataItem || !dataItem.isGroupItem) {
 				event.preventDefault();
 				event.stopPropagation();
@@ -1271,8 +1276,7 @@ class axTableController {
 		} else if (event.keyCode === keyCodes.UpArrow && !this.inlineEditing) {
 			event.preventDefault();
 			event.stopPropagation();
-			if (this.canEdit && !this.$validateField(this.currentField, this.currentItem)) return false;
-
+			if (this.canEdit && !this.validateField(this.currentField, this.currentItem)) return false;
 			let self = this;
 			let moveTo = function () {
 				tds = angular.element(event.target).closest("td");
@@ -1297,7 +1301,7 @@ class axTableController {
 			let self = this;
 			tds = angular.element(event.target).closest("td");
 			//console.log("key down DownArray", tds);
-			if (this.canEdit && !this.$validateField(this.currentField, this.currentItem)) return false;
+			if (this.canEdit && !this.validateField(this.currentField, this.currentItem)) return false;
 			if (self.currentItem && self.currentItem.isGroupItem) columnIndex = self.currentColumnIndex;
 			else if (tds.length > 0) columnIndex = tds[0].getAttribute("column-index");
 			else columnIndex = 0;
@@ -1370,13 +1374,13 @@ class axTableController {
 		};
 		if (this.$api) {
 			var apiArgs = {};
-			if (this.config.createExtendApiArgs) angular.extend(apiArgs, this.createExtendApiArgs());
-			else if (this.config.createApiArgs) angular.extend(apiArgs, this.createApiArgs());
+			if (this.config.createApiArgs) angular.extend(apiArgs, this.config.createApiArgs());
 			$controller.$api.newAction(apiArgs)
 				.then(function (response) {
 					if (response.data) createFn(response.data);
 					if (response && response.loader) response.loader.remove();
 					if (!response || !response.status) console.error("Api error:", response);
+					console.log("response", response);
 
 				});
 		} else {
@@ -1396,7 +1400,7 @@ class axTableController {
 				function (response) {
 					if (!response) return;
 					if (response.data)
-						$controller.openDialog($controller.$template.getMessage("common", "view"), true, response.data, $controller.editFormTemplate, $controller, null, {readOnly: true});
+						$controller.openFormDialog($controller.$template.getMessage("common", "view"), true, response.data, $controller.editFormTemplate, $controller, null, {readOnly: true});
 					response.loader.remove();
 				});
 		else $controller.editRow($controller.$template.getMessage("common", "view"), dataItem, false, true);
@@ -1440,16 +1444,15 @@ class axTableController {
 		if (!this.canDelete(dataItem)) return;
 		var deleteFromServer = function () {
 			if ($controller.$api) {
-				var apiArgs = {item: dataItem};
-				if (angular.isFunction($controller.config.deleteExtendApiArgs)) apiArgs = $controller.config.deleteExtendApiArgs(apiArgs);
-				else if (angular.isFunction($controller.config.deleteApiArgs)) apiArgs = $controller.config.deleteApiArgs(apiArgs);
+				var apiArgs = {};
+				if (angular.isFunction($controller.config.deleteApiArgs)) apiArgs = angular.extend(apiArgs, $controller.config.deleteApiArgs());
 				$controller.$api.deleteAction(dataItem[$controller.$api.config.idField], apiArgs)
 					.then(function (response) {
 						if (response && response.status) {
 							$controller.dataItemRemove(dataItem, true);
 							//$controller.$notify.success($controller.$template.getMessage("common", "deleteDone!"));
 						}
-						if ($controller.config.deleteCallback) $controller.config.deleteCallback(response);
+						if ($controller.config.deleteCallback) $controller.config.deleteCallback(dataItem);
 						if (callback) callback(response);
 						if (response && response.loader) response.loader.remove();
 					});
@@ -1579,7 +1582,7 @@ class axTableController {
 				}
 
 
-				if (editField && this.attrs.editRow === "inline-cell" && !$controller.$validateField(editField, dataItem, true)) {
+				if (editField && this.attrs.editRow === "inline-cell" && !$controller.validateField(editField, dataItem, true)) {
 					this.setCurrentTrErrors(this.currentTr, dataItem);
 					$controller.dontChangeFocus = false;
 					return false;
@@ -1643,37 +1646,36 @@ class axTableController {
 		//execute save api method
 		var apiArgs = {children: this.childrenGetDatasources()};
 		//this.debug.log(apiArgs);
-		if (angular.isFunction($controller.config.saveExtendApiArgs)) apiArgs = angular.extend(apiArgs, $controller.config.saveExtendApiArgs(dataItem));
-		else if (angular.isFunction($controller.config.saveApiArgs)) apiArgs = angular.extend(apiArgs, $controller.config.saveApiArgs(dataItem));
+		if (angular.isFunction($controller.config.saveApiArgs)) apiArgs = angular.extend(apiArgs, $controller.config.saveApiArgs(dataItem));
 		var loaderSelector = $controller.attrs.editRow === "inline-cell" ? 'no' : this.getDomElement();
 		// var isNewRecord = this.$api.isNewRecord(dataItem) && !$controller.attrs.editRow.startsWith("inline");
 		var uid = dataItem.$$uid;
-		this.$api.saveAction(dataItem, apiArgs, "no")
-			.then(function (response) {
-				if (response && response.status) {
-					response.data.$$uid = uid;
-					angular.extend(dataItem, response.data);
-					savedCallback(dataItem, currentTr, response);
-					//if (["editor"].includes($controller.attrs.editRow))
-					//$controller.$notify.success($controller.$template.getMessage("common", "saveSuccessful"));
-					if (response && response.loader) response.loader.remove();
-					return;
-				} else if (response && response.errors) {
-					if (response.message) response.errors[""] = [response.message];
-					$controller.extractErrors(response.errors, dataItem);
-					$controller.showGlobalErrorMessages(dataItem);
-					$controller.currentTrRemoveSaving(dataItem, false, currentTr);
-					if ($controller.attrs.editRow === "inline")
-						$controller.$timeout(function () {
-							$controller.focusToFirstError();
-						}, 300);
-				} else $controller.currentTrRemoveSaving(dataItem, false, currentTr);
-
-				if (angular.isFunction(saveCallback)) saveCallback($controller, response);
-				if (angular.isFunction($controller.config.saveCallback)) $controller.config.saveCallback($controller, response);
+		let saveThen = function (response) {
+			if (response && response.status) {
+				response.data.$$uid = uid;
+				angular.extend(dataItem, response.data);
+				savedCallback(dataItem, currentTr, response);
+				//if (["editor"].includes($controller.attrs.editRow))
+				//$controller.$notify.success($controller.$template.getMessage("common", "saveSuccessful"));
 				if (response && response.loader) response.loader.remove();
-			});
-		return true;
+				return;
+			} else if (response && response.errors) {
+				if (response.message) response.errors[""] = [response.message];
+				$controller.extractErrors(response.errors, dataItem);
+				$controller.showGlobalErrorMessages(dataItem);
+				$controller.currentTrRemoveSaving(dataItem, false, currentTr);
+				if ($controller.attrs.editRow === "inline")
+					$controller.$timeout(function () {
+						$controller.focusToFirstError();
+					}, 300);
+			} else $controller.currentTrRemoveSaving(dataItem, false, currentTr);
+
+			if (angular.isFunction(saveCallback)) saveCallback($controller, response);
+			if (angular.isFunction($controller.config.saveCallback)) $controller.config.saveCallback($controller, response);
+			if (response && response.loader) response.loader.remove();
+		};
+		if (this.config.save) return this.config.save(dataItem, apiArgs, saveThen);
+		else this.$api.saveAction(dataItem, apiArgs, "no").then(saveThen);
 	}
 
 	rightVisiblePosition() {
@@ -1773,7 +1775,6 @@ class axTableController {
 
 	loadDataApiArgs() {
 		if (this.config.loadDataApiArgs) return (angular.isFunction(this.config.loadDataApiArgs) ? this.config.loadDataApiArgs() : this.config.loadDataApiArgs);
-		else if (this.config.loadDataExtendApiArgs) return (angular.isFunction(this.config.loadDataExtendApiArgs) ? this.config.loadDataExtendApiArgs() : this.config.loadDataExtendApiArgs);
 		else return {};
 	}
 
@@ -1870,7 +1871,29 @@ class axTableController {
 			});
 	}
 
-	openDialog(title, readOnly, dataItem, template, $controller, width, params, appendTo) {
+	/**
+	 *
+	 * @param title
+	 * @param template
+	 * @param dataItem
+	 */
+	openTemplate(title, template, dataItem, width) {
+		var $controller = this;
+		if ($controller.attrs.refreshItemOnEdit) {
+			$controller.remoteEditAction(dataItem,
+				function (response) {
+					if (!response) return;
+					if (response.data) {
+						response.data.$$uid = dataItem.$$uid;
+						$controller.refreshViewItem(dataItem);
+						$controller.openFormDialog(title, false, response.data, template, $controller, width);
+					}
+					response.loader.remove();
+				});
+		} else $controller.openFormDialog(title, false, dataItem, template, $controller, width);
+	}
+
+	openFormDialog(title, readOnly, dataItem, template, $controller, width, params, appendTo) {
 		params = this.prepareForm(title, readOnly, dataItem, $controller, params);
 		appendTo = appendTo || (this.$$grid.$$editor && this.$$grid.$$editor.opened ? this.element.linked.find("ax-edit-popup") : this.element.linked);
 		switch (this.attrs.loadFormType) {
@@ -1892,6 +1915,29 @@ class axTableController {
 				console.error("The data-table attribute 'load-form-type' can have only values: 'ng-dialog'!");
 		}
 	}
+
+	/**
+	 *
+	 * @param params {Object} params={template, templateUrl, appendTo, width, height}
+	 */
+	openDialog(params) {
+		params.popup = true;
+		var config = {
+			template: params.template,
+			templateUrl: params.templateUrl,
+			plain: params.plain || params.template,
+			className: 'ngdialog-theme-plain',
+			disableAnimation: false,
+			appendTo: params.appendTo || this.element.linked,
+			params: params,
+			trapFocus: true,
+			scope: this.$parent
+		};
+		if (params.width) config.width = params.width;
+		if (params.height) config.height = params.height;
+		this.$ngDialog.open(config);
+	}
+
 
 	closeDialog() {
 		switch (this.attrs.loadFormType) {
@@ -2332,7 +2378,7 @@ class axTableController {
 		this.parentItem = parentItem;
 		let self = this;
 		if (this.currentParentItemChanged) this.currentParentItemChanged();
-		if (this.attrs.autoLoadData === "true" && this.parentItem) {
+		if (this.attrs.autoLoadData === "true" ) {
 			this.loadData(this, false, function () {
 				self.$timeout(function () {
 					self.setCurrentItemToFirstItem();
@@ -2469,42 +2515,20 @@ class axTableController {
 		var apiArgs = {};
 		var dataItemId = dataItem && !dataItem.isGroupItem ? dataItem[this.$api.config.idField] : 0;
 		if (this.config.editApiArgs) angular.extend(apiArgs, this.config.editApiArgs());
-		else if (this.config.editExtendApiArgs) angular.extend(apiArgs, this.config.editExtendApiArgs());
 		this.$api.editAction(dataItemId, apiArgs, "no").then(callBack);
 	}
 
-	/**
-	 *
-	 * @param title
-	 * @param template
-	 * @param dataItem
-	 */
-	openTemplate(title, template, dataItem, width) {
-		var $controller = this;
-		if ($controller.attrs.refreshItemOnEdit) {
-			$controller.remoteEditAction(dataItem,
-				function (response) {
-					if (!response) return;
-					if (response.data) {
-						response.data.$$uid = dataItem.$$uid;
-						$controller.refreshViewItem(dataItem);
-						$controller.openDialog(title, false, response.data, template, $controller, width);
-					}
-					response.loader.remove();
-				});
-		} else $controller.openDialog(title, false, dataItem, template, $controller, width);
-	}
 
 	getItemValue(dataItem, fieldName) {
 		return dataItem[fieldName];
 	}
 
 
-	$validateField(fieldName, dataItem, forced, $event) {
+	validateField(fieldName, dataItem, forced, $event) {
 		//this.clearFieldError(dataItem, fieldName);
 		if (dataItem.isGroupItem) return true;
 		if (!this.inlineEditing && !this.canEdit) return false;
-		this.debug.log("$validateField", arguments);
+		this.debug.log("validateField", arguments);
 		this.clearFieldError(dataItem, fieldName);
 		let error = this.currentFocusObject ? this.currentFocusObject.closest("td").find("[error-for]") : [];
 		if (error.length > 0) {
@@ -2529,17 +2553,14 @@ class axTableController {
 				return true;
 			}
 		}
-		var returnValue = this.validateField(fieldName, dataItem);
+		let returnValue = true;
+		if (this.config.validateField) returnValue = this.config.validateField(fieldName, dataItem);
 		if (!this.$api) this.$dataSource.calculations.update();
-		// this.debug.log("$validateField - end", fieldName, dataItem);
+		// this.debug.log("validateField - end", fieldName, dataItem);
 		//this.debug.log("validate field result", returnValue);
 		return returnValue;
 	}
 
-	validateField(fieldName, dataItem) {
-		if (this.config.validateField) return this.config.validateField(fieldName, dataItem);
-		else return true;
-	}
 
 	hideColumnByBindTo(bindTo, hide, compile) {
 		let hiddenColumns = [];
@@ -3323,8 +3344,8 @@ class axTableController {
 			clearFilter = clearFilter || (this.filters.arrayValues[fieldName].selectedModel !== undefined && this.filters.arrayValues[fieldName].selectedModel.length > 0);
 			if (this.filters.arrayValues[fieldName].clear) this.filters.arrayValues[fieldName].clear();
 		}
-		if (this.config.itemCustomClear) {
-			this.config.itemCustomClear();
+		if (this.config.itemCustomFilterClear) {
+			this.config.itemCustomFilterClear();
 			clearFilter = true;
 		}
 		if (clearFilter) this.filterApply();
@@ -3356,22 +3377,22 @@ class axTableController {
 
 	}
 
-	//changeTrTemplate() {
-	//	let $controller = this;
-	//	this.$timeout(function () {
+//changeTrTemplate() {
+//	let $controller = this;
+//	this.$timeout(function () {
 
-	//		let currentTrElement = $controller.getCurrentAllTr($controller.currentRowIndex);
-	//		if ($controller.inlineEditing) {
-	//			currentTrElement.attr("template-type", "edit");
-	//			$controller.getDomElement().addClass("inline-editing");
-	//		}
-	//		else {
-	//			currentTrElement.attr("template-type", "view");
-	//			$controller.getDomElement().removeClass("inline-editing");
-	//		}
+//		let currentTrElement = $controller.getCurrentAllTr($controller.currentRowIndex);
+//		if ($controller.inlineEditing) {
+//			currentTrElement.attr("template-type", "edit");
+//			$controller.getDomElement().addClass("inline-editing");
+//		}
+//		else {
+//			currentTrElement.attr("template-type", "view");
+//			$controller.getDomElement().removeClass("inline-editing");
+//		}
 
-	//	});
-	//}
+//	});
+//}
 
 	undo(dataItem, $event) {
 		var initial = angular.copy(this.getClone(dataItem));
@@ -3765,7 +3786,7 @@ class axTableController {
 				scope.$ctrl.childIndex = parseInt(attrs.childIndex || 1);
 				if (!attrs.childName) console.error("You need to setup an child-name attribute!");
 				parent.children[attrs.childName] = scope.$ctrl;
-				console.log("set children for parent", parent);
+				// console.log("set children for parent", parent);
 			});
 		}
 		this.$layout = new axTableLayout(this, scope);

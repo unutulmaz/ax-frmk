@@ -326,3 +326,6 @@ ax-table-editor > .editor-content > ax-form {
 [popup-class="scroller-popup-menu"]{
   margin-left:3px !important;
 }
+table[role=form-column][cols-width] td>div{
+  max-width:100%;
+}

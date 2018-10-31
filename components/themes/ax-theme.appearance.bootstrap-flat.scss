@@ -29,7 +29,7 @@ button, html input[type="button"], input[type="reset"], input[type="submit"]{
 }
 
 .app-header {
-  background-color: #2d80b5;
+  background-color: #0a75b9;
   color: white;
 }
 
@@ -79,6 +79,10 @@ tr[role=filters] .form-control,
 tr[role=filters] ax-dropdown-popup > button,
 th > div > ax-dropdown-list > button {
   border-color: #c5c9ce;
+}
+
+[role=table-left], [role=table-right] {
+  border-color: #42a6c7 !important;
 }
 
 .form-control:focus,
@@ -170,7 +174,7 @@ table.ax-table:not(.no-border) tr:not([role=filters]) > th:not(.last-column):not
 table.ax-table:not(.no-border) tr[role=filters] > th:not(.last-column):not([hidden-column]) > div.right-border,
 table.ax-table tr > th[left-freezed-column]:last-child:not(.last-column):not([hidden-column]) > div[role=column-resizer],
 table.ax-table.element-table > thead > tr:first-child {
-  border-color: #458ecc;
+  border-color: #fff;
 }
 
 table.ax-table.element-list:not(.no-border) tr:not([role=filters]) > th:not(.last-column):not([hidden-column]) > div[role=column-resizer],
@@ -206,7 +210,7 @@ ax-table-content > [role=paginator] {
 }
 
 table.ax-table.element-table > thead > tr > th {
-  background-color: #51a7c3;
+  background-color: #d6e8ef;
 }
 
 [role=fake-scrollbar],

@@ -91,7 +91,7 @@
 
 				popupObj.fitToWindow();
 				popupElement.css("visibility", "");
-				if (!popupObj.disableAnimation) popupElement.slideShow(popupObj.popupDirection === 'down' ? "top" : "bottom", 500);
+				if (!popupObj.disableAnimation) popupElement.slideShow(popupObj.popupDirection === 'down' ? "top" : "bottom", 300);
 
 				if (popupObj.attrs.closeOnBlur === "true") {
 					$document.on('click', documentClickClosure);
@@ -182,7 +182,7 @@
 			}
 			var popupElement = popupObj.findPopup();
 			if (popupElement.length > 0)
-				popupElement.slideHide(popupObj.popupDirection === 'down' ? "top" : "bottom", 500, finalizeClosing);
+				popupElement.slideHide(popupObj.popupDirection === 'down' ? "top" : "bottom", 300, finalizeClosing);
 		},
 		documentClick: function (event, fromPropup) {
 			var popupObj = this;

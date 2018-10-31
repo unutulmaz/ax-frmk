@@ -1,10 +1,11 @@
 (function () {
 	window.app = angular.module("App", modules);
 	angular.module("App").controller("mainCtrl", mainCtrl);
-	mainCtrl.$inject = ["$scope", "axDataStore", "authService", "$localStorage", "notify", "apiAction", "$injector"];
+	mainCtrl.$inject = ["$scope", "axDataStore", "authService", "$localStorage", "notify", "apiAction", "$injector", "axDataSet"];
 
-	function mainCtrl($scope, dataStore, authService, $storage, notify, apiAction, $injector) {
+	function mainCtrl($scope, dataStore, authService, $storage, notify, apiAction, $injector, dataSet) {
 		$scope.dataStore = dataStore;
+		$scope.dataSet = dataSet;
 		$scope.authService = authService;
 		$scope.mainMenu = {};
 		$scope.theme = {
@@ -18,7 +19,8 @@
 		};
 
 		$scope.locationReload = function () {
-			let url = window.origin + "?v=" + Math.random() + window.location.hash;
+			// let url = window.origin + "?v=" + Math.random() + window.location.hash;
+			let url = window.origin + window.location.hash;
 			window.location.reload(true);
 			window.location.href = url;
 		};
@@ -74,7 +76,8 @@
 										//console.log("getUserInfo", data);
 										authService.promiseExecuted = true;
 										// authService.go(route);
-										authService.goToStorageRoute(name);
+										console.log('route', name);
+										if (authService.isAuthenticated()) authService.goToStorageRoute('main');
 									});
 								}
 							}]
@@ -94,7 +97,9 @@
 									return authService.getUserInfo().then(function (data) {
 										//console.log("getUserInfo", data);
 										authService.promiseExecuted = true;
-										authService.goToStorageRoute("main");
+										console.log('route',  name);
+										if (authService.isAuthenticated()) authService.goToStorageRoute('main');
+
 									});
 								}
 							}]
@@ -200,8 +205,8 @@
 				if (!authService.promiseExecuted) return;
 				var authenticated = authService.isAuthenticated();
 				// console.log("stateChange", authenticated, $storage.user, toState);
-				if (!authenticated && toState.name === "reset-password" && !axAuthConfig.allowAnonymous) ;
-				else if (!authenticated && toState.name !== "login" && !axAuthConfig.allowAnonymous) $state.go("login");
+				if (!authenticated && (toState.name === "reset-password" || toState.name === "login")) ;
+				else if (!authenticated && toState.name !== "login") $state.go("login");
 				else if (authenticated && toState.name === "login") authService.goToStorageRoute("main");
 				else authService.goToStorageRoute(toState.name);
 			});

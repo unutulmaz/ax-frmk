@@ -202,9 +202,11 @@ ax-checkbox.form-control:not(.no-template) {
 .app-header > ax-dropdown-popup,
 .app-header > ax-dropdown-popup > .btn.icon > .caret-holder,
 .scroller-bars-btn {
+  //height: 40px !important;
   width: 34px !important;
   line-height: 32px !important;
 }
+
 
 main {
   top: 36px;
@@ -245,7 +247,6 @@ ax-form-section-header,
 input {
   border-radius: 5px;
 }
-
 
 .ngdialog-close {
   //height: 32px;
@@ -537,7 +538,7 @@ table.ax-table > thead > tr > th > ax-dropdown-popup > button > div {
 }
 
 ax-radio-options.form-control.editor-control > ax-radio-option,
-ax-radio-options.form-control.grid-control > ax-radio-option{
+ax-radio-options.form-control.grid-control > ax-radio-option {
   line-height: 22px;
 }
 
@@ -842,7 +843,7 @@ th ax-dropdown-list.form-control:not(.grid-control):not(.editor-control) > butto
   font-size: 24px;
 }
 
-.dropdown-popup-menu button {
+.dropdown-popup-menu button:not(.form-control) {
   line-height: 30px;
 }
 
@@ -856,6 +857,7 @@ th ax-dropdown-list.form-control:not(.grid-control):not(.editor-control) > butto
 .app-header >div {
   line-height: 36px;
 }
+
 ax-tab-view {
   top: 34px;
 }
@@ -868,10 +870,12 @@ ax-tab-view {
   height: 34px;
   line-height: 32px;
 }
-[role=toolbar] ax-datetime.form-control:not(.grid-control):not(.editor-control) input{
-  height:32px;
+
+[role=toolbar] ax-datetime.form-control:not(.grid-control):not(.editor-control) input {
+  height: 32px;
   line-height: 32px;
 }
+
 [role=toolbar] ax-datetime.form-control:not(.grid-control):not(.editor-control) button {
   line-height: 30px !important;
   height: 32px;

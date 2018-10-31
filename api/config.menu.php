@@ -30,10 +30,9 @@ function addMenu($roleId)
 	$showCase->appendChild("Products Categories", "show-case/products-categories", "app-modules/show-case/products/products-categories.html");
 	$showCase->appendChild("Products", "show-case/products", "app-modules/show-case/products/products.html");
 	$showCase->appendChild("Invoices", "show-case/invoices", "app-modules/show-case/invoices/invoices.html");
-
-	$items[] = $demoApp;
+	if ($roleId !== 'docs') $items[] = $demoApp;
 	$docs = new MenuItem("Documentation");
-	$docs->showItems = false;
+	$docs->showItems = true;
 	$frmkDocs = $docs->appendChild("Framework", "");
 //	$frmkDocs->appendChild("Get started", "");
 //	$frmkDocs->appendChild("Tasks automation", "");
@@ -57,7 +56,7 @@ function addMenu($roleId)
 	$axDt->appendChild("Records filtering", "ax-table/records-filtering", "app-modules/docs/ax-table/records-filtering/records-filtering.html");
 	$axDt->appendChild("Invariant data column", "ax-table/invariant-column", "app-modules/docs/ax-table/invariant-column/invariant-column.html");
 	$axDt->appendChild("Records grouping", "ax-table/records-grouping", "app-modules/docs/ax-table/records-grouping/records-grouping.html");
-	$axDt->appendChild("Records editing", "ax-table/records-editing", "app-modules/docs/ax-table/records-editing/records-editor-editing.html");
+	$axDt->appendChild("Records editing", "ax-table/records-editing", "app-modules/docs/ax-table/records-editing/records-editing.html");
 	$axDt->appendChild("Records selecting", "ax-table/records-selecting", "app-modules/docs/ax-table/records-selecting/records-selecting.html");
 	$axDt->appendChild("Records drag & drop", "ax-table/drag-and-drop", "app-modules/docs/ax-table/drag-and-drop/drag-and-drop-tabs.html");
 	$axDt->appendChild("Exporting data", "ax-table/export", "app-modules/docs/ax-table/exporting-data/exporting-data.html");
@@ -107,6 +106,6 @@ function addMenu($roleId)
 //	$axTest->appendChild("Test", "test", "app-modules/docs/test/test.html");
 //	$axTest->appendChild("Test 1: AxDt Freeze columns, Headers Structure", "test1", "app-modules/docs/test/test1.html");
 //	$axTest->showItems = false;
-//	$items[] = $docs;
+	if ($roleId == 'docs') $items[] = $docs;
 	return $items;
 }

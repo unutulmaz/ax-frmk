@@ -301,3 +301,9 @@ td.footer-calculation > div > .calculation-label, td.header-calculation > div > 
   white-space: nowrap;
 }
 
+table[role=form-column] td{
+  overflow: hidden;
+}
+tr[role=filters] th {
+  font-weight: normal;
+}

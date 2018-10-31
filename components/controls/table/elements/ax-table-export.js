@@ -10,16 +10,12 @@ class axTableExport {
 		this.controller.getExportFileName = function getExportFileName() {
 			return this.export.def.fileName;
 		};
-		Object.defineProperty(controller, "testReadOnlyMethod", {
-			writeable: false,
-			value: function (par) { console.log(par); }
-		});
+
 		this.controller.createExportApi = function createExportApi($axApi) {
-			this.$toolsApi = new $axApi({ controller: this.export.def.apiController, actions: {} });
-			var api = this.$toolsApi;
+			this.$toolsApi = new $axApi({controller: this.export.def.apiController, actions: {}});
 			this.$toolsApi.xlsExport = function (params, removeSpinner) {
 				return this.$http.post(
-					this.getCustomActionUrl('xlsExport'),
+					this.getCustomActionUrl('xls'),
 					params,
 					{
 						headers: {
@@ -34,21 +30,20 @@ class axTableExport {
 						data: response.data,
 					};
 					return responseThen;
-				}).catch(function (response) {
-					api.serviceFailed(response);
+				}).catch(response => {
+					this.serviceFailed(response);
 					if (removeSpinner) removeSpinner();
 				});
 			};
 			this.$toolsApi.htmlExport = function (params, removeSpinner) {
 				return this.$http.post(
-					this.getCustomActionUrl('htmlExport'),
+					this.getCustomActionUrl('html'),
 					params,
 					{
 						headers: {
 							'Content-type': 'application/json',
-							'Accept': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+							'Accept': 'application/textt'
 						},
-						responseType: 'arraybuffer'
 					}
 				).then(function (response) {
 					var responseThen = {
@@ -56,17 +51,41 @@ class axTableExport {
 						data: response.data,
 					};
 					return responseThen;
-				}).catch(function (response) {
-					api.serviceFailed(response);
+				}).catch(response => {
+					this.serviceFailed(response);
 					if (removeSpinner) removeSpinner();
 				});
 			};
-
+			this.$toolsApi.pdfExport = function (params, removeSpinner) {
+				// console.log('pdf', params);
+				return this.$http.post(
+					this.getCustomActionUrl('pdf'),
+					params,
+					{
+						headers: {
+							'Content-type': 'text/html;charset=utf-8',
+							'Accept': 'text/html'
+						},
+						responseType: params.noDownload ? 'json' : 'blob'
+					}
+				).then(function (response) {
+					var responseThen = {
+						headers: response.headers,
+						data: response.data,
+					};
+					return responseThen;
+				}).catch(response => {
+					this.serviceFailed(response);
+					if (removeSpinner) removeSpinner();
+				});
+			};
 		};
 		this.controller.exportData = function exportData(params) {
 			var type = params.type;
 			var removeSpinner = params.removeSpinner;
-			if (this.export.def.exportType === 'server') this.serverSideExport(type, removeSpinner);
+			console.log('export', params);
+			if (type === 'pdf') this.exportToPdf(params);
+			else if (this.export.def.exportType === 'server') this.serverSideExport(type, removeSpinner);
 			else this.clientSideExport(type, removeSpinner);
 		};
 		this.controller.getColumnsForExport = function getColumnsForExport(options) {
@@ -75,7 +94,7 @@ class axTableExport {
 				function (columnDef) {
 					if (columnDef.canView === false || !columnDef.bindTo || !columnDef.exportable) return true;
 					if (options.includes("justdata") && columnDef.bindTo === "$$uid") return true;
-					let column = { fieldName: columnDef.bindTo, header: columnDef.title, colSpan: columnDef.colSpan, width: columnDef.width, hidden: columnDef.hidden };
+					let column = {fieldName: columnDef.bindTo, header: columnDef.title, colSpan: columnDef.colSpan, width: columnDef.width, hidden: columnDef.hidden};
 					if (column.hidden) return true;
 					columns.push(column);
 					return false;
@@ -105,7 +124,7 @@ class axTableExport {
 				this.$toolsApi.xlsExport(this.prepareDataForExport()).then(function (response) {
 					if (response) {
 						var fileName = $controller.getExportFileName() + '.xlsx';
-						var fileContent = new Blob([response.data], { type: response.headers('Content-Type') });
+						var fileContent = new Blob([response.data], {type: response.headers('Content-Type')});
 						window.saveAs(fileContent, fileName);
 					}
 					if (removeSpinner) removeSpinner();
@@ -115,7 +134,7 @@ class axTableExport {
 				this.$toolsApi.htmlExport(this.prepareDataForExport()).then(function (response) {
 					if (response) {
 						var fileName = $controller.getExportFileName() + '.html';
-						var fileContent = new Blob([response.data], { type: response.headers('Content-Type') });
+						var fileContent = new Blob([response.data], {type: response.headers('Content-Type')});
 						window.saveAs(fileContent, fileName);
 					}
 					if (removeSpinner) removeSpinner();
@@ -175,14 +194,14 @@ class axTableExport {
 			let rowData = this.getCollection("filtered");
 			var wb = XLSX.utils.book_new();
 			var arrayData = new Array(rowData.length + 1);
-			var xlsOptions = { bookSST: true, bookType: "xlsx", type: "array" };
-			let topCell = XLSX.utils.encode_cell({ r: rowsFreezed, c: leftFreezed });
-			let wsFreeze = { xSplit: leftFreezed, ySplit: rowsFreezed, topLeftCell: topCell, activePane: "bottomRight", state: "frozen" };
+			var xlsOptions = {bookSST: true, bookType: "xlsx", type: "array"};
+			let topCell = XLSX.utils.encode_cell({r: rowsFreezed, c: leftFreezed});
+			let wsFreeze = {xSplit: leftFreezed, ySplit: rowsFreezed, topLeftCell: topCell, activePane: "bottomRight", state: "frozen"};
 			let wsCols = [];
 			let row = new Array(exportColumns.length);
 			exportColumns.each(function (column, i) {
 				row[i] = column.header;
-				wsCols.push({ wpx: column.width });
+				wsCols.push({wpx: column.width});
 			});
 			arrayData[0] = row;
 			rowData.each(function (row, i) {
@@ -197,23 +216,23 @@ class axTableExport {
 			ws["!freeze"] = wsFreeze;
 			XLSX.utils.book_append_sheet(wb, ws, reportTitle);
 			var wbout = XLSX.write(wb, xlsOptions);
-			window.saveAs(new Blob([wbout], { type: 'application/octet-stream' }), reportTitle + ".xlsx");
+			window.saveAs(new Blob([wbout], {type: 'application/octet-stream'}), reportTitle + ".xlsx");
 		};
 		this.controller.htmlJustDataExport = function (options) {
 			// let reportTitle = this.getExportFileName(), rowsFreezed = 1, leftFreezed = 0;
 			let exportColumns = this.getColumnsForExport(options);
 			let rowData = this.getCollection("filtered");
-			var table = axElement.createDOMElement('table', { border: 1 });
-			table.style.font = "12px/1.5 Arial, sans-serif";
-			createElement("style", {}, `td{vertical-align:top;}`, table);
+			var table = axElement.createDOMElement('table', {border: 1});
+			table.style.font = "14px/1.5 Arial, sans-serif";
+			createElement("style", {type: "text/css"}, `td{vertical-align:top;}`, table);
 			let colgroups = createElement("colgroups");
 			let thead = createElement("thead");
 			let theadTr = createElement("tr");
 			theadTr.style.height = "24px";
 
 			exportColumns.each(function (column, i) {
-				createElement("th", { style: "text-align:center;font-weight:bold;vertical-align:middle;border-top:1px solid black;border-bottom:1px solid black;border-left:1px solid black;background-color:lightgrey" }, column.header, theadTr);
-				createElement("col", { style: "width:" + column.width }, false, colgroups);
+				createElement("th", {style: "text-align:center;font-weight:bold;vertical-align:middle;border-top:1px solid black;border-bottom:1px solid black;border-left:1px solid black;background-color:lightgrey"}, column.header, theadTr);
+				createElement("col", {style: "width:" + column.width}, false, colgroups);
 			});
 			thead.appendChild(theadTr);
 			table.appendChild(thead);
@@ -224,26 +243,57 @@ class axTableExport {
 				exportColumns.each(function (column, i) {
 					let value = row[column.fieldName];
 					let innerHtml = value === null || value === undefined ? "" : value.toString();
-					createElement("td", { style: "border-left: 1px solid lightgray; padding: 1px;padding:0 5px;" }, innerHtml, tr);
+					createElement("td", {style: "border-left: 1px solid lightgray; padding: 1px;padding:0 5px;"}, innerHtml, tr);
 				});
 				tbody.appendChild(tr);
 			});
 			table.appendChild(tbody);
 			return table;
 		};
-		this.controller.readyToPrintExport = function (exportOptions) {
-			var table = axElement.createDOMElement('table', { border: 1 });
-			table.style.font = "12px/1.5 Arial, sans-serif";
-			createElement("style", {}, `td{vertical-align:top;}`, table);
+		this.controller.readyToPrintExport = function (exportOptions, colsWidth) {
+			var table = axElement.createDOMElement('table', {border: 1, style: "border:1px solid black"});
+			if (exportOptions[0] !== "xls") table.style.font = "14px/1.5 Arial, sans-serif";
+			// console.log('export', exportOptions);
+			createElement("style", {type: "text/css"}, `td{vertical-align:top;}`, table);
 			let thead = this.$template.createHeaderTitleRows(true);
 			var $controller = this;
 			let scope = $controller.scope();
 			let columns = angular.copy($controller.columns.defs);
+			let levelsCnt = $controller.groups.defs.length;
+
+			var colgroup = createElement("colgroup");
+			let colGroupsWidth = [];
+			let colIndex = 0;
+			for (let i = 0; i < $controller.columns.defs.length; i++) {
+				let columnDef = $controller.columns.defs[i];
+				let col = createElement("col");
+				if (angular.element(columnDef).hasClass("empty-column")) continue;
+				if (columnDef.hasAttribute("hidden-column") || columnDef.getAttribute("exportable") === "false") {
+					continue;
+				}
+				let width = colsWidth ? colsWidth[colIndex] : parseInt(columnDef.getAttribute("width")) + (i === 0 ? levelsCnt * 20 : 0);
+				col.style.width = width + 'px';
+				colGroupsWidth.push(width);
+				colIndex++;
+				colgroup.appendChild(col);
+			}
+
 			let theadSource = $controller.$compile(thead)(scope);
 			theadSource.find(".empty-column, th[hidden-column], th[export-colspan=0], th[exportable=false]").remove();
+			let setTdWidth = function (td, index) {
+				let colIndex = index !== undefined ? index : parseInt(td.getAttribute("export-column-index"));
+				let colSpan = parseInt(td.getAttribute('colspan')) || 1;
+				let width = 0;
+				for (let i = colIndex; i < colIndex + colSpan; i++) {
+					width += parseInt(colGroupsWidth[i]);
+				}
+				td.addStyle('width', width + 'px');
+				td.setAttribute('width', width);
+			};
 			let rowsCnt = theadSource.find("tr").length - 1;
 			theadSource.find("tr").each(function (rowIndex, trSource) {
-				trSource.style.height = "24px";
+				// trSource.style.height = "24px";
+				trSource.style["line-height"] = "28px";
 				for (let i = 0; i < trSource.cells.length; i++) {
 					let tdSource = angular.element(trSource.cells[i]);
 					tdSource.find(".sortable-index").remove();
@@ -254,32 +304,33 @@ class axTableExport {
 					});
 					let source = $controller.$interpolate(tdSource[0].innerHTML)(scope);
 					if (!source) continue;
-					let dummyDiv = createElement("div", {}, source);
-					tdSource[0].innerHTML = axUtils.htmlToPlainText(dummyDiv);
-					tdSource[0].style.cssText = "text-align:center;font-weight:bold;vertical-align:middle;background-color:lightgrey";
+					let emptyDiv = createElement("div", {}, source);
+					tdSource[0].innerHTML = axUtils.htmlToPlainText(emptyDiv);
+					tdSource[0].style.cssText = "text-align:center;font-weight:bold;vertical-align:middle";
+					if (exportOptions[0] !== "pdf") tdSource[0].style.cssText = "background-color:lightgrey";
+
 					let colspan = tdSource[0].getAttribute("export-colspan") || 1;
 					if (tdSource[0].hasAttribute("export-colspan")) tdSource[0].setAttribute("colspan", colspan);
-					if (exportOptions[0] !== "xls") tdSource[0].style.cssText += "border-top:1px solid black;border-left:1px solid black";
 					let lastRowIndex = rowIndex + parseInt((tdSource[0].getAttribute("rowspan") || 1) - 1);
-					if (rowIndex === rowsCnt || lastRowIndex === rowsCnt) tdSource[0].style.cssText += "border-bottom:1px solid black;";
+					if (exportOptions[0] === "pdf") {
+						if (tdSource.hasClass('last-column')) tdSource[0].style.cssText += "border:1px solid black";
+						else {
+							tdSource[0].style.cssText += "border-top:1px solid black;border-left:1px solid black";
+							if (rowIndex === rowsCnt || lastRowIndex === rowsCnt) tdSource[0].style.cssText += ";border-bottom:1px solid black;";
+						}
+					} else {
+						if (exportOptions[0] !== "xls") tdSource[0].style.cssText += "border-top:1px solid black;border-left:1px solid black";
+						if (rowIndex === rowsCnt || lastRowIndex === rowsCnt) tdSource[0].style.cssText += ";border-bottom:1px solid black;";
+						let colIndex = parseInt(tdSource.attr('export-column-index')) + parseInt((tdSource.attr('colspan') || '1')) - 1;
+						if (tdSource.hasClass('last-column') || colIndex === colGroupsWidth.length - 1) tdSource[0].style.cssText += ";border-right:1px solid black;";
+					}
+					setTdWidth(tdSource[0]);
 				}
 			}, this);
 			if (exportOptions[0] === "xls") theadSource.find("tr th[hidden-column]").remove();
 			table.appendChild(thead);
-			let levelsCnt = $controller.groups.defs.length;
 			var tbody = axElement.createDOMElement('tbody');
-			var colgroup = createElement("colgroup");
-			for (let i = 0; i < $controller.columns.defs.length; i++) {
-				let columnDef = $controller.columns.defs[i];
-				let col = createElement("col");
-				col.style.width = parseInt(columnDef.getAttribute("width")) + (i === 0 ? levelsCnt * 20 : 0) + 'px';
-				if (columnDef.hasAttribute("hidden-column") || columnDef.getAttribute("exportable") === "false") {
-					continue;
-				}
-				if (angular.element(columnDef).hasClass("empty-column")) continue;
-				colgroup.appendChild(col);
-			}
-			tbody.appendChild(colgroup);
+			table.appendChild(colgroup);
 			let dataItems = $controller.getCollection('items');
 			let fillCells = dataItems.length < this.export.def.viewTemplateLimit ? this.export.def.dataValue : "bind-to";
 			angular.forEach(dataItems,
@@ -355,7 +406,7 @@ class axTableExport {
 							td.removeAttribute("tabindex");
 							td.removeAttribute("column-index");
 							td.removeAttribute("group-level");
-
+							setTdWidth(td);
 							tr.appendChild(td);
 						});
 
@@ -396,7 +447,8 @@ class axTableExport {
 								}
 								element.innerHTML = axUtils.htmlToPlainText(element);
 							});
-							td.style.cssText = "border-left: 1px solid lightgray; padding: 1px;";
+							let borderLeftCss = "border-left: 1px solid " + (parseInt(sourceEl[0].getAttribute('export-column-index')) === 0 ? "black;" : "lightgray;");
+							td.style.cssText = borderLeftCss + "border-top: 1px solid black; padding: 1px;";
 							if (td.hasAttribute("hidden-column")) td.style.cssText += "display:none";
 							td.innerHTML = sourceEl.html();
 							if (td.hasClass("group-footer")) {
@@ -406,25 +458,28 @@ class axTableExport {
 							let colspan = td.getAttribute("export-colspan") || 1;
 							if (colspan === "0") return;
 							if (td.hasAttribute("export-colspan")) td.setAttribute("colspan", td.getAttribute("export-colspan"));
+							setTdWidth(td);
 							td.removeAttribute("left-freezed-column");
 							td.removeAttribute("columns-range");
 							td.removeAttribute("export-colspan");
 							td.removeAttribute("tabindex");
 							td.removeAttribute("column-index");
 							td.removeAttribute("group-level");
-
+							let colIndex = parseInt(td.getAttribute('export-column-index')) + (td.hasAttribute('colspan') ? parseInt(td.getAttribute('colspan')) : 1) - 1;
+							if (colIndex === colGroupsWidth.length - 1) td.style.cssText += "border-right: 1px solid black;";
 							tr.appendChild(td);
 						});
 					} else if (!exportOptions.includes("justagg")) {
 						tr.setAttribute("style", "mso-outline-level:" + (levelsCnt));
-
 						for (let i = 0; i < columns.length; i++) {
 							let column = columns[i];
 							if (column.hasAttribute("hidden-column")) continue;
 							if (column.getAttribute("exportable") == "false") continue;
 							var view = angular.element(column).find('ax-column-view')[0];
 							var td = axElement.createDOMElement('td');
-							td.style.cssText = "border-left: 1px solid lightgray; padding: 1px 2px 1px 6px;";
+							let borderCss = "border-left: 1px solid " + (parseInt(column.getAttribute('export-column-index')) === 0 ? "black;" : "lightgray;");
+							td.style.cssText = borderCss + "padding: 1px 2px 1px 6px;";
+
 							if (levelsCnt && i === 0 && levelsCnt > 1) td.style["padding-left"] = levelsCnt * 20 + 'px';
 							if (column.getAttribute("header") === "Empty column") continue;
 							else if (fillCells === "bind-to") {
@@ -454,7 +509,11 @@ class axTableExport {
 								if (axView.style["padding-right"]) td.style["padding-right"] = axView.style["padding-right"];
 								td.innerHTML = axUtils.htmlToPlainText(htmlContent);
 							}
-							td.style.cssText += "width:" + column.getAttribute("width");
+							if (parseInt(column.getAttribute('export-column-index')) === colGroupsWidth.length - 1)
+								td.style.cssText += ";border-right: 1px solid black";
+							// td.style.cssText += "width:" + column.getAttribute("width");
+							setTdWidth(td, parseInt(column.getAttribute('export-column-index')));
+
 							tr.appendChild(td);
 						}
 					}
@@ -476,11 +535,11 @@ class axTableExport {
 			table.removeAttribute('border');
 			table.style["border-collapse"] = "collapse";
 			let element = angular.element(table);
-			element.find('th').css({ 'border1': '1px solid black', 'padding': '0 3px', 'height': '28px' });
+			element.find('th').css({'border1': '1px solid black', 'padding': '0 3px', 'height': '28px'});
 			//angular.element(table).find('td').css({ 'border-left': '1px solid lightgray', 'padding': '1px 2px 1px 6px' });
-			element.find('tr >th:not(.child-export-table):last-child').css({ 'border-right': '1px solid black', 'padding': '0 3px;' });
-			element.find('tr >td:not(.child-export-table):last-child').css({ 'border-right': '1px solid black', 'padding': '0 3px;' });
-			element.find('tr >td:not(.child-export-table):first-child').css({ 'border-left': '1px solid black', 'padding': '0 3px;' });
+			element.find('tr >th:not(.child-export-table):last-child').css({'border-right': '1px solid black', 'padding': '0 3px;'});
+			element.find('tr >td:not(.child-export-table):last-child').css({'border-right': '1px solid black', 'padding': '0 3px;'});
+			element.find('tr >td:not(.child-export-table):first-child').css({'border-left': '1px solid black', 'padding': '0 3px;'});
 			element.find('tbody tr:not(.group-header):nth-child(even)').css('background', '#F8F9FC');
 			let trs = angular.element(table).find('tbody>tr');
 			if (trs.length > 0) trs[0].style['border-top'] = '1px solid black';
@@ -501,8 +560,8 @@ class axTableExport {
 				appendTo: "#right-pane",
 				scope: scope
 			}).then(function () {
-				yesCallback();
-			},
+					yesCallback();
+				},
 				function () {
 					if (noCallback) noCallback();
 				});
@@ -511,11 +570,15 @@ class axTableExport {
 			let html = "";
 			let $controller = this;
 			let detailsOutput = $controller.config.exportCfg && $controller.config.exportCfg.item && $controller.config.exportCfg.item.detailsOutput ? true : false;
+			let colsWidth = this.export.def.item.colsWidth ? this.export.def.item.colsWidth.split(',') : undefined;
+			// console.log('cols-width', colsWidth);
 			this.export.def.item.element.find("ax-export-details").each(function (i, detail) {
 				let detailName = detail.getAttribute("name");
+				let colsDetailWidth = detail.getAttribute("cols-width") || colsWidth;
 				let detailTitle = detail.getAttribute("show-title") === "true" ? detail.getAttribute("title") : "&nbsp;";
 				let detailsCtrl = $controller.getChild(detailName);
-				let table = detailsCtrl.readyToPrintExport(["print"]);
+				let table = detailsCtrl.readyToPrintExport([type], colsWidth);
+				table.addCssText(detail.getAttribute("style"));
 				if (type !== "xls") table.removeAttribute("border");
 				if (detail.hasAttribute("class")) table.addClass(detail.getAttribute("class"));
 				$(table).find("td").each(function (i, td) {
@@ -523,7 +586,7 @@ class axTableExport {
 					td.style["vertical-align"] = "top";
 					if (td.classList.contains("group-footer") || td.classList.contains("group-header")) td.style["font-weight"] = "bold";
 					if (td.classList.contains("group-footer") && td.hasAttribute("colspan")) {
-						$(td).closest("tr").css({ height: "26px", "line-height": "26px", "font-size": "16px" });
+						$(td).closest("tr").css({height: "26px", "line-height": "26px", "font-size": "16px"});
 						td.style["text-align"] = "right";
 						td.style["padding-right"] = "10px";
 					}
@@ -538,7 +601,7 @@ class axTableExport {
 					});
 				}
 				if (detail.getAttribute("show-title") === "true" || type === "xls")
-					createElement("caption", { style: "height:25px;font-weight:bold;text-align:left;font-size:16px;padding-left:10px;" }, detailTitle, table);
+					createElement("caption", {style: "height:25px;font-weight:bold;text-align:left;font-size:16px;padding-left:10px;"}, detailTitle, table);
 				if (detailsOutput) $controller.config.exportCfg.item.detailsOutput(type, $(table), detailName);
 				html += table.outerHTML;
 			});
@@ -593,32 +656,56 @@ class axTableExport {
 			});
 			axTabs.html(html);
 		};
-		this.controller.exportCurrentItem = function (dataItem, type) {
-			let originalPopup = this.getDomElement().parent().find("ax-table-editor>ax-editor-content");
-			let popup = angular.copy(originalPopup);
-			popup.find("ax-form, .form-title").each(function(i, element){element.removeAttribute("ng-if");});
-			popup.find("div[role=toolbar], button,ax-dropdown-list,ax-dropdown-popup, [ng-model],.ngdialog-close, .fa-caret-down, [ng-if], [ng-show]").remove();
-			popup.find(".printable").css("display", "block");
-			popup.find(".form-title").css({ "font-size": "18px", "font-weight": "bold", colspan: 7 }).removeAttr("ng-bind");
-			popup.find("ax-form-section-header").each(function (i, header) {
-				let td = $(header).closest("td");
-				header.style.height = "30px";
-				td.css({ "font-weight": "bold" });
-				td.find("td").each(function (i, td) {
-					$(td).css({ "font-weight": "initial" });
+		this.controller.getItemContentHtml = function (dataItem, type) {
+			let def = this.export.def.item.element.find("ax-export-content, ax-export-content-" + type);
+			let contentHtml;
+			if (def.length === 0) {
+
+				let originalPopup = this.getDomElement().parent().find("ax-table-editor>ax-editor-content");
+				let popup = angular.copy(originalPopup);
+				popup.find("ax-form, .form-title").each(function (i, element) {
+					element.removeAttribute("ng-if");
 				});
-			});
-			popup.find("td").each(function (i, td) {
-				//td.innerHTML = td.innerText;
-				td.style["vertical-align"] = "top";
-				if (td.getAttribute("role") === "input") td.style["font-weight"] = "bold";
-			});
-			this.getExportAxTabs(type, popup, originalPopup);
-			if (this.config.exportCfg && this.config.exportCfg.item && this.config.exportCfg.item.formOutput) this.config.exportCfg.item.formOutput(type, popup, dataItem);
+				popup.find("div[role=toolbar], button,ax-dropdown-list,ax-dropdown-popup, [ng-model],.ngdialog-close, .fa-caret-down, [ng-if], [ng-show]").remove();
+				popup.find(".printable").css("display", "block");
+				popup.find(".form-title").css({"font-size": "18px", "font-weight": "bold", colspan: 7}).removeAttr("ng-bind");
+				popup.find("ax-form-section-header").each(function (i, header) {
+					let td = $(header).closest("td");
+					header.style.height = "30px";
+					td.css({"font-weight": "bold"});
+					td.find("td").each(function (i, td) {
+						$(td).css({"font-weight": "initial"});
+					});
+				});
+				popup.find("td").each(function (i, td) {
+					//td.innerHTML = td.innerText;
+					td.style["vertical-align"] = "top";
+					if (td.getAttribute("role") === "input") td.style["font-weight"] = "bold";
+				});
+				let contentHtml = popup[0].outerHTML.replaceAll("!important", "");
+				this.getExportAxTabs(type, popup, originalPopup);
+				if (this.config.exportCfg && this.config.exportCfg.item && this.config.exportCfg.item.formOutput) this.config.exportCfg.item.formOutput(type, popup, dataItem);
+				return contentHtml;
+			} else {
+				let html = def.html();
+				let scope = this.scope().$new();
+				scope.dataItem = dataItem;
+				if (def[0].hasAttribute("datasource")) {
+					let datasource = scope.$eval(def[0].getAttribute("datasource"));
+					if (datasource === undefined) console.error("Datasource ", def.attr("datasource"), "doesn't exist on master controller");
+					scope.datasource = datasource;
+				}
+				return this.$interpolate(html)(scope);
+			}
+
+		};
+		this.controller.exportCurrentItem = function (dataItem, type, noDownload, callback) {
+
 			let html = this.getExportHeader(type, dataItem);
-			html += popup[0].outerHTML.replaceAll("!important", "");
+			html += this.getItemContentHtml(dataItem, type);
 			html += this.exportGetDetails(type);
 			html += this.getExportFooter(type, dataItem);
+			// let html = this.exportGetDetails(type);
 			let $controller = this;
 			let reportTitle = this.getExportFileName();
 			this.$timeout(function () {
@@ -629,8 +716,19 @@ class axTableExport {
 					newDocument.body.innerHTML = table;
 					html = newDocument.getHtml();
 					window.saveAsXls(html, reportTitle);
-				} else if (type === 'view') {
-					$controller.openReport("Report", table.outerHTML);
+				} else if (type === 'pdf') {
+					$controller.$toolsApi.pdfExport({html: html, noDownload: noDownload || false}).then(response => {
+						if (response) {
+							console.log("Response", response);
+							let result = response.data && response.data.status ? response.data : false;
+							var fileName = reportTitle + '.pdf';
+							if (!noDownload) {
+								var fileContent = new Blob([response.data], {type: response.headers('Content-Type')});
+								window.saveAs(fileContent, fileName);
+							} else result.name = fileName;
+							if (callback) callback(result);
+						}
+					});
 				} else if (type.startsWith('print')) {
 					let newDocument = new axDocument($controller.export.def.item.element, type);
 					createElement("title", {}, reportTitle, newDocument.head);
@@ -640,7 +738,7 @@ class axTableExport {
 					if (newWindow) {
 						newWindow.document.title = reportTitle + " - generating";
 						newWindow.document.write(html);
-						$(newWindow.document.body).html(table);
+						$(newWindow.document.body).html(createElement("div", {style: "position:relative;height:100%;width:100%;overflow:auto"}, table).outerHTML);
 						newWindow.document.title = reportTitle;
 						newWindow.document.close();
 						//newWindow.print();
@@ -650,8 +748,11 @@ class axTableExport {
 				}
 				//removeSpinner();
 			}, 100);
-
 		};
+		this.controller.exportToPdf = function (params) {
+			console.log("pdf", params);
+		};
+
 
 	}//end constructor
 	static htmlXlsTemplate(properties) {

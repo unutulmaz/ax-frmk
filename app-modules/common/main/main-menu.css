@@ -20,6 +20,7 @@ i.icon-has-ul {
 #nav-wrapper > ax-tree-view a.active > div {
 	background-color: #b7defa;
 	border-left: 2px solid #178efe;
+	width:100%;
 }
 
 #nav-wrapper > ax-tree-view a > div {
@@ -37,4 +38,8 @@ i.icon-has-ul {
 	line-height: 26px;
 	background-color: lightgray;
 	border-bottom: 1px solid white;
+}
+#nav-wrapper ax-tree-view-node > div {
+	display:inline-flex;
+	width:100%;
 }

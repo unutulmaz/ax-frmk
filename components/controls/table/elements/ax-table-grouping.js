@@ -312,6 +312,8 @@ class axTableGrouping extends axElement {
 			if (expression !== "true" && first) first = false;
 			let header = angular.element(item).find(">ax-group-header");
 			let footer = angular.element(item).find(">ax-group-footer");
+			let groupCalculations = angular.element(item).find(">ax-calculation");
+			// console.log(item, groupCalculations);
 			var group = {
 				level: level,
 				def: item,
@@ -324,7 +326,7 @@ class axTableGrouping extends axElement {
 				label: expression === "true" ? "All records" : (item.getAttribute('label') || expression),
 				header: {columnsCalculations: [], columns: [], template: header.find("xx")},
 				footer: {columnsCalculations: [], columns: [], template: footer.find("xx"), customDisplay: footer.find("xx"), label: footer.attr('label') || item.getAttribute('label') || expression, labelIndent: 200},
-				allLevelsCalculations: allLevelsCalculations && item.getAttribute('all-levels-calculations') !== "false",
+				allLevelsCalculations: allLevelsCalculations && item.getAttribute('all-levels-calculations') !== "false" && groupCalculations.length===0 ,
 				calculations: {},
 			};
 			group.calculationType = group.allLevelsCalculations ? "All levels" : "This level";

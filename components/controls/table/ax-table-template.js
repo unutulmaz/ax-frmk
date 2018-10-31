@@ -406,6 +406,7 @@ class axTableTemplate extends axElement {
 		let forbiddenColumns = this.controllerConfig.forbiddenColumns ? this.controllerConfig.forbiddenColumns() : [];
 		controller.columns.hidden = 0;
 		controller.hiddenColumns = [];
+		let exportColumnIndex = -1;
 		this.forEachColumn(function (item) {
 			columnIndex = parseInt(item.getAttribute("column-index"));
 			controller.columns.defs.push(item);
@@ -478,6 +479,23 @@ class axTableTemplate extends axElement {
 				controller.columns.hidden++;
 				controller.hiddenColumns.push(header);
 			}
+			if (["gutter-icons", "crud-buttons"].includes(item.getAttribute("view-type"))) {
+				item.setAttribute("hideable", "false");
+				if (editRowInEditor) {
+					item.setAttribute("hidden-column", "");
+					hideableColumn.hidden = true;
+				} else if (hideableColumn.hidden && ["inline", "inline-cell"].includes(template.attributes["edit-row"])) {
+					item.removeAttribute("hidden-column");
+					hideableColumn.hidden = false;
+				}
+				item.setAttribute("exportable", false);
+				angular.element(item).find(">ax-column-header").attr("exportable", false);
+				hideableColumn.exportable = false;
+			}
+
+			if (!hideableColumn.hidden && hideableColumn.exportable) exportColumnIndex++;
+			if (hideableColumn.exportable) {hideableColumn.exportColumnIndex = exportColumnIndex; item.setAttribute('export-column-index', exportColumnIndex)}
+			else item.removeAttribute('export-column-index');
 			let sortableAdded = false;
 			if (template.attributes["no-header"] !== "true") {
 				var axHeaders = template.getDirectChildrenOfType("AX-COLUMN-HEADER", item);
@@ -513,6 +531,7 @@ class axTableTemplate extends axElement {
 						headerDef.removeAttribute("bind-to");
 						headerDef.removeAttribute("sortable");
 					}
+					if (hideableColumn.exportable) headerDef.setAttribute('export-column-index', exportColumnIndex);
 					if (!angular.isDefined(controller.header.rows[rowIndex])) controller.header.rows[rowIndex] = [];
 					controller.header.rows[rowIndex].push(headerDef);
 				};
@@ -558,19 +577,6 @@ class axTableTemplate extends axElement {
 				if (item.hasAttribute("style")) axView.setAttribute("style", item.getAttribute("style"));
 				if (item.hasAttribute("class")) axView.setAttribute("style", item.getAttribute("class"));
 				item.appendChild(axView);
-			}
-			if (["gutter-icons", "crud-buttons"].includes(item.getAttribute("view-type"))) {
-				item.setAttribute("hideable", "false");
-				if (editRowInEditor) {
-					item.setAttribute("hidden-column", "");
-					hideableColumn.hidden = true;
-				} else if (hideableColumn.hidden && ["inline", "inline-cell"].includes(template.attributes["edit-row"])) {
-					item.removeAttribute("hidden-column");
-					hideableColumn.hidden = false;
-				}
-				item.setAttribute("exportable", false);
-				angular.element(item).find(">ax-column-header").attr("exportable", false);
-				hideableColumn.exportable = false;
 			}
 			axViews = angular.element(item).find(">ax-column-view");
 			if (axViews.length > 0) {
@@ -1093,12 +1099,14 @@ class axTableTemplate extends axElement {
 		var columnsRange = columnsRangeString.split(",");
 		let colSpan = 0;
 		let exportColSpan = 0;
+
 		for (let i = 0; i < columnsRange.length; i++) {
 			let index = parseInt(columnsRange[i]);
 			let original = this.controller.columns.hideable[index];
 			if (!original) throw "Not found column with index: " + index;
 			if ((original.leftFreezedColumn || column.rightFreezedColumn) ? !original.hidden : (original.isScrollVisible && !original.hidden)) colSpan++;
 			if (!original.exportable || original.hidden) continue;
+			if (exportColSpan === 0) column.setAttribute('export-column-index', original.exportColumnIndex);
 			exportColSpan++;
 		}
 		if (colSpan === 0) column.style.display = '';

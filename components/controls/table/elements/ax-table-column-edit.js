@@ -77,7 +77,7 @@ class axTableColumnEdit extends axInput {
 
 	createInput(bindTo, source) {
 		let dataItem = this.controller.attrs.editRow === "inline-cell" ? "$parent.$parent.dataItem" : "$parent.$parent.dataItem";
-		var element, ngDisabled, ngBlur = this.controller.attrs.editRow !== "inline-cell" ? "$ctrl.$validateField( '" + bindTo + "', " + dataItem + ", false, $event ) " : "", ngChange = "";
+		var element, ngDisabled, ngBlur = this.controller.attrs.editRow === "inline-cell" && this.controller.$api ? "": "$ctrl.validateField( '" + bindTo + "', " + dataItem + ", false, $event ) " , ngChange = "";
 		var type = this.attributes.type || "";
 		var ngModel = this.source.getAttribute("ng-model");
 		if (this.controller.attrs.editRow === "inline-cell" && !this.controller.attrs.parentConfig) ngChange = "$ctrl.save(" + dataItem + ")";

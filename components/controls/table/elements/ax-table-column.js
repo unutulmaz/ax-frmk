@@ -17,6 +17,7 @@ class axTableColumn extends axElement {
 		if (scope.attrs.noEmptyColumn === "true") columnRightIndex++;
 		td.setAttribute("role", "grid-cell");
 		td.setAttribute("right-index", columnRightIndex);
+		if (this.hasSourceAttribute('export-column-index')) td.setAttribute("export-column-index", this.getSourceAttribute('export-column-index'));
 		td.setAttribute("tabindex", columnIndex);
 		td.setAttribute("column-for", td.getAttribute("header"));
 		td.removeAttribute("header");

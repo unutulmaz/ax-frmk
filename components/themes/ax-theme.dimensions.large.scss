@@ -206,7 +206,6 @@ ax-checkbox.form-control:not(.no-template) {
 
 .app-header .btn.fa,
 .app-header > ax-dropdown-popup,
-.app-header #current-user,
 .app-header > ax-dropdown-popup > .btn.icon > .caret-holder,
 .scroller-bars-btn {
   //height: 40px !important;
@@ -830,7 +829,7 @@ th ax-dropdown-list.form-control:not(.grid-control):not(.editor-control) > butto
 }
 
 .dropdown-popup-menu button {
-  line-height: 38px;
+  line-height: 30px;
 }
 
 [button-type=settings] {

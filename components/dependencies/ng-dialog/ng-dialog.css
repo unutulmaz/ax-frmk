@@ -181,8 +181,8 @@ body.ngdialog-open {
 
 
 .ngdialog.ngdialog-theme-plain {
-	padding-bottom: 160px;
-	padding-top: 160px;
+	padding-bottom: 20px;
+	padding-top: 20px;
 }
 
 	.ngdialog.ngdialog-theme-plain .ngdialog-content {
