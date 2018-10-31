@@ -1,0 +1,26 @@
+﻿ax-datetime, ax-datetime.form-control {
+	display: block;
+	padding: 0px !important;
+}
+
+ax-datetime > div > input {
+	border: none;
+	width: 100%;
+	outline: none;
+}
+
+.text-muted {
+	color: #c1c1c1;
+}
+
+ax-datetime > div > .btn, ax-datetime > div > input {
+	background-color: transparent;
+}
+
+ax-datetime.hasFocus {
+	background-color: white;
+}
+
+ax-datetime[readonly] .fa-eraser, ax-datetime[readonly] .date-open-popup {
+	display: none;
+}

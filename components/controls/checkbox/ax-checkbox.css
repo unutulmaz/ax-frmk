@@ -1,0 +1,36 @@
+﻿ax-checkbox {
+	cursor: pointer;
+	border: 1px solid transparent;
+}
+
+ax-checkbox, ax-checkbox.form-control {
+	display: inline-flex;
+	vertical-align: top;
+}
+
+ax-checkbox > div {
+	display: inline-flex;
+	vertical-align: top;
+	white-space: nowrap;
+}
+
+ax-checkbox > i {
+	line-height: inherit !important;
+	display: initial;
+}
+
+ax-checkbox.no-template > i {
+	width: 100%;
+}
+
+ax-checkbox > div > label {
+	cursor: pointer
+}
+
+ax-checkbox.hasFocus {
+	background-color: white;
+}
+
+ax-checkbox.editor-control {
+	margin-left: 0 !important;
+}

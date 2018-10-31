@@ -1,0 +1,56 @@
+﻿ax-autocomplete, ax-autocomplete.form-control {
+	display: block;
+	padding: 0;
+}
+
+ax-autocomplete > div > input {
+	border: none;
+	width: 100%;
+	outline: none;
+}
+
+
+ax-autocomplete[readonly] > div > .btn.fa.text-clear-btn,
+ax-autocomplete[disabled] > div > .btn.fa.text-clear-btn {
+	display: none !important;
+}
+
+ax-dropdown-list.ax-autocomplete-dropdown > button {
+	padding: 0;
+	text-align: center;
+	border: none;
+}
+
+ax-dropdown-list.ax-autocomplete-dropdown > button > span {
+	position: relative !important;
+	padding: 0;
+	text-align: center;
+	top: initial !important;
+	right: initial !important;
+}
+
+ax-autocomplete.ax-autocomplete-dropdown {
+	padding-right: 1px;
+}
+
+
+ax-autocomplete > div > ax-dropdown-popup.link-popup > button,
+ax-autocomplete > div > ax-dropdown-popup.link-popup > button:hover {
+	/*border: none !important;*/
+}
+
+ax-autocomplete > div > .btn, ax-autocomplete > div > input {
+	background-color: transparent;
+}
+
+
+
+ax-autocomplete[readonly] ,
+ax-autocomplete[disabled]  {
+	background-color: initial;
+}
+
+ax-autocomplete.form-control.hasFocus > div > .btn.fa.text-clear-btn {
+	color: black
+}
+

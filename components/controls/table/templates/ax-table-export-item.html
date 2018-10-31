@@ -1,0 +1,47 @@
+<style>
+	.container-popup {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.container-popup > div > label {
+		margin-right: 5px;
+	}
+
+	.container-popup ax-checkbox[disabled], .container-popup label[disabled] {
+		color: lightgray;
+	}
+</style>
+<div class="dropdown-header" ng-bind="launcher.title"></div>
+<div style="padding:10px;" class="container-popup">
+	<div class="inline" >
+		<label>Send as email attachment:</label>
+		<ax-checkbox ng-change="launcher.sendAsEmailChanged()"
+						 class="form-control"
+						 style="width:auto;display: inline-flex"
+						 ng-model="launcher.sendAsEmail"></ax-checkbox>
+	</div>
+	<div class="inline">
+		<label>Output:</label>
+		<ax-radio-options options="launcher.outputOptions"
+								class="form-control"
+								style="width:auto"
+								ng-change="launcher.changeOutput()"
+								ng-model="launcher.output"></ax-radio-options>
+	</div>
+	<div style="text-align: left;margin-top:10px;">
+		<button ng-click="launcher.applySpinner.do($event)"
+				  class="btn btn-primary" style="width:auto;margin-right:6px">
+			<ax-i-spinner config="launcher.applySpinner"
+							  i-class="fa fa-check"
+							  i-height="16"
+							  style="margin-right:3px"
+							  has-callback="false"
+							  action="launcher.confirm(removeSpinner)">
+			</ax-i-spinner>
+			{{launcher.applySpinner.working?launcher.applyingText :launcher.applyText }}
+		</button>
+
+		<button ng-click="launcher.close($event)" class="btn btn-primary" style="width:auto"><i class="fa fa-ban"></i>{{launcher.cancelText || 'Cancel'}}</button>
+	</div>
+</div>

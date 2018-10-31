@@ -1,0 +1,27 @@
+﻿ax-file {
+	display: flex;
+	flex-direction: column;
+}
+
+ax-file > [type=file] {
+	width: auto;
+}
+
+ax-file > div {
+	overflow: hidden;
+}
+
+ax-file[readonly] > button {
+	visibility: hidden;
+}
+
+ax-file.form-control {
+	margin: 0;
+	border: none !important;
+	padding: 0;
+	width: auto;
+	box-shadow: none;
+}
+ax-file > [role=files-list] > [role=file-upload-file]{
+	width:100%;
+}
