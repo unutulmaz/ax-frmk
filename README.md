@@ -8,7 +8,7 @@ AngularJS Framework
     Possibility to have different versions for js, html files in development and production. Deploy files by sftp protocol to remote server, in production or development.
     <br>Watchers used in development for add/remove file in index.html (with index.html regeneration), compile scss, verifying js files with jsHint, compile es6 to es5 (if you want), copy files to wwwroot or public folder <a href="https://github.com/bogdanim36/gulp-web-tasks">View on github</a>
     <br><strong>REST api</strong> very handy and light libraries for connecting to databases in php <a href="https://github.com/bogdanim36/php-api">View on github</a>
-    <br><strong>theme, css</strong> flexible way to load or build themes, adapted for mobile devices too.
+    <br><strong>theme, css</strong> flexible way to load or build themes.
     <br><strong>generic application content</strong> a generic main.html suitable for most application, with a side tree-view control for application menu.
     <br><strong>login and users administrations pages</strong> pages easy to customize, for login,and users administration.
     <br><strong>ax-table, ax-list</strong> data table, list having same core, with virtual rows and columns scroll, filtering, grouping and sorting, row editing, export.
